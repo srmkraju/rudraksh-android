@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/thirty_dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/fragment_service_cv_food"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_eighty_dp"
+        android:layout_margin="@dimen/ten_dp"
+        app:cardElevation="@dimen/five_dp">
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sixteen_sp"
+            android:text="@string/food"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/fragment_service_cv_pg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_eighty_dp"
+        android:layout_margin="@dimen/ten_dp"
+        app:cardElevation="@dimen/five_dp">
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sixteen_sp"
+            android:text="@string/paying_guest"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
