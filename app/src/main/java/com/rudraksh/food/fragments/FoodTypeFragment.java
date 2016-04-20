@@ -35,8 +35,8 @@ public class FoodTypeFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().setActionBarTitle("Food");
-        SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().setActionBarTitle(getString(R.string.food));
+        SecondActivity.getInstance().hideBackButton();
     }
 
     @Override
@@ -44,19 +44,19 @@ public class FoodTypeFragment extends BaseFragment implements View.OnClickListen
         final Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.fragment_food_type_cv_gujarati:
-                bundle.putString(Constant.CARD_NAME, "Gujarati Food");
+                bundle.putString(Constant.CARD_NAME,getString(R.string.gujarathi_thali));
                 final Fragment gujaratiFragment = new FoodDetailFragment();
                 gujaratiFragment.setArguments(bundle);
                 addFragment(this, gujaratiFragment, true);
                 break;
             case R.id.fragment_food_type_cv_punjabi:
-                bundle.putString(Constant.CARD_NAME, "Punjabi Food");
+                bundle.putString(Constant.CARD_NAME,getString(R.string.punjabi_thali));
                 final Fragment punjabiFragment = new FoodDetailFragment();
                 punjabiFragment.setArguments(bundle);
                 addFragment(this, punjabiFragment, true);
                 break;
             case R.id.fragment_food_type_cv_jain:
-                bundle.putString(Constant.CARD_NAME, "Jain Food");
+                bundle.putString(Constant.CARD_NAME,getString(R.string.jain_thali));
                 final Fragment jainFragment = new FoodDetailFragment();
                 jainFragment.setArguments(bundle);
                 addFragment(this, jainFragment, true);

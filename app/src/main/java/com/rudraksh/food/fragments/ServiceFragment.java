@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
-import com.rudraksh.food.utils.Constant;
 
 /**
  * Created by Raju on 4/16/2016.
@@ -37,6 +36,7 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
     protected void initToolbar() {
         SecondActivity.getInstance().setActionBarTitle(getString(R.string.services));
         SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
     }
 
     @Override

@@ -45,6 +45,7 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
     protected void initToolbar() {
         SecondActivity.getInstance().setActionBarTitle(getString(R.string.contact_us));
         SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
     }
 
     @Override

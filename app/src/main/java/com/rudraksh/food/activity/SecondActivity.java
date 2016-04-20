@@ -26,6 +26,7 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
     private static SecondActivity instance;
     private Toolbar toolbar;
     private ImageView backImageView;
+    private ImageView shareImageView;
 
     @Override
     protected void initView() {
@@ -35,6 +36,7 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
         setSupportActionBar(toolbar);
         setActionBarTitle();
         backImageView = (ImageView) findViewById(R.id.row_toolbar_iv_back);
+        shareImageView = (ImageView) findViewById(R.id.row_toolbar_iv_share);
         tabLayout = (TabLayout) findViewById(R.id.activity_main_tab_layout);
         tabLayout.setOnTabSelectedListener(this);
         setTabLayout();
@@ -131,5 +133,9 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
 
     public static SecondActivity getInstance() {
         return instance;
+    }
+
+    public ImageView getShareImageView() {
+        return shareImageView;
     }
 }

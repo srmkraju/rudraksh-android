@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/five_dp"
+    android:elevation="@dimen/five_dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/ten_dp"
+        android:orientation="vertical">
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/twenty_sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="@string/order_food"/>
+
+        <com.rudraksh.food.widgets.AppEditText
+            android:id="@+id/fragment_order_edt_user_name"
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/user_name"/>
+        <com.rudraksh.food.widgets.AppEditText
+            android:id="@+id/fragment_order_edt_mobile_no"
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/mobile_number"/>
+        <com.rudraksh.food.widgets.AppEditText
+            android:id="@+id/fragment_order_edt_flat_no"
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/address"/>
+        <com.rudraksh.food.widgets.AppEditText
+            android:id="@+id/fragment_order_edt_area"
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:textSize="@dimen/sixteen_sp"
+            android:hint="@string/area_name"/>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

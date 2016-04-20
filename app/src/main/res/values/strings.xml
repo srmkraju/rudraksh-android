@@ -33,4 +33,17 @@
     <string name="mukesh_91_9409409408">+91-9409409408</string>
     <string name="naresh_91_8866660906">+91-8866660906</string>
     <string name="rudraksh_food_service">Rudraksh Food Service</string>
+    <string name="user_name">User Name</string>
+    <string name="order_food">Order Food</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="flat_no">Flat No , Street</string>
+    <string name="area_name">Area Name(C.G Road)</string>
+    <string name="landmark">Landmark</string>
+    <string name="address">Address</string>
+    <string name="gujarathi_thali">Gujarati Thali</string>
+    <string name="punjabi_thali">Punjabi Thali</string>
+    <string name="jain_thali">Jain Thali</string>
+    <string name="thali_contains">Thali Contains</string>
+    <string name="items_included">Items Included</string>
+    <string name="Rs">\u20B9</string>
 </resources>
