@@ -35,7 +35,7 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void initToolbar() {
         SecondActivity.getInstance().setActionBarTitle(getString(R.string.services));
-        SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().hideBackButton();
         SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
     }
 

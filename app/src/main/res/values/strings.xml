@@ -27,8 +27,8 @@
     <string name="paying_guest">Paying Guest</string>
     <string name="rudraksh">Rudraksh</string>
     <string name="food_service">Food Service</string>
-    <string name="mukesh_bhai">Mukeshbhai</string>
-    <string name="naresh_bhai">Nareshbhai</string>
+    <string name="mukesh_bhai">Mukeshbhai (9409409408)</string>
+    <string name="naresh_bhai">Nareshbhai (8866660906)</string>
     <string name="contact_us">Contact Us</string>
     <string name="mukesh_91_9409409408">+91-9409409408</string>
     <string name="naresh_91_8866660906">+91-8866660906</string>
@@ -46,4 +46,13 @@
     <string name="thali_contains">Thali Contains</string>
     <string name="items_included">Items Included</string>
     <string name="Rs">\u20B9</string>
+    <string name="total">Total:</string>
+    <string name="zero">0</string>
+    <string name="enter_valid_mobile">Enter valid mobile number</string>
+    <string name="enter_mobile">Mobile Number is empty</string>
+    <string name="enter_name">Name is empty</string>
+    <string name="address_empty">Address is empty</string>
+    <string name="no_emial_client">There is no email client installed.</string>
+    <string name="your_total_bill">Your total bill</string>
+    <string name="select_items">Select Items</string>
 </resources>

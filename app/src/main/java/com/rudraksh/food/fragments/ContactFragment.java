@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
@@ -24,8 +25,8 @@ import java.util.Locale;
  */
 public class ContactFragment extends BaseFragment implements View.OnClickListener{
 
-    private CardView contactFrgmentCVMukesh;
-    private CardView contactFragmentCVNaresh;
+    private Button contactFrgmentBtnMukesh;
+    private Button contactFragmentBtnNaresh;
 
     @Nullable
     @Override
@@ -35,26 +36,26 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initView(View view) {
-        contactFrgmentCVMukesh = (CardView) view.findViewById(R.id.frament_contact_cv_mukesh);
-        contactFragmentCVNaresh = (CardView) view.findViewById(R.id.frament_contact_cv_naresh);
-        contactFrgmentCVMukesh.setOnClickListener(this);
-        contactFragmentCVNaresh.setOnClickListener(this);
+        contactFrgmentBtnMukesh = (Button) view.findViewById(R.id.frament_contact_btn_mukesh);
+        contactFragmentBtnNaresh = (Button) view.findViewById(R.id.frament_contact_btn_naresh);
+        contactFrgmentBtnMukesh.setOnClickListener(this);
+        contactFragmentBtnNaresh.setOnClickListener(this);
     }
 
     @Override
     protected void initToolbar() {
         SecondActivity.getInstance().setActionBarTitle(getString(R.string.contact_us));
-        SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().hideBackButton();
         SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.frament_contact_cv_mukesh:
+            case R.id.frament_contact_btn_mukesh:
                 callToMukesh();
                 break;
-            case R.id.frament_contact_cv_naresh:
+            case R.id.frament_contact_btn_naresh:
                 callToNaresh();
                 break;
         }
@@ -62,9 +63,6 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     private void callToMukesh(){
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse(getString(R.string.mukesh_91_9409409408)));
-        startActivity(callIntent);
-        /*Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(String.format(Locale.getDefault(), "tel:%s", getString(R.string.mukesh_91_9409409408))));
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -73,7 +71,7 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
             }
             return;
         }
-        startActivity(callIntent);*/
+        startActivity(callIntent);
     }
 
     private void callToNaresh(){

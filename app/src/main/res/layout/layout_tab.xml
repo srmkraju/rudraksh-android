@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="@drawable/selected_bg_tab_layout"
     android:orientation="vertical">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@null"
+        android:scaleType="fitCenter"
         android:src="@mipmap/ic_launcher" />
 
     <com.rudraksh.food.widgets.AppTextView
@@ -22,6 +24,6 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/home"
-        android:textColor="@color/gray"
+        android:textColor="@color/black"
         android:textSize="@dimen/twelve_sp" />
 </LinearLayout>

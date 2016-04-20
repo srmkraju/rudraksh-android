@@ -15,34 +15,25 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initToolbar();
 
-    /*@Override
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         hideIcons();
         initToolbar();
-    }*/
+    }
 
-    /*private void hideIcons() {
+    private void hideIcons() {
         setHasOptionsMenu(false);
         if (SecondActivity.getInstance() != null) {
-            MainActivity.getInstance().getFilterImageView().setVisibility(View.GONE);
-            MainActivity.getInstance().getSearchImageView().setVisibility(View.GONE);
-            MainActivity.getInstance().getMoreImageView().setVisibility(View.GONE);
-            MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
-            MainActivity.getInstance().getMenuImageView().setVisibility(View.GONE);
-            MainActivity.getInstance().getActionMenuView().setVisibility(View.GONE);
-
-            MainActivity.getInstance().getFilterImageView().setOnClickListener(null);
-            MainActivity.getInstance().getSearchImageView().setOnClickListener(null);
-            MainActivity.getInstance().getMoreImageView().setOnClickListener(null);
-            MainActivity.getInstance().getShareImageView().setOnClickListener(null);
+            SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+            SecondActivity.getInstance().getShareImageView().setOnClickListener(null);
         }
-    }*/
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         initView(view);
-        //hideIcons();
+        hideIcons();
         initToolbar();
     }
 
@@ -50,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            //hideIcons();
+            hideIcons();
             initToolbar();
         }
     }
