@@ -45,6 +45,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
         foodDetailOrderButton.setOnClickListener(this);
+
         //foodTVTotal.setText(getString(R.string.Rs));
         oneThaliPrice = foodTVTotal.getText().toString();
         if(getArguments()!=null){
@@ -80,13 +81,18 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.fragment_food_iv_plus:
                 count = count+1;
-                final int price = Integer.parseInt(oneThaliPrice);
-                int pric = price*count;
-                foodTVTotal.setText(String.valueOf(pric));
-                String pf = String.valueOf(pric);
-                Log.e("TAG", "price " + pf);
+                final int plusprice = Integer.parseInt(oneThaliPrice);
+                final int convertPlusPrice = plusprice*count;
+                foodTVTotal.setText(String.valueOf(convertPlusPrice));
                 break;
             case R.id.fragment_food_iv_minus:
+                count = count-1;
+                final int minusprice = Integer.parseInt(oneThaliPrice);
+                final int convertMinusPrice = minusprice*count;
+                foodTVTotal.setText(String.valueOf(convertMinusPrice));
+                break;
+            case R.id.row_toolbar_iv_share:
+                Log.e("Tag","share clicked");
                 break;
         }
     }

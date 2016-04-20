@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/one_fifty_dp"
                 android:contentDescription="@null"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/gujarathi_thali" />
 
             <RelativeLayout
@@ -146,9 +146,9 @@
 
                 <com.rudraksh.food.widgets.AppButton
                     android:id="@+id/fragment_food_detail_btn_order"
-                    style="@style/extra_bold"
+                    style="@style/semi_bold"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/seventy_dp"
+                    android:layout_height="@dimen/fifty_dp"
                     android:layout_alignParentBottom="true"
                     android:background="@color/green"
                     android:text="@string/order_now"
