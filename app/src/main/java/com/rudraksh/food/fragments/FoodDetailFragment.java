@@ -1,6 +1,10 @@
 package com.rudraksh.food.fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rudraksh.food.R;
@@ -32,6 +37,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private int thaliPrice;
     private CoordinatorLayout foodDetailCoordinatorLayout;
     private String oneThaliPrice;
+    private LinearLayout fragmentFoodLinearLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodTVTotalQuantity = (TextView) view.findViewById(R.id.fragment_food_tv_total_quantity);
         foodDetailTVTotalPrice = (TextView) view.findViewById(R.id.fragment_food_tv_total_price);
         foodDetailCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_food_detail_coordinatorLayout);
+        fragmentFoodLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_foof_detail_ll);
 
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
@@ -55,23 +62,23 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
         //foodTVTotal.setText(getString(R.string.Rs));
         //oneThaliPrice = foodTVTotalQuantity.getText().toString();
-        if(getArguments()!=null){
+        if (getArguments() != null) {
             selectedFoodName = getArguments().getString(Constant.CARD_NAME);
-            if(selectedFoodName.equalsIgnoreCase(getString(R.string.gujarathi_thali))){
+            if (selectedFoodName.equalsIgnoreCase(getString(R.string.gujarathi_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.roties));
-                count=0;
-                thaliPrice=70;
-            } else if(selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))){
+                count = 0;
+                thaliPrice = 70;
+            } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
-                count=0;
-                thaliPrice=100;
-            } else if(selectedFoodName.equalsIgnoreCase(getString(R.string.jain_thali))){
+                count = 0;
+                thaliPrice = 100;
+            } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.jain_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
-                count=0;
-                thaliPrice=70;
+                count = 0;
+                thaliPrice = 70;
             }
         }
     }
@@ -81,43 +88,63 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         SecondActivity.getInstance().setActionBarTitle(selectedFoodName);
         SecondActivity.getInstance().showBackButton();
         SecondActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
+        SecondActivity.getInstance().getShareImageView().setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         final Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fragment_food_detail_btn_order:
-                if(!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")){
-                    bundle.putString(Constant.TOTAL_BILL,foodDetailTVTotalPrice.getText().toString());
+                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
+                    bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
+                    bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
+                    bundle.putString(Constant.CARD_NAME, selectedFoodName);
                     final Fragment orderFoodFragment = new OrderFoodFragment();
                     orderFoodFragment.setArguments(bundle);
                     addFragment(this, orderFoodFragment, true);
-                } else{
-                    Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.select_items));
+                } else {
+                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
                 }
 
                 break;
             case R.id.fragment_food_iv_plus:
-                count = count+1;
+                count = count + 1;
                 //final int plusprice = Integer.parseInt(thaliPrice);
-                final int convertPlusPrice = thaliPrice*count;
-                if(count>0){
+                final int convertPlusPrice = thaliPrice * count;
+                if (count > 0) {
                     foodTVTotalQuantity.setText(String.valueOf(count));
                     foodDetailTVTotalPrice.setText(String.valueOf(convertPlusPrice));
                 }
                 break;
             case R.id.fragment_food_iv_minus:
-                count = count-1;
+                count = count - 1;
                 //final int minusprice = Integer.parseInt(oneThaliPrice);
-                final int convertMinusPrice = thaliPrice*count;
-                if(count>-1){
+                final int convertMinusPrice = thaliPrice * count;
+                if (count > -1) {
                     foodTVTotalQuantity.setText(String.valueOf(count));
                     foodDetailTVTotalPrice.setText(String.valueOf(convertMinusPrice));
                 }
-                break;            case R.id.row_toolbar_iv_share:
-                Log.e("Tag","share clicked");
+                break;
+            case R.id.row_toolbar_iv_share:
+                shareImage();
                 break;
         }
+    }
+
+    private void shareImage(){
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.share_text));
+        fragmentFoodLinearLayout.setDrawingCacheEnabled(true);
+        fragmentFoodLinearLayout.buildDrawingCache();
+        Bitmap bm = Bitmap.createBitmap(fragmentFoodLinearLayout.getDrawingCache());
+        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bm, "Image Description", null);
+        Uri uri = Uri.parse(path);
+        final Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_propery_subject));
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, stringBuilder.toString());
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
     }
 }

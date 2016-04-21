@@ -1,5 +1,7 @@
 package com.rudraksh.food.activity;
 
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,12 +9,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.fragments.ContactFragment;
 import com.rudraksh.food.fragments.FoodTypeFragment;
+import com.rudraksh.food.fragments.OffersFragment;
+import com.rudraksh.food.fragments.PhotoGalleryFragment;
 import com.rudraksh.food.fragments.TabFragment2;
 import com.rudraksh.food.fragments.ServiceFragment;
 
@@ -35,6 +40,10 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
         titleTextView = (TextView) toolbar.findViewById(R.id.row_toolbar_tv_title);
         setSupportActionBar(toolbar);
         setActionBarTitle();
+
+        //android.support.v7.app.ActionBar bar = getSupportActionBar();
+        //bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
+
         backImageView = (ImageView) findViewById(R.id.row_toolbar_iv_back);
         shareImageView = (ImageView) findViewById(R.id.row_toolbar_iv_share);
         tabLayout = (TabLayout) findViewById(R.id.activity_main_tab_layout);
@@ -93,13 +102,13 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
                 selectedFragment = new FoodTypeFragment();
                 break;
             case 1:
-                selectedFragment = new TabFragment2();
+                selectedFragment = new PhotoGalleryFragment();
                 break;
             case 2:
                 selectedFragment = new ServiceFragment();
                 break;
             case 3:
-                selectedFragment = new TabFragment2();
+                selectedFragment = new OffersFragment();
                 break;
             case 4:
                 selectedFragment = new ContactFragment();

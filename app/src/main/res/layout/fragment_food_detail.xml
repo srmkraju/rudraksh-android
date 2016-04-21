@@ -16,6 +16,7 @@
         app:cardElevation="@dimen/five_dp">
 
         <LinearLayout
+            android:id="@+id/fragment_foof_detail_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen_dp"
+                android:maxLength="10"
                 android:hint="@string/mobile_number"
                 android:inputType="phone"
                 android:textColor="@color/black"
@@ -54,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen_dp"
                 android:hint="@string/address"
+                android:maxLines="2"
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />

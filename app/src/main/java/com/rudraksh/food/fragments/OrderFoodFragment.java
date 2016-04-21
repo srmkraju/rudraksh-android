@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.rudraksh.food.R;
+import com.rudraksh.food.activity.SecondActivity;
 import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 import com.rudraksh.food.utils.Utils;
@@ -29,6 +30,8 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private TextView orderFoodTVTotalBill;
     private CoordinatorLayout orderFoodCordinatorLayout;
     private String totalBill;
+    private String totalQuantity;
+    private String selectedOrderFoodName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     protected void initView(View view) {
         if(getArguments()!=null){
             totalBill = getArguments().getString(Constant.TOTAL_BILL);
+            totalQuantity = getArguments().getString(Constant.TOTAL_QUANTITY);
+            selectedOrderFoodName = getArguments().getString(Constant.CARD_NAME);
         }
         orderFoodETUserName = (EditText) view.findViewById(R.id.fragment_order_edt_user_name);
         orderFoodETMobileNo = (EditText) view.findViewById(R.id.fragment_order_edt_mobile_no);
@@ -55,6 +60,9 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected void initToolbar() {
+        SecondActivity.getInstance().setActionBarTitle(getString(R.string.gujarathi_thali));
+        SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
 
     }
 
@@ -77,7 +85,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             if (!TextUtils.isEmpty(mobileNo)) {
                 if (Utils.isValidMobile(mobileNo)) {
                     if(!TextUtils.isEmpty(address1)){
-                        sendEmail();
+                        sendEmail(userName,mobileNo,address1);
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
                     }
@@ -92,7 +100,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private void sendEmail(){
+    private void sendEmail(final String userName, final String mobileNo, final String address1){
         if(Utils.isConnectedToInternet(getActivity())){
             String[] TO = {"sraju432@gmail.com"};
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -100,8 +108,9 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             emailIntent.setData(Uri.parse("mailto:"));
             emailIntent.setType("text/plain");
             emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-            emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName);
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "Name : " + userName + "\n" +
+                    "Mobile No " + mobileNo + "\n" + "Address1 " + address1 );
 
             try {
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
