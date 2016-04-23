@@ -48,6 +48,8 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
                 addFragment(this, foodTypeFragment, true);
                 break;
             case R.id.fragment_service_cv_pg:
+                final PGFragment pgFragment = new PGFragment();
+                addFragment(this, pgFragment, true);
                 break;
         }
     }
