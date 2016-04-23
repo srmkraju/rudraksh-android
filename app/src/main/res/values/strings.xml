@@ -56,12 +56,17 @@
     <string name="your_total_bill">Your total bill</string>
     <string name="select_items">Select Items</string>
 
-    <string name="page_one_desc_1">Square Connect is India’s first and largest mobile-only aggregation platform for real estate brokers, independent financial agents and stock broking firms, providing them access to much larger inventory, opening up more possibilities and helping them increase productivity.</string>
-    <string name="page_one_desc_2">An Initiative by Square Yards.</string>
-    <string name="page_one_desc_3">Square Yards is the largest player for the primary residential real estate in India, and it enjoys relationship with 500+ grade A developers in 21 cities and six countries.</string>
+    <string name="offer_1">\u2022 In same office, building or society 5 or less than 10 Tiffin service will get 10% discount to each members.</string>
+    <string name="offer_2">\u2022 In same office, building or society 10 or less than 15 Tiffin service will get 15% discount to each members.</string>
+    <string name="offer_3">\u2022 In same office, building or society 15 or less than 20 Tiffin service will get 20% discount to each members.</string>
+    <string name="offer_4">\u2022 In same office, building or society 15 or less than 25 Tiffin service will get 25% discount to each members.</string>
     <string name="photo_gallery">Photo Gallery</string>
 
     <string name="share_via">Share via</string>
     <string name="share_text">Check out this Rudraksh Food Service</string>
     <string name="share_propery_subject">Property on Rudraksh Food Service App</string>
+    <string name="single_share">Single Share</string>
+    <string name="two_sharing">Two Sharing</string>
+    <string name="three_sharing">Three Sharing</string>
+    <string name="one_sharing">One Sharing</string>
 </resources>

@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="1"
         android:layout_margin="@dimen/ten_dp"
         app:cardElevation="@dimen/five_dp">
 
@@ -15,8 +16,9 @@
             style="@style/semi_bold"
             android:id="@+id/fragment_offer_tv_offer1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/page_one_desc_1"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:text="@string/offer_1"
             android:layout_marginStart="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/ten_dp"
             android:layout_marginTop="@dimen/ten_dp"
@@ -26,22 +28,37 @@
             style="@style/semi_bold"
             android:id="@+id/fragment_offer_tv_offer2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
             android:layout_marginStart="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/ten_dp"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:text="@string/page_one_desc_2"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:text="@string/offer_2"
             android:textColor="@color/black"
             android:textSize="@dimen/sixteen_sp"/>
         <com.rudraksh.food.widgets.AppTextView
             style="@style/semi_bold"
             android:id="@+id/fragment_offer_tv_offer3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/page_one_desc_3"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:text="@string/offer_3"
             android:layout_marginStart="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/ten_dp"
-            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"/>
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:id="@+id/fragment_offer_tv_offer4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:text="@string/offer_4"
+            android:layout_marginStart="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/fifteen_dp"
             android:textColor="@color/black"
             android:textSize="@dimen/sixteen_sp"/>
 

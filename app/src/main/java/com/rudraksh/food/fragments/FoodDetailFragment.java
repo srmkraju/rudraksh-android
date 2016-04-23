@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,18 +132,16 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     }
 
     private void shareImage(){
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getString(R.string.share_text));
         fragmentFoodLinearLayout.setDrawingCacheEnabled(true);
         fragmentFoodLinearLayout.buildDrawingCache();
         Bitmap bm = Bitmap.createBitmap(fragmentFoodLinearLayout.getDrawingCache());
-        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bm, "Image Description", null);
+        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(),
+                bm, "Image Description", null);
+
         Uri uri = Uri.parse(path);
-        final Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_propery_subject));
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, stringBuilder.toString());
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/jpg");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(shareIntent, "Share image using"));
     }
 }
