@@ -1,12 +1,14 @@
 package com.rudraksh.food.fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,10 @@ import android.widget.TextView;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.service.NotifyAlarmService;
 import com.rudraksh.food.utils.Constant;
-import com.rudraksh.food.utils.Logger;
+
+import java.util.Calendar;
 
 /**
  * Created by Raju on 4/16/2016.
@@ -37,6 +41,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private CoordinatorLayout foodDetailCoordinatorLayout;
     private String oneThaliPrice;
     private LinearLayout fragmentFoodLinearLayout;
+    private PendingIntent pendingIntent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +100,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.fragment_food_detail_btn_order:
-                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
+                setAlarmService();
+                /*if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
                     bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
                     bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
                     bundle.putString(Constant.CARD_NAME, selectedFoodName);
@@ -104,7 +110,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     addFragment(this, orderFoodFragment, true);
                 } else {
                     Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
-                }
+                }*/
 
                 break;
             case R.id.fragment_food_iv_plus:
@@ -143,5 +149,20 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         shareIntent.setType("image/jpg");
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(shareIntent, "Share image using"));
+    }
+
+    private void setAlarmService(){
+        Intent myIntent = new Intent(getActivity(), NotifyAlarmService.class);
+        pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);
+
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 10);
+        //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*3600*1000, pendingIntent);
+
+
     }
 }

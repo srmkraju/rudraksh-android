@@ -30,6 +30,9 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
 
         serviceFragmentCVFood.setOnClickListener(this);
         serviceFragmentCVPG.setOnClickListener(this);
+
+
+
     }
 
     @Override
@@ -53,4 +56,5 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
                 break;
         }
     }
+
 }

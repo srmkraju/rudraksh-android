@@ -69,4 +69,7 @@
     <string name="two_sharing">Two Sharing</string>
     <string name="three_sharing">Three Sharing</string>
     <string name="one_sharing">One Sharing</string>
+    <string name="alarm_text">Do you want to oreder food from Rudraksh?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>

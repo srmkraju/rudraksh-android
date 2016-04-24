@@ -1,10 +1,10 @@
 package com.rudraksh.food.fragments;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
 import com.rudraksh.food.utils.Constant;
@@ -85,6 +86,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             if (!TextUtils.isEmpty(mobileNo)) {
                 if (Utils.isValidMobile(mobileNo)) {
                     if(!TextUtils.isEmpty(address1)){
+                        showAlarmAlertDialog();
                         sendEmail(userName,mobileNo,address1);
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
@@ -130,6 +132,15 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         final Intent i = new Intent(Intent.ACTION_SENDTO, uri);
         i.setPackage("com.whatsapp");
         startActivity(Intent.createChooser(i, ""));
+    }
+
+    private void showAlarmAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+        builder.setTitle("Dialog");
+        builder.setMessage("Do you want to set Alarm everyday to order food?");
+        builder.setPositiveButton(getString(R.string.yes), null);
+        builder.setNegativeButton(getString(R.string.cancel), null);
+        builder.show();
     }
 }
 
