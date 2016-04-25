@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
 import com.rudraksh.food.service.NotifyAlarmService;
 import com.rudraksh.food.utils.Constant;
+import com.rudraksh.food.utils.Logger;
 
 import java.util.Calendar;
 
@@ -100,8 +102,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.fragment_food_detail_btn_order:
-                setAlarmService();
-                /*if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
+                //setAlarmService();
+                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
                     bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
                     bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
                     bundle.putString(Constant.CARD_NAME, selectedFoodName);
@@ -110,8 +112,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     addFragment(this, orderFoodFragment, true);
                 } else {
                     Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
-                }*/
-
+                }
                 break;
             case R.id.fragment_food_iv_plus:
                 count = count + 1;
@@ -162,7 +163,5 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         calendar.add(Calendar.SECOND, 10);
         //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*3600*1000, pendingIntent);
-
-
     }
 }
