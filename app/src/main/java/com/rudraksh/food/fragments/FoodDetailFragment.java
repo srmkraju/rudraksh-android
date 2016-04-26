@@ -38,12 +38,73 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private ImageView foodIVMinus;
     private TextView foodDetailTVTotalPrice;
     private TextView foodTVTotalQuantity;
+    //extras
+    private ImageView extraRotiIVAdd;
+    private ImageView extraRotiIVMinus;
+    private TextView extraRotiTVTotal;
+
+    private ImageView extraVegCurryIVAdd;
+    private ImageView extraVegCurryIVMinus;
+    private TextView extraVegCurryTVTotal;
+
+    private ImageView extraDalIVAdd;
+    private ImageView extraDalIVMinus;
+    private TextView extraDalTVTotal;
+
+    private ImageView extraPulsesIVAdd;
+    private ImageView extraPulsesIVMinus;
+    private TextView extraPulsesTVTotal;
+
+    private ImageView extraRiceIVAdd;
+    private ImageView extraRiceIVMinus;
+    private TextView extraRiceTVTotal;
+
+    private ImageView extraButterMilkIVAdd;
+    private ImageView extraButterMilkIVMinus;
+    private TextView extraButterMilkTVTotal;
+
+    private TextView extraFoodTVTotal;
+
     private int count;
     private int thaliPrice;
     private CoordinatorLayout foodDetailCoordinatorLayout;
     private String oneThaliPrice;
     private LinearLayout fragmentFoodLinearLayout;
     private PendingIntent pendingIntent;
+    private int total;
+
+    //extraPrice
+    private int extraGujaratiRoti;
+    private int extraGujaratiRotiCount;
+    private int extraGujaratiVegCurry;
+    private int extraGujaratiVegCurryCount;
+    private int extraGujaratiDal;
+    private int extraGujaratiDalCount;
+    private int extraGujaratiPulses;
+    private int extraGujaratiPulseCount;
+    private int extraGujaratiRice;
+    private int extraGujaratiRiceCount;
+    private int extraGujaratiButtermilk;
+    private int extraGujaratiButtermilkCount;
+
+    private int extraPunjabiRoti;
+    private int extraPunjabiVegCurry;
+    private int extraPunjabiDal;
+    private int extraPunjabiPulses;
+    private int extraPunjabiRice;
+    private int extraPunjabiButtermilk;
+
+    private int extraJainRoti;
+    private int extraJainVegCurry;
+    private int extraJainDal;
+    private int extraJainPulses;
+    private int extraJainrice;
+    private int extraJainButtermilk;
+
+    private int extraFoodTotal;
+    private int extraGujaratiVegCurryTotal;
+    private int extraGujaratiRotiTotal;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,9 +123,55 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodDetailCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_food_detail_coordinatorLayout);
         fragmentFoodLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_foof_detail_ll);
 
+        //extras
+        extraRotiIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_roti_add);
+        extraRotiIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_roti_minus);
+        extraRotiTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_roti_total);
+
+        extraVegCurryIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_vegcurry_add);
+        extraVegCurryIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_vegcurry_minus);
+        extraVegCurryTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_vegcurry_total);
+
+        extraDalIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_dal_add);
+        extraDalIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_dal_minus);
+        extraDalTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_dal_total);
+
+        extraPulsesIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_pulse_add);
+        extraPulsesIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_pulse_minus);
+        extraPulsesTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_pulse_toatl);
+
+        extraRiceIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_rice_add);
+        extraRiceIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_rice_minus);
+        extraRiceTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_rice_total);
+
+        extraButterMilkIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_buttermilk_add);
+        extraButterMilkIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_buttermilk_minus);
+        extraButterMilkTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_buttermilk_total);
+
+        extraFoodTVTotal = (TextView) view.findViewById(R.id.order_food_extra_TV_total);
+
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
         foodDetailOrderButton.setOnClickListener(this);
+
+        //extras on click
+        extraRotiIVAdd.setOnClickListener(this);
+        extraRotiIVMinus.setOnClickListener(this);
+
+        extraVegCurryIVAdd.setOnClickListener(this);
+        extraVegCurryIVMinus.setOnClickListener(this);
+
+        extraDalIVAdd.setOnClickListener(this);
+        extraDalIVMinus.setOnClickListener(this);
+
+        extraPulsesIVAdd.setOnClickListener(this);
+        extraPulsesIVMinus.setOnClickListener(this);
+
+        extraRiceIVAdd.setOnClickListener(this);
+        extraRiceIVMinus.setOnClickListener(this);
+
+        extraButterMilkIVAdd.setOnClickListener(this);
+        extraButterMilkIVMinus.setOnClickListener(this);
 
         //foodTVTotal.setText(getString(R.string.Rs));
         //oneThaliPrice = foodTVTotalQuantity.getText().toString();
@@ -75,16 +182,38 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 foodDetailTextViewRoties.setText(getString(R.string.roties));
                 count = 0;
                 thaliPrice = 70;
+                extraGujaratiRoti = 10;
+                extraGujaratiRotiCount = 0;
+                extraGujaratiVegCurry = 50;
+                extraGujaratiVegCurryTotal = 0;
+                extraGujaratiRotiTotal = 0;
+                extraGujaratiVegCurryCount = 0;
+                extraGujaratiDal = 50;
+                extraGujaratiPulses = 50;
+                extraGujaratiRice = 40;
+                extraGujaratiButtermilk=10;
             } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
                 count = 0;
                 thaliPrice = 100;
+                extraPunjabiRoti = 10;
+                extraPunjabiVegCurry = 60;
+                extraPunjabiDal = 60;
+                extraPunjabiPulses = 50;
+                extraPunjabiRice = 40;
+                extraPunjabiButtermilk=10;
             } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.jain_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
                 count = 0;
                 thaliPrice = 70;
+                extraJainRoti = 10;
+                extraJainVegCurry = 50;
+                extraJainDal = 50;
+                extraJainPulses = 50;
+                extraJainrice = 40;
+                extraJainButtermilk=10;
             }
         }
     }
@@ -116,7 +245,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.fragment_food_iv_plus:
                 count = count + 1;
-                //final int plusprice = Integer.parseInt(thaliPrice);
                 final int convertPlusPrice = thaliPrice * count;
                 if (count > 0) {
                     foodTVTotalQuantity.setText(String.valueOf(count));
@@ -125,7 +253,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.fragment_food_iv_minus:
                 count = count - 1;
-                //final int minusprice = Integer.parseInt(oneThaliPrice);
                 final int convertMinusPrice = thaliPrice * count;
                 if (count > -1) {
                     foodTVTotalQuantity.setText(String.valueOf(count));
@@ -135,7 +262,63 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
             case R.id.row_toolbar_iv_share:
                 shareImage();
                 break;
+            case R.id.extra_food_IV_roti_add:
+                extraGujaratiRotiCount =  extraGujaratiRotiCount + 1;
+                extraGujaratiRotiTotal = extraGujaratiRoti * extraGujaratiRotiCount;
+                total = extraGujaratiRotiTotal+extraFoodTotal;
+                if (extraGujaratiRotiCount > 0) {
+                    extraRotiTVTotal.setText(String.valueOf(extraGujaratiRotiCount));
+                    extraFoodTVTotal.setText(String.valueOf(total));
+                }
+                break;
+            case R.id.extra_food_IV_roti_minus:
+                extraGujaratiRotiCount = extraGujaratiRotiCount - 1;
+                extraFoodTotal = extraGujaratiRoti * extraGujaratiRotiCount;
+                if (extraGujaratiRotiCount > -1) {
+                    extraRotiTVTotal.setText(String.valueOf(extraGujaratiRotiCount));
+                    extraFoodTVTotal.setText(String.valueOf(extraFoodTotal));
+                }
+                break;
+            case R.id.extra_food_IV_vegcurry_add:
+                extraGujaratiVegCurryCount = extraGujaratiVegCurryCount + 1;
+                extraGujaratiVegCurryTotal = extraGujaratiVegCurry * extraGujaratiVegCurryCount;
+                total = extraGujaratiVegCurryTotal+extraFoodTotal;
+                if (extraGujaratiVegCurryCount > 0) {
+                    extraVegCurryTVTotal.setText(String.valueOf(extraGujaratiVegCurryCount));
+                    extraFoodTVTotal.setText(String.valueOf(total));
+                }
+                break;
+            case R.id.extra_food_IV_vegcurry_minus:
+                extraGujaratiVegCurryCount = extraGujaratiVegCurryCount - 1;
+                extraGujaratiVegCurryTotal = extraGujaratiVegCurry * extraGujaratiVegCurryCount;
+                final int totalVeg = extraGujaratiVegCurryTotal+extraFoodTotal;
+                if (extraGujaratiVegCurryCount > -1) {
+                    extraVegCurryTVTotal.setText(String.valueOf(extraGujaratiVegCurryCount));
+                    extraFoodTVTotal.setText(String.valueOf(totalVeg));
+                }
+                    break;
+            case R.id.extra_food_IV_dal_add:
+                break;
+            case R.id.extra_food_IV_dal_minus:
+                break;
+            case R.id.extra_food_IV_pulse_add:
+                break;
+            case R.id.extra_food_IV_pulse_minus:
+                break;
+            case R.id.extra_food_IV_rice_add:
+                break;
+            case R.id.extra_food_IV_rice_minus:
+                break;
+            case R.id.extra_food_IV_buttermilk_add:
+                break;
+            case R.id.extra_food_IV_buttermilk_minus:
+                break;
+
         }
+    }
+
+    private void calculateExtraFood(final int price){
+
     }
 
     private void shareImage(){

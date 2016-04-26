@@ -19,15 +19,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:id="@+id/fragment_foof_detail_ll"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:orientation="vertical">
-
-
                     <ImageView
                         android:id="@+id/fragment_food_detail_iv"
                         android:layout_width="match_parent"
@@ -222,6 +219,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                         <ImageView
+                                            android:id="@+id/extra_food_IV_roti_add"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/circle"
@@ -229,6 +227,7 @@
                                             android:src="@drawable/ic_add" />
 
                                         <com.rudraksh.food.widgets.AppTextView
+                                            android:id="@+id/extra_food_TV_roti_total"
                                             style="@style/semi_bold"
                                             android:layout_width="0dp"
                                             android:layout_weight="0.2"
@@ -240,6 +239,7 @@
                                             android:textSize="@dimen/sixteen_sp" />
 
                                         <ImageView
+                                            android:id="@+id/extra_food_IV_roti_minus"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center|start"
@@ -283,6 +283,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_vegcurry_add"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/circle"
@@ -290,6 +291,7 @@
                                         android:src="@drawable/ic_add" />
 
                                     <com.rudraksh.food.widgets.AppTextView
+                                        android:id="@+id/extra_food_TV_vegcurry_total"
                                         style="@style/semi_bold"
                                         android:layout_width="0dp"
                                         android:layout_weight="0.2"
@@ -301,6 +303,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_vegcurry_minus"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center|start"
@@ -344,6 +347,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_dal_add"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/circle"
@@ -351,6 +355,7 @@
                                         android:src="@drawable/ic_add" />
 
                                     <com.rudraksh.food.widgets.AppTextView
+                                        android:id="@+id/extra_food_TV_dal_total"
                                         style="@style/semi_bold"
                                         android:layout_width="0dp"
                                         android:layout_weight="0.2"
@@ -362,6 +367,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_dal_minus"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center|start"
@@ -404,6 +410,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_pulse_add"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/circle"
@@ -411,6 +418,7 @@
                                         android:src="@drawable/ic_add" />
 
                                     <com.rudraksh.food.widgets.AppTextView
+                                        android:id="@+id/extra_food_TV_pulse_toatl"
                                         style="@style/semi_bold"
                                         android:layout_width="0dp"
                                         android:layout_weight="0.2"
@@ -422,6 +430,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_pulse_minus"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center|start"
@@ -465,6 +474,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_rice_add"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/circle"
@@ -472,6 +482,7 @@
                                         android:src="@drawable/ic_add" />
 
                                     <com.rudraksh.food.widgets.AppTextView
+                                        android:id="@+id/extra_food_TV_rice_total"
                                         style="@style/semi_bold"
                                         android:layout_width="0dp"
                                         android:layout_weight="0.2"
@@ -483,6 +494,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_rice_minus"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center|start"
@@ -526,6 +538,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_buttermilk_add"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/circle"
@@ -533,6 +546,7 @@
                                         android:src="@drawable/ic_add" />
 
                                     <com.rudraksh.food.widgets.AppTextView
+                                        android:id="@+id/extra_food_TV_buttermilk_total"
                                         style="@style/semi_bold"
                                         android:layout_width="0dp"
                                         android:layout_weight="0.2"
@@ -544,6 +558,7 @@
                                         android:textSize="@dimen/sixteen_sp" />
 
                                     <ImageView
+                                        android:id="@+id/extra_food_IV_buttermilk_minus"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center|start"
@@ -574,15 +589,32 @@
                     android:layout_marginStart="@dimen/ten_dp"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/twenty_dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
 
                     <com.rudraksh.food.widgets.AppTextView
                         style="@style/semi_bold"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
                         android:textColor="@color/black"
                         android:gravity="start|center_horizontal"
                         android:textSize="@dimen/sixteen_sp"
                         android:text="@string/your_total_bill"/>
+                        <com.rudraksh.food.widgets.AppTextView
+                            android:id="@+id/order_food_extra_TV_total"
+                            style="@style/semi_bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:textColor="@color/black"
+                            android:gravity="start|center_horizontal"
+                            android:textSize="@dimen/sixteen_sp"
+                            android:text="@string/your_total_bill"/>
+                    </LinearLayout>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
