@@ -112,7 +112,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName);
             emailIntent.putExtra(Intent.EXTRA_TEXT, "Name : " + userName + "\n" +
-                    "Mobile No " + mobileNo + "\n" + "Address1 " + address1 );
+                    " Mobile No " + mobileNo + "\n" + " Address1 " + address1 );
 
             try {
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
@@ -121,6 +121,8 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             catch (android.content.ActivityNotFoundException ex) {
                 Logger.snackBar(orderFoodCordinatorLayout,getActivity(),getString(R.string.no_emial_client));
             }
+        } else{
+            Logger.snackBar(orderFoodCordinatorLayout,getActivity(),getString(R.string.connect_to_internet));
         }
         //openWhatsappContact("8140113954");
 

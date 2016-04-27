@@ -94,4 +94,5 @@
     <string name="room_and_toilet_cleaning">\u2022  Room and Toilet Cleaning</string>
     <string name="t_v_wifi_fridge_water_filter">\u2022  T.V , Wifi , Fridge , Water Filter</string>
     <string name="almirah_with_locker">\u2022  Almirah with locker</string>
+    <string name="connect_to_internet">Connect to Internet</string>
 </resources>
