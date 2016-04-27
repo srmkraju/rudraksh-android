@@ -76,8 +76,7 @@ public class Logger {
     }
 
     public static final void snackBar(CoordinatorLayout coordinatorLayout,Context context, String message) {
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
-
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 
@@ -124,6 +123,8 @@ public class Logger {
             progressDialog.dismiss();
         }
     }
+
+
 
     /**
      * Display progress dialog

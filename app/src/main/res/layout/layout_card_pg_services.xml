@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardElevation="@dimen/five_dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/extra_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten_dp"
+            android:layout_weight="0.166"
+            android:gravity="center|start"
+            android:text="@string/facilities"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen_sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten_dp"
+            android:layout_weight="0.166"
+            android:gravity="center|start"
+            android:text="@string/morning_evening_tea"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"/>
+
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten_dp"
+            android:gravity="center|start"
+            android:layout_weight="0.166"
+            android:text="@string/breakfast_lunch_dinner"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"/>
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten_dp"
+            android:layout_weight="0.166"
+            android:gravity="center|start"
+            android:text="@string/room_and_toilet_cleaning"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"/>
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten_dp"
+            android:layout_weight="0.166"
+            android:gravity="center|start"
+            android:text="@string/t_v_wifi_fridge_water_filter"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"/>
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/ten_dp"
+            android:layout_weight="0.166"
+            android:gravity="center|start"
+            android:text="@string/almirah_with_locker"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

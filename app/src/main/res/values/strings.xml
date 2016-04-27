@@ -85,4 +85,13 @@
     <string name="cart_item">1</string>
 
     <string name="extras">Extras</string>
+    <string name="no_one_sharing">One sharing not available at the moment</string>
+    <string name="no_three_sharing">Three sharing not available at the moment</string>
+    <string name="no_two_sharing">Two sharing not available at the moment</string>
+    <string name="facilities">Facilities</string>
+    <string name="morning_evening_tea">\u2022  Morning , Evening Tea</string>
+    <string name="breakfast_lunch_dinner">\u2022  Breakfast , Lunch , Dinner</string>
+    <string name="room_and_toilet_cleaning">\u2022  Room and Toilet Cleaning</string>
+    <string name="t_v_wifi_fridge_water_filter">\u2022  T.V , Wifi , Fridge , Water Filter</string>
+    <string name="almirah_with_locker">\u2022  Almirah with locker</string>
 </resources>

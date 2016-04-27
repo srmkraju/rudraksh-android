@@ -144,6 +144,10 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
         return instance;
     }
 
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
     public ImageView getShareImageView() {
         return shareImageView;
     }
