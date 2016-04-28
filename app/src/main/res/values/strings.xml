@@ -95,4 +95,10 @@
     <string name="t_v_wifi_fridge_water_filter">\u2022  T.V , Wifi , Fridge , Water Filter</string>
     <string name="almirah_with_locker">\u2022  Almirah with locker</string>
     <string name="connect_to_internet">Connect to Internet</string>
+    <string name="submit">Submit</string>
+    <string name="order_time">Order Time</string>
+    <string name="check_availability">Check Availability</string>
+    <string name="check">Check</string>
+    <string name="not_available_pin_code">Not available with given pin code</string>
+    <string name="available_food">"Available with this button "</string>
 </resources>

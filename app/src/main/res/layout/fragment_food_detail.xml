@@ -35,11 +35,11 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
                             android:gravity="center"
@@ -107,13 +107,58 @@
                                 android:text="@string/slad_papad"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sixteen_sp" />
+                            <LinearLayout
+                                style="@style/semi_bold"
+                                android:id="@+id/fragment_order_ll_check_pincode"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/seventy_dp"
+                                android:layout_marginTop="@dimen/ten_dp"
+                                android:layout_marginBottom="@dimen/ten_dp"
+                                android:padding="@dimen/ten_dp"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.rudraksh.food.widgets.AppTextView
+                                    style="@style/semi_bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.4"
+                                    android:gravity="center"
+                                    android:drawableStart="@drawable/ic_location_map"
+                                    android:text="@string/check_availability"
+                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textColor="@color/black"/>
+                                <com.rudraksh.food.widgets.AppEditText
+                                    android:id="@+id/fragment_food_edt_check_availability"
+                                    style="@style/semi_bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/sixteen_sp"
+                                    android:background="@drawable/white_drawable_gray_border"
+                                    android:textColor="@color/black"
+                                    android:layout_weight="0.3"/>
+                                <com.rudraksh.food.widgets.AppButton
+                                    android:id="@+id/fragment_food_btn_check"
+                                    style="@style/semi_bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.3"
+                                    android:gravity="center"
+                                    android:text="@string/check"
+                                    android:textSize="@dimen/sixteen_sp"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                            </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/fragment_food_ll_parent_add_minus"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:layout_margin="@dimen/ten_dp"
                                 android:gravity="start"
+                                android:visibility="gone"
                                 android:orientation="horizontal"
                                 android:weightSum="1">
 
@@ -171,8 +216,10 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/fragment_food_ll_parent_extras"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:visibility="gone"
                                 android:orientation="vertical">
 
                                 <View
@@ -582,12 +629,13 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fragment_order_rr_button"
+                    android:id="@+id/fragment_order_rl_total_bill"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fifty_dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/ten_dp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/twenty_dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -617,8 +665,10 @@
                     </LinearLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/food_detail_rl_order_now"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <com.rudraksh.food.widgets.AppButton
                         android:id="@+id/fragment_food_detail_btn_order"

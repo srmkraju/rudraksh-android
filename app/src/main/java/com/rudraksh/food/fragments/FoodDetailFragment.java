@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rudraksh.food.R;
@@ -62,8 +65,14 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private ImageView extraButterMilkIVAdd;
     private ImageView extraButterMilkIVMinus;
     private TextView extraButterMilkTVTotal;
-
     private TextView extraFoodTVTotal;
+    private EditText foodDetailEdtPinCodeCheck;
+    private Button foodDetailBtnCheck;
+    private LinearLayout foodDetialLinearLayoutPinCheck;
+    private LinearLayout foodDetailLinearLayoutExtras;
+    private LinearLayout foodDetailLinearLayoutAddMinus;
+    private RelativeLayout foodDetailRelativeLayoutTotalBill;
+    private RelativeLayout foodDetailRelativeLayoutOrder;
 
     private int count;
     private int thaliPrice;
@@ -122,6 +131,13 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodDetailTVTotalPrice = (TextView) view.findViewById(R.id.fragment_food_tv_total_price);
         foodDetailCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_food_detail_coordinatorLayout);
         fragmentFoodLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_foof_detail_ll);
+        foodDetailEdtPinCodeCheck = (EditText) view.findViewById(R.id.fragment_food_edt_check_availability);
+        foodDetailBtnCheck = (Button) view.findViewById(R.id.fragment_food_btn_check);
+        foodDetialLinearLayoutPinCheck = (LinearLayout) view.findViewById(R.id.fragment_order_ll_check_pincode);
+        foodDetailLinearLayoutExtras = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_extras);
+        foodDetailLinearLayoutAddMinus = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_add_minus);
+        foodDetailRelativeLayoutTotalBill = (RelativeLayout) view.findViewById(R.id.fragment_order_rl_total_bill);
+        foodDetailRelativeLayoutOrder = (RelativeLayout) view.findViewById(R.id.food_detail_rl_order_now) ;
 
         //extras
         extraRotiIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_roti_add);
@@ -153,6 +169,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
         foodDetailOrderButton.setOnClickListener(this);
+        foodDetailBtnCheck.setOnClickListener(this);
 
         //extras on click
         extraRotiIVAdd.setOnClickListener(this);
@@ -230,6 +247,18 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
+            case R.id.fragment_food_btn_check:
+                final String pinCode = foodDetailEdtPinCodeCheck.getText().toString();
+                if(!TextUtils.isEmpty(pinCode)){
+                    if(pinCode.equalsIgnoreCase("380009")){
+                        foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
+                        foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
+                        Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.available_food));
+                    } else{
+                        Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.not_available_pin_code));
+                    }
+                }
+                break;
             case R.id.fragment_food_detail_btn_order:
                 //setAlarmService();
                 if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
@@ -249,6 +278,13 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 if (count > 0) {
                     foodTVTotalQuantity.setText(String.valueOf(count));
                     foodDetailTVTotalPrice.setText(String.valueOf(convertPlusPrice));
+                    foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                    foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                } else{
+                    foodTVTotalQuantity.setText(String.valueOf(count));
+                    foodDetailTVTotalPrice.setText(String.valueOf(convertPlusPrice));
+                    foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                    foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.fragment_food_iv_minus:
@@ -313,7 +349,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.extra_food_IV_buttermilk_minus:
                 break;
-
         }
     }
 

@@ -2,6 +2,7 @@ package com.rudraksh.food.fragments;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,12 @@ public class PhotoGalleryFragment extends BaseFragment {
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().setActionBarTitle(getString(R.string.photo_gallery));
-        SecondActivity.getInstance().hideBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        if(getActivity() instanceof SecondActivity){
+            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
+            actionBar.show();
+            SecondActivity.getInstance().setActionBarTitle(getString(R.string.photo_gallery));
+            SecondActivity.getInstance().hideBackButton();
+            SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        }
     }
 }

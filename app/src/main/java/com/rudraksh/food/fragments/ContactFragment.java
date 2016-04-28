@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,13 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         SecondActivity.getInstance().setActionBarTitle(getString(R.string.contact_us));
         SecondActivity.getInstance().hideBackButton();
         SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        if(getActivity() instanceof SecondActivity){
+            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
+            actionBar.show();
+        } else {
+            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
+            actionBar.show();
+        }
     }
 
     @Override

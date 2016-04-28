@@ -1,5 +1,8 @@
 package com.rudraksh.food.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,14 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
 import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 import com.rudraksh.food.utils.Utils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by dell3 on 19/4/16.
  */
@@ -30,6 +41,8 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private Button orderFoodBtnOrder;
     private TextView orderFoodTVTotalBill;
     private CoordinatorLayout orderFoodCordinatorLayout;
+    private TextView orderFoodTVOrderDateTime;
+    private EditText orderFoodEdtOrderDate;
     private String totalBill;
     private String totalQuantity;
     private String selectedOrderFoodName;
@@ -53,6 +66,10 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         orderFoodBtnOrder = (Button) view.findViewById(R.id.fragment_order_food_btn_order);
         orderFoodTVTotalBill = (TextView) view.findViewById(R.id.order_food_tv_total_bill);
         orderFoodCordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_order_food_coordinatorLayout);
+        orderFoodTVOrderDateTime = (TextView) view.findViewById(R.id.fragment_order_tv_order_date);
+        orderFoodEdtOrderDate = (EditText) view.findViewById(R.id.fragment_order_edt_order_date);
+
+        orderFoodEdtOrderDate.setOnClickListener(this);
         orderFoodBtnOrder.setOnClickListener(this);
         if(!TextUtils.isEmpty(totalBill)){
             orderFoodTVTotalBill.setText(getString(R.string.Rs) + totalBill);
@@ -73,7 +90,43 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             case R.id.fragment_order_food_btn_order:
                 checkFoodOrderUserValidation();
                 break;
+            case R.id.fragment_order_edt_order_date:
+                openOrderDateTime();
+                break;
         }
+    }
+
+    private void openOrderDateTime(){
+        final Calendar mcurrentDate = Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth = mcurrentDate.get(Calendar.MONTH);
+        int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog mDatePicker = new DatePickerDialog(
+                getActivity(), new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker,
+                                  int
+                                          selectedyear, int selectedmonth,
+                                  int selectedday) {
+                mcurrentDate.set(Calendar.YEAR, selectedyear);
+                mcurrentDate.set(Calendar.MONTH, selectedmonth);
+                mcurrentDate.set(Calendar.DAY_OF_MONTH,
+                        selectedday);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",
+                        Locale.US);
+
+                SimpleDateFormat sdfnew = new SimpleDateFormat("dd-MM-yyyy",
+                        Locale.US);
+                Date now = new Date();
+                SimpleDateFormat sdfa = new SimpleDateFormat("K:mm a");
+                String formattedTime = sdfa.format(now);
+                orderFoodTVOrderDateTime.setTag(sdf.format(mcurrentDate.getTime()));
+                Logger.e("Time " + formattedTime);
+                orderFoodTVOrderDateTime.setText(sdfnew.format(mcurrentDate.getTime()));
+            }
+        }, mYear, mMonth, mDay);
+        mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+        mDatePicker.show();
     }
 
     private void checkFoodOrderUserValidation() {
@@ -88,6 +141,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
                     if(!TextUtils.isEmpty(address1)){
                         showAlarmAlertDialog();
                         sendEmail(userName,mobileNo,address1);
+                        openThankYouAlertDialog();
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
                     }
@@ -127,15 +181,9 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         //openWhatsappContact("8140113954");
 
     }
+    private void openThankYouAlertDialog(){
 
-    private void openWhatsappContact(String number) {
-
-        final Uri uri = Uri.parse("smsto:" + number);
-        final Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-        i.setPackage("com.whatsapp");
-        startActivity(Intent.createChooser(i, ""));
     }
-
     private void showAlarmAlertDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
         builder.setTitle("Dialog");
