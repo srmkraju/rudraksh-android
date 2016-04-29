@@ -60,7 +60,7 @@ public class PGFragment extends BaseFragment implements View.OnClickListener{
                 addFragment(this, twoSharingFragment, true);
                 break;
             case R.id.fragment_pg_type_cv_three_share:
-                Logger.snackBar(pgCoordinatorLayout,getActivity(),getString(R.string.no_one_sharing));
+                Logger.snackBar(pgCoordinatorLayout,getActivity(),getString(R.string.no_three_sharing));
                 break;
         }
     }

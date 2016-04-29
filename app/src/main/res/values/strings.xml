@@ -100,5 +100,5 @@
     <string name="check_availability">Check Availability</string>
     <string name="check">Check</string>
     <string name="not_available_pin_code">Not available with given pin code</string>
-    <string name="available_food">"Available with this button "</string>
+    <string name="available_food">"Available with given pin code "</string>
 </resources>

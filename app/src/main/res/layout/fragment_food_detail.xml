@@ -122,32 +122,36 @@
                                     style="@style/semi_bold"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="0.4"
+                                    android:layout_weight="0.45"
                                     android:gravity="center"
                                     android:drawableStart="@drawable/ic_location_map"
                                     android:text="@string/check_availability"
-                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textSize="@dimen/twelve_sp"
                                     android:textColor="@color/black"/>
                                 <com.rudraksh.food.widgets.AppEditText
                                     android:id="@+id/fragment_food_edt_check_availability"
                                     style="@style/semi_bold"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/thirty_dp"
                                     android:gravity="center"
                                     android:textSize="@dimen/sixteen_sp"
+                                    android:maxLength="6"
                                     android:background="@drawable/white_drawable_gray_border"
                                     android:textColor="@color/black"
-                                    android:layout_weight="0.3"/>
+                                    android:layout_weight="0.25"/>
                                 <com.rudraksh.food.widgets.AppButton
                                     android:id="@+id/fragment_food_btn_check"
                                     style="@style/semi_bold"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/thirty_dp"
                                     android:layout_weight="0.3"
                                     android:gravity="center"
+                                    android:paddingStart="@dimen/five_dp"
+                                    android:layout_gravity="start"
                                     android:text="@string/check"
-                                    android:textSize="@dimen/sixteen_sp"
-                                    android:textColor="@color/colorPrimaryDark"/>
+                                    android:background="@color/green"
+                                    android:textSize="@dimen/fourteen_sp"
+                                    android:textColor="@color/white"/>
 
                             </LinearLayout>
 
