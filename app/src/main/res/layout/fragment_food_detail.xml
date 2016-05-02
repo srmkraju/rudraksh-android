@@ -70,7 +70,7 @@
                                 android:padding="@dimen/ten_dp"
                                 android:text="@string/roties"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/eighteen_sp" />
+                                android:textSize="@dimen/sixteen_sp" />
 
                             <com.rudraksh.food.widgets.AppTextView
                                 style="@style/semi_bold"
@@ -160,9 +160,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
-                                android:layout_margin="@dimen/ten_dp"
+                                android:padding="@dimen/ten_dp"
                                 android:gravity="start"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:orientation="horizontal"
                                 android:weightSum="1">
 
@@ -223,7 +223,7 @@
                                 android:id="@+id/fragment_food_ll_parent_extras"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:orientation="vertical">
 
                                 <View
@@ -236,7 +236,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginTop="@dimen/ten_dp"
                                     android:text="@string/extras"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/eighteen_sp" />
@@ -267,7 +267,7 @@
                                         android:layout_weight="0.75"
                                         android:text="@string/extra_roti_price"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/sixteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp" />
 
                                         <ImageView
                                             android:id="@+id/extra_food_IV_roti_add"
@@ -310,7 +310,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginTop="@dimen/ten_dp"
                                     android:text="@string/extra_curry"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/sixteen_sp" />
@@ -331,7 +331,7 @@
                                         android:layout_weight="0.75"
                                         android:text="@string/extra_curry_price"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/sixteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp" />
 
                                     <ImageView
                                         android:id="@+id/extra_food_IV_vegcurry_add"
@@ -374,7 +374,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginTop="@dimen/ten_dp"
                                     android:text="@string/extra_dal"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/sixteen_sp" />
@@ -395,7 +395,7 @@
                                         android:layout_weight="0.75"
                                         android:text="@string/extra_curry_price"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/sixteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp" />
 
                                     <ImageView
                                         android:id="@+id/extra_food_IV_dal_add"
@@ -437,7 +437,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginTop="@dimen/ten_dp"
                                     android:text="@string/extra_pulse"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/sixteen_sp" />
@@ -458,7 +458,7 @@
                                         android:layout_weight="0.75"
                                         android:text="@string/extra_curry_price"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/sixteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp" />
 
                                     <ImageView
                                         android:id="@+id/extra_food_IV_pulse_add"
@@ -501,7 +501,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginTop="@dimen/ten_dp"
                                     android:text="@string/extra_rice"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/sixteen_sp" />
@@ -522,7 +522,7 @@
                                         android:layout_weight="0.75"
                                         android:text="@string/extra_curry_price"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/sixteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp" />
 
                                     <ImageView
                                         android:id="@+id/extra_food_IV_rice_add"
@@ -565,7 +565,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/ten_dp"
-                                    android:layout_marginTop="@dimen/twenty_dp"
+                                    android:layout_marginTop="@dimen/ten_dp"
                                     android:text="@string/extra_buttermilk"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/sixteen_sp" />
@@ -586,7 +586,7 @@
                                         android:layout_weight="0.75"
                                         android:text="@string/extra_buttermilk_price"
                                         android:textColor="@color/black"
-                                        android:textSize="@dimen/sixteen_sp" />
+                                        android:textSize="@dimen/fourteen_sp" />
 
                                     <ImageView
                                         android:id="@+id/extra_food_IV_buttermilk_add"

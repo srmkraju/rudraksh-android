@@ -103,12 +103,28 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private int extraPunjabiRice;
     private int extraPunjabiButtermilk;
 
+    private int extraPunjabiRotiCount;
+    private int extraPunjabiVegCurryTotal;
+    private int extraPunjabiVegCurryCount;
+    private int extraPunjabiDalCount;
+    private int extraPunjabiPulseCount;
+    private int extraPunjabiRiceCount;
+    private int extraPunjabiButtermilkCount;
+
     private int extraJainRoti;
     private int extraJainVegCurry;
     private int extraJainDal;
     private int extraJainPulses;
     private int extraJainrice;
     private int extraJainButtermilk;
+
+    private int extraJainRotiCount;
+    private int extraJainVegCurryTotal;
+    private int extraJainVegCurryCount;
+    private int extraJainDalCount;
+    private int extraJainPulseCount;
+    private int extraJainRiceCount;
+    private int extraJainButtermilkCount;
 
     private int extraFoodTotal;
     private int extraGujaratiVegCurryTotal;
@@ -201,43 +217,60 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.roties));
                 count = 0;
-                thaliPrice = 70;
+                thaliPrice = 80;
                 extraGujaratiRoti = 10;
-                extraGujaratiRotiCount = 0;
                 extraGujaratiVegCurry = 50;
-                extraGujaratiVegCurryTotal = 0;
-                extraGujaratiRotiTotal = 0;
-                extraGujaratiVegCurryCount = 0;
                 extraGujaratiDal = 50;
-                extraGujaratiDalCount = 0;
                 extraGujaratiPulses = 50;
-                extraGujaratiPulseCount = 0;
                 extraGujaratiRice = 40;
-                extraGujaratiRiceCount = 0;
                 extraGujaratiButtermilk=10;
+
+                extraGujaratiRotiCount = 0;
+                extraGujaratiVegCurryTotal = 0;
+                extraGujaratiVegCurryCount = 0;
+                extraGujaratiDalCount = 0;
+                extraGujaratiPulseCount = 0;
+                extraGujaratiRiceCount = 0;
                 extraGujaratiButtermilkCount = 0;
+
             } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
                 count = 0;
-                thaliPrice = 100;
+                thaliPrice = 110;
                 extraPunjabiRoti = 10;
                 extraPunjabiVegCurry = 60;
                 extraPunjabiDal = 60;
                 extraPunjabiPulses = 50;
                 extraPunjabiRice = 40;
                 extraPunjabiButtermilk=10;
+
+                extraPunjabiRotiCount = 0;
+                extraPunjabiVegCurryTotal = 0;
+                extraPunjabiVegCurryCount = 0;
+                extraPunjabiDalCount = 0;
+                extraPunjabiPulseCount = 0;
+                extraPunjabiRiceCount = 0;
+                extraPunjabiButtermilkCount = 0;
             } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.jain_thali))) {
                 foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
                 count = 0;
-                thaliPrice = 70;
+                thaliPrice = 80;
                 extraJainRoti = 10;
                 extraJainVegCurry = 50;
                 extraJainDal = 50;
                 extraJainPulses = 50;
                 extraJainrice = 40;
                 extraJainButtermilk=10;
+
+                extraJainRotiCount = 0;
+                extraJainVegCurryTotal = 0;
+                extraJainVegCurryCount = 0;
+                extraJainDalCount = 0;
+                extraJainPulseCount = 0;
+                extraJainRiceCount = 0;
+                extraJainButtermilkCount = 0;
             }
         }
     }
@@ -287,14 +320,19 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 count =  count + 1;
                 gujaratiThali = gujaratiThali * count;
                 if (count > 0) {
-                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount);
-                    /*foodTVTotalQuantity.setText(String.valueOf(count));
-                    //total = convertPlusPrice;
-                    total = (thaliPrice*count) + gujaratiThali;
-                    foodDetailTVTotalPrice.setText(String.valueOf(total));
-                    extraFoodTVTotal.setText(String.valueOf(total));*/
-                    foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
-                    foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                    if(selectedFoodName.equalsIgnoreCase(getString(R.string.gujarathi_thali))){
+                        calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount);
+                        foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                        foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                    } else if(selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))){
+                        calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount);
+                        foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                        foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                    } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.jain_thali))){
+                        calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount);
+                        foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                        foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                    }
                 }
                 break;
             case R.id.fragment_food_iv_minus:
@@ -303,8 +341,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 if (count > -1) {
                     foodTVTotalQuantity.setText(String.valueOf(count));
                     calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount);
-                    //total = convertMinusPrice;
-                    //foodDetailTVTotalPrice.setText(String.valueOf(total));
                 }
                 break;
             case R.id.row_toolbar_iv_share:
