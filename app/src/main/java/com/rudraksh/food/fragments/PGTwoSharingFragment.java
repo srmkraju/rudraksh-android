@@ -26,7 +26,7 @@ import java.util.Locale;
  * Created by Raju on 4/27/2016.
  */
 public class PGTwoSharingFragment extends BaseFragment implements View.OnClickListener{
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    //private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton callFloatingButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,32 +34,16 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
     }
     @Override
     protected void initView(View view) {
-        collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.htab_collapse_toolbar);
-        collapsingToolbarLayout.setTitle(getString(R.string.two_sharing));
-        toolbarTextApperence();
         callFloatingButton = (FloatingActionButton) view.findViewById(R.id.fragment_pg_fab_call);
         callFloatingButton.setOnClickListener(this);
     }
 
     @Override
     protected void initToolbar() {
-        /*SecondActivity.getInstance().showBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);*/
-        if(getActivity() instanceof SecondActivity){
-            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
-            actionBar.hide();
-            SecondActivity.getInstance().showBackButton();
-        } else {
-            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
-            actionBar.hide();
-            SecondActivity.getInstance().showBackButton();
-        }
-    }
-
-
-    private void toolbarTextApperence(){
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.AppTheme);
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.AppTheme);
+        SecondActivity.getInstance().setActionBarTitle(getString(R.string.two_sharing));
+        SecondActivity.getInstance().showBackButton();
+        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        //SecondActivity.getInstance().getShareImageView().setOnClickListener(this);
     }
 
     @Override

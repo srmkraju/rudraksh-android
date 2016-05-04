@@ -101,4 +101,6 @@
     <string name="check">Check</string>
     <string name="not_available_pin_code">Not available with given pin code</string>
     <string name="available_food">"Available with given pin code "</string>
+    <string name="thank_you_dialog">Thank you for ordering from Rudraksh, your order will be deliverd within 45 min.</string>
+    <string name="ok">OK</string>
 </resources>

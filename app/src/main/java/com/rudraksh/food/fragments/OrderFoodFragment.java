@@ -2,9 +2,12 @@ package com.rudraksh.food.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +20,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
@@ -24,10 +37,12 @@ import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 import com.rudraksh.food.utils.Utils;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Properties;
 
 /**
  * Created by dell3 on 19/4/16.
@@ -46,6 +61,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private String totalBill;
     private String totalQuantity;
     private String selectedOrderFoodName;
+    private String orderFormatTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +88,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         orderFoodEdtOrderDate.setOnClickListener(this);
         orderFoodBtnOrder.setOnClickListener(this);
         if(!TextUtils.isEmpty(totalBill)){
-            orderFoodTVTotalBill.setText(getString(R.string.Rs) + totalBill);
+            orderFoodTVTotalBill.setText(getString(R.string.Rs) + 130);
         }
     }
 
@@ -119,10 +135,10 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
                         Locale.US);
                 Date now = new Date();
                 SimpleDateFormat sdfa = new SimpleDateFormat("K:mm a");
-                String formattedTime = sdfa.format(now);
+                String orderFormatTime = sdfa.format(now);
                 orderFoodTVOrderDateTime.setTag(sdf.format(mcurrentDate.getTime()));
-                Logger.e("Time " + formattedTime);
-                orderFoodTVOrderDateTime.setText(sdfnew.format(mcurrentDate.getTime()));
+                Logger.e("Time " + orderFormatTime);
+                orderFoodTVOrderDateTime.setText(sdfnew.format(mcurrentDate.getTime()) + " " +orderFormatTime);
             }
         }, mYear, mMonth, mDay);
         mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -134,13 +150,14 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         final String mobileNo = orderFoodETMobileNo.getText().toString();
         final String address1 = orderFoodETAddress1.getText().toString();
         final String address2 = orderFoodETAdrress2.getText().toString();
+        final String orderTime = orderFoodTVOrderDateTime.getText().toString();
 
         if (!TextUtils.isEmpty(userName)) {
             if (!TextUtils.isEmpty(mobileNo)) {
                 if (Utils.isValidMobile(mobileNo)) {
                     if(!TextUtils.isEmpty(address1)){
-                        showAlarmAlertDialog();
-                        sendEmail(userName,mobileNo,address1);
+                        //showAlarmAlertDialog();
+                        sendEmailWithContent(userName,mobileNo,address1,orderTime);
                         openThankYouAlertDialog();
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
@@ -156,7 +173,72 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private void sendEmail(final String userName, final String mobileNo, final String address1){
+    private void sendEmailWithContent(final String userName, final String mobileNo, final String address1, final String orderTime) {
+        Session session = createSessionObject();
+
+        try {
+            Message message = createMessage(userName, mobileNo, address1, orderTime,session);
+            new SendMailTask().execute(message);
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Message createMessage(String username, String moile, String messageBody, String orderTime,Session session) throws MessagingException, UnsupportedEncodingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("sraju432@gmail.com", "subbaraju123"));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress("sraju432@gmail.com", "sraju432@gmail.com"));
+        message.setSubject("hi");
+        message.setText("301 setu");
+        return message;
+    }
+
+    private Session createSessionObject() {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", true);
+        properties.put("mail.smtp.starttls.enable", true);
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.setProperty("mail.smtp.ssl.trust", "smtpserver");
+
+        return Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("sraju432@gmail.com", "subbaraju123");
+            }
+        });
+    }
+
+    private class SendMailTask extends AsyncTask<Message, Void, Void> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(getActivity(), "Please wait", "Sending mail", true, false);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected Void doInBackground(Message... messages) {
+            try {
+                Transport.send(messages[0]);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private void sendEmail(final String userName, final String mobileNo, final String address1, final String orderTime){
         if(Utils.isConnectedToInternet(getActivity())){
             String[] TO = {"sraju432@gmail.com"};
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -164,7 +246,16 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             emailIntent.setData(Uri.parse("mailto:"));
             emailIntent.setType("text/plain");
             emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName);
+            if(!TextUtils.isEmpty(orderFormatTime)){
+                if(orderTime.contains("AM")){
+                    Logger.e("Order AM");
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName + " for Lunch");
+                } else if (orderTime.contains("PM")){
+                    Logger.e("Order PM");
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName + " for Dinner");
+                }
+            }
+
             emailIntent.putExtra(Intent.EXTRA_TEXT, "Name : " + userName + "\n" +
                     " Mobile No " + mobileNo + "\n" + " Address1 " + address1 );
 
@@ -181,8 +272,18 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         //openWhatsappContact("8140113954");
 
     }
-    private void openThankYouAlertDialog(){
+    private void openThankYouAlertDialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
+        // Setting Dialog Message
+        alertDialog.setMessage(getActivity().getString(R.string.thank_you_dialog));
+        alertDialog.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Logger.toast(getActivity(),"thanks");
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
     }
     private void showAlarmAlertDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
