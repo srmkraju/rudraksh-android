@@ -1,9 +1,7 @@
 package com.rudraksh.food.fragments;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,8 +17,20 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
+
+import com.rudraksh.food.R;
+import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.utils.Constant;
+import com.rudraksh.food.utils.Logger;
+import com.rudraksh.food.utils.SendMail;
+import com.rudraksh.food.utils.Utils;
+
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,19 +40,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
-import com.rudraksh.food.utils.Constant;
-import com.rudraksh.food.utils.Logger;
-import com.rudraksh.food.utils.Utils;
-
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Properties;
 
 /**
  * Created by dell3 on 19/4/16.
@@ -157,7 +154,10 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
                 if (Utils.isValidMobile(mobileNo)) {
                     if(!TextUtils.isEmpty(address1)){
                         //showAlarmAlertDialog();
-                        sendEmailWithContent(userName,mobileNo,address1,orderTime);
+                        //sendEmailWithContent(userName,mobileNo,address1,orderTime);
+                        SendMail sm = new SendMail(getActivity(), "sraju432@gmail.com", "Hi", "ordering");
+                        //Executing sendmail to send email
+                        sm.execute();
                         openThankYouAlertDialog();
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
