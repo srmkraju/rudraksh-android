@@ -37,7 +37,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private String selectedFoodName;
     private ImageView foodDetailImageView;
     private TextView foodDetailTextViewRoties;
-    private Button foodDetailOrderButton;
+    //private Button foodDetailOrderButton;
     private ImageView foodIVPlus;
     private ImageView foodIVMinus;
     private TextView foodDetailTVTotalPrice;
@@ -143,7 +143,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     protected void initView(View view) {
         foodDetailImageView = (ImageView) view.findViewById(R.id.fragment_food_detail_iv);
         foodDetailTextViewRoties = (TextView) view.findViewById(R.id.fragment_food_detail_tv_roties);
-        foodDetailOrderButton = (Button) view.findViewById(R.id.fragment_food_detail_btn_order);
+        //foodDetailOrderButton = (Button) view.findViewById(R.id.fragment_food_detail_btn_order);
         foodIVPlus = (ImageView) view.findViewById(R.id.fragment_food_iv_plus);
         foodIVMinus = (ImageView) view.findViewById(R.id.fragment_food_iv_minus);
         foodTVTotalQuantity = (TextView) view.findViewById(R.id.fragment_food_tv_total_quantity);
@@ -187,7 +187,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
-        foodDetailOrderButton.setOnClickListener(this);
+        foodDetailRelativeLayoutOrder.setOnClickListener(this);
         foodDetailBtnCheck.setOnClickListener(this);
 
         //extras on click
@@ -220,8 +220,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 thaliPrice = 80;
                 extraGujaratiRoti = 10;
                 extraGujaratiVegCurry = 50;
-                extraGujaratiDal = 50;
-                extraGujaratiPulses = 50;
+                extraGujaratiDal = 40;
+                extraGujaratiPulses = 40;
                 extraGujaratiRice = 40;
                 extraGujaratiButtermilk=10;
 
@@ -238,9 +238,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 foodDetailTextViewRoties.setText(getString(R.string.paratha));
                 count = 0;
                 thaliPrice = 110;
-                extraPunjabiRoti = 10;
+                extraPunjabiRoti = 15;
                 extraPunjabiVegCurry = 60;
-                extraPunjabiDal = 60;
+                extraPunjabiDal = 50;
                 extraPunjabiPulses = 50;
                 extraPunjabiRice = 40;
                 extraPunjabiButtermilk=10;
@@ -259,8 +259,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 thaliPrice = 80;
                 extraJainRoti = 10;
                 extraJainVegCurry = 50;
-                extraJainDal = 50;
-                extraJainPulses = 50;
+                extraJainDal = 40;
+                extraJainPulses = 40;
                 extraJainrice = 40;
                 extraJainButtermilk=10;
 
@@ -301,7 +301,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     }
                 }
                 break;
-            case R.id.fragment_food_detail_btn_order:
+            case R.id.food_detail_rl_order_now:
                 //setAlarmService();
                 if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
                     bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());

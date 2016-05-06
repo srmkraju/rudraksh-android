@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -59,6 +60,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private String totalQuantity;
     private String selectedOrderFoodName;
     private String orderFormatTime;
+    private SendMail sm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -155,9 +157,23 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
                     if(!TextUtils.isEmpty(address1)){
                         //showAlarmAlertDialog();
                         //sendEmailWithContent(userName,mobileNo,address1,orderTime);
-                        SendMail sm = new SendMail(getActivity(), "sraju432@gmail.com", "Hi", "ordering");
+                        if(!TextUtils.isEmpty(orderTime)){
+                            if(orderTime.contains("AM")){
+                                sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Lunch Pack",
+                                        "Name : " + userName + "\n" +
+                                                " Mobile No " + mobileNo + "\n" + " Address: " + address1);
+                            } else if(orderTime.contains("PM")){
+                                sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Dinner Pack",
+                                        "Name : " + userName + "\n" +
+                                                " Mobile No " + mobileNo + "\n" + " Address: " + address1);
+                            }
+                        }
+
                         //Executing sendmail to send email
                         sm.execute();
+                        orderFoodETUserName.setText("");
+                        orderFoodETMobileNo.setText("");
+                        orderFoodETAddress1.setText("");
                         openThankYouAlertDialog();
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
@@ -279,9 +295,10 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         alertDialog.setMessage(getActivity().getString(R.string.thank_you_dialog));
         alertDialog.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Logger.toast(getActivity(),"thanks");
             }
         });
+        final Fragment foodTypeFragment = new FoodTypeFragment();
+        addFragment(this, foodTypeFragment, true);
         // Showing Alert Message
         alertDialog.show();
     }

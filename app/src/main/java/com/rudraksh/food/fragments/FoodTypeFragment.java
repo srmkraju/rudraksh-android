@@ -43,17 +43,11 @@ public class FoodTypeFragment extends BaseFragment implements View.OnClickListen
         foodTypeCardViewPunjabi.setOnClickListener(this);
         foodTypeCardViewJain.setOnClickListener(this);
 
-        foodTypeGujarati.loadImage("https://www.dropbox.com/s/hs92xb34aen6s9i/gujarathi_thali.png?dl=0");
+        foodTypeGujarati.loadImage("https://drive.google.com/open?id=0B3TjsORMi5wKTi1jSktGdlVZVWs");
     }
 
     @Override
     protected void initToolbar() {
-        /*if(!TextUtils.isEmpty(foodService)){
-            SecondActivity.getInstance().showBackButton();
-        } else{
-            SecondActivity.getInstance().setActionBarTitle(getString(R.string.food));
-            SecondActivity.getInstance().hideBackButton();
-        }*/
         SecondActivity.getInstance().setActionBarTitle(getString(R.string.food));
         SecondActivity.getInstance().hideBackButton();
     }
@@ -63,13 +57,13 @@ public class FoodTypeFragment extends BaseFragment implements View.OnClickListen
         final Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.fragment_food_type_cv_gujarati:
-                /*bundle.putString(Constant.CARD_NAME,getString(R.string.gujarathi_thali));
+                bundle.putString(Constant.CARD_NAME,getString(R.string.gujarathi_thali));
                 final Fragment gujaratiFragment = new FoodDetailFragment();
                 gujaratiFragment.setArguments(bundle);
-                addFragment(this, gujaratiFragment, true);*/
-                final Fragment orderFoodFragment = new OrderFoodFragment();
+                addFragment(this, gujaratiFragment, true);
+                /*final Fragment orderFoodFragment = new OrderFoodFragment();
                 orderFoodFragment.setArguments(bundle);
-                addFragment(this, orderFoodFragment, true);
+                addFragment(this, orderFoodFragment, true);*/
                 break;
             case R.id.fragment_food_type_cv_punjabi:
                 bundle.putString(Constant.CARD_NAME,getString(R.string.punjabi_thali));

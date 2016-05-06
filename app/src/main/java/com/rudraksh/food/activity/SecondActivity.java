@@ -41,9 +41,6 @@ public class SecondActivity extends BaseActivity implements TabLayout.OnTabSelec
         setSupportActionBar(toolbar);
         setActionBarTitle();
 
-        //android.support.v7.app.ActionBar bar = getSupportActionBar();
-        //bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
-
         backImageView = (ImageView) findViewById(R.id.row_toolbar_iv_back);
         shareImageView = (ImageView) findViewById(R.id.row_toolbar_iv_share);
         tabLayout = (TabLayout) findViewById(R.id.activity_main_tab_layout);

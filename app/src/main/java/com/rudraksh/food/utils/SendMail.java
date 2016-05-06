@@ -93,7 +93,6 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
             mm.setSubject(subject);
             //Adding message
             mm.setText(message);
-
             //Sending email
             Transport.send(mm);
 
