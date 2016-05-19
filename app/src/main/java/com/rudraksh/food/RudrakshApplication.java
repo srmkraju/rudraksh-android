@@ -2,12 +2,14 @@ package com.rudraksh.food;
 
 import android.app.Application;
 
+import com.rudraksh.food.webservices.RestClient;
+
 /**
  * Created by Raju on 4/13/2016.
  */
 public class RudrakshApplication extends Application {
 
-    private RudrakshApplication instance;
+    private static RudrakshApplication instance;
 
     public RudrakshApplication(){
     }
@@ -16,10 +18,12 @@ public class RudrakshApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        new RestClient();
+
         
     }
 
-    public RudrakshApplication getInstance() {
+    public static RudrakshApplication getInstance() {
         return instance;
     }
 

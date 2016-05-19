@@ -28,7 +28,6 @@ import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 
 import java.util.Calendar;
-import java.util.zip.CheckedOutputStream;
 
 /**
  * Created by Raju on 4/16/2016.
@@ -68,7 +67,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private TextView extraButterMilkTVTotal;
     private TextView extraFoodTVTotal;
     private EditText foodDetailEdtPinCodeCheck;
+
     private Button foodDetailBtnCheck;
+    private Button orderNow;
     private LinearLayout foodDetialLinearLayoutPinCheck;
     private LinearLayout foodDetailLinearLayoutExtras;
     private LinearLayout foodDetailLinearLayoutAddMinus;
@@ -156,8 +157,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodDetailLinearLayoutExtras = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_extras);
         foodDetailLinearLayoutAddMinus = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_add_minus);
         foodDetailRelativeLayoutTotalBill = (RelativeLayout) view.findViewById(R.id.fragment_order_rl_total_bill);
-        foodDetailRelativeLayoutOrder = (RelativeLayout) view.findViewById(R.id.food_detail_rl_order_now) ;
 
+        orderNow = (Button)view.findViewById(R.id.food_detail_bt_orderNow);
         //extras
         extraRotiIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_roti_add);
         extraRotiIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_roti_minus);
@@ -187,7 +188,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
-        foodDetailRelativeLayoutOrder.setOnClickListener(this);
+        orderNow.setOnClickListener(this);
         foodDetailBtnCheck.setOnClickListener(this);
 
         //extras on click
@@ -287,6 +288,19 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
+            case R.id.food_detail_bt_orderNow:
+                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
+                    bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
+                    bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
+                    bundle.putString(Constant.CARD_NAME, selectedFoodName);
+                    bundle.putString("pincode",foodDetailEdtPinCodeCheck.getText().toString());
+                    final Fragment orderFoodFragment = new OrderFoodFragment();
+                    orderFoodFragment.setArguments(bundle);
+                    addFragment(this, orderFoodFragment, true);
+                } else {
+                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
+                }
+                break;
             case R.id.fragment_food_btn_check:
                 final String pinCode = foodDetailEdtPinCodeCheck.getText().toString();
                 if(!TextUtils.isEmpty(pinCode)){
@@ -301,19 +315,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     }
                 }
                 break;
-            case R.id.food_detail_rl_order_now:
-                //setAlarmService();
-                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
-                    bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
-                    bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
-                    bundle.putString(Constant.CARD_NAME, selectedFoodName);
-                    final Fragment orderFoodFragment = new OrderFoodFragment();
-                    orderFoodFragment.setArguments(bundle);
-                    addFragment(this, orderFoodFragment, true);
-                } else {
-                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
-                }
-                break;
             case R.id.fragment_food_iv_plus:
                /* count = count + 1;
                 final int convertPlusPrice = thaliPrice * count;*/
@@ -325,13 +326,13 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                                 extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
                                 extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
                         foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
-                        foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                        orderNow.setVisibility(View.VISIBLE);
                     } else if(selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))){
                         calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
                                 ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
                                 extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
                         foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
-                        foodDetailRelativeLayoutOrder.setVisibility(View.VISIBLE);
+                        orderNow.setVisibility(View.VISIBLE);
                     }
                 }
                 break;
@@ -480,8 +481,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                             extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
                 }
                 break;
-        }
-    }
+             }
+         }
 
     private void calculateTotal(final int thaliCount, final int gujaratiRotiCount, final int gujaratiVegCurryCount, final int gujaratiDalCount,
                                 final int gujaratiPulseCount, final int guajaratiRiceCount, final int butterMilkCount,

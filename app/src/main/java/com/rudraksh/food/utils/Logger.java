@@ -132,12 +132,12 @@ public class Logger {
      * @param context
      * @return ProgressDialog
      */
-    /*public static final ProgressDialog showProgressDialog(Context context) {
-        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.ProgressDialog_Theme);
+    public static final ProgressDialog showProgressDialog(Context context) {
+        final ProgressDialog progressDialog = new ProgressDialog(context,  R.style.AppTheme_ProgressDialog_Theme);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         return progressDialog;
-    }*/
+    }
 
 }

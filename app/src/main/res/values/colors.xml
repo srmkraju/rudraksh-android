@@ -8,4 +8,7 @@
     <color name="green">#558B2F</color>
     <color name="gray">#BDBDBD</color>
     <color name="colorPrimary_alpha">#33653316</color>
+    <color name="blue">#134B84</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

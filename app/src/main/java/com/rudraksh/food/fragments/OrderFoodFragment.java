@@ -21,10 +21,14 @@ import android.widget.TextView;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.models.UserModel;
+import com.rudraksh.food.models.UserResponseModel;
 import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 import com.rudraksh.food.utils.SendMail;
 import com.rudraksh.food.utils.Utils;
+import com.rudraksh.food.webservices.RestClient;
+import com.rudraksh.food.webservices.RetrofitCallback;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -42,6 +46,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import retrofit.Call;
+
 /**
  * Created by dell3 on 19/4/16.
  */
@@ -56,6 +62,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private CoordinatorLayout orderFoodCordinatorLayout;
     private TextView orderFoodTVOrderDateTime;
     private EditText orderFoodEdtOrderDate;
+    private String pincode;
     private String totalBill;
     private String totalQuantity;
     private String selectedOrderFoodName;
@@ -73,6 +80,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             totalBill = getArguments().getString(Constant.TOTAL_BILL);
             totalQuantity = getArguments().getString(Constant.TOTAL_QUANTITY);
             selectedOrderFoodName = getArguments().getString(Constant.CARD_NAME);
+            pincode = getArguments().getString("pincode");
         }
         orderFoodETUserName = (EditText) view.findViewById(R.id.fragment_order_edt_user_name);
         orderFoodETMobileNo = (EditText) view.findViewById(R.id.fragment_order_edt_mobile_no);
@@ -167,14 +175,12 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
                                         "Name : " + userName + "\n" +
                                                 " Mobile No " + mobileNo + "\n" + " Address: " + address1);
                             }
-                        }
 
+                        }
+                      UserModel usermodel=  setUserData(userName,mobileNo,address1,address2,pincode);
+                        doSignUp(usermodel);
                         //Executing sendmail to send email
-                        sm.execute();
-                        orderFoodETUserName.setText("");
-                        orderFoodETMobileNo.setText("");
-                        orderFoodETAddress1.setText("");
-                        openThankYouAlertDialog();
+
                     } else {
                         Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.address_empty));
                     }
@@ -187,6 +193,53 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         } else {
             Logger.snackBar(orderFoodCordinatorLayout,getActivity(), getString(R.string.enter_name));
         }
+    }
+
+    private UserModel setUserData(String userName, String mobileNo, String address1, String address2, String pincode) {
+        UserModel usermodel = new UserModel();
+        usermodel.setName(userName);
+        usermodel.setMobile(mobileNo);
+        usermodel.setPincode(pincode);
+        usermodel.setAddress(address1);
+        usermodel.setAddress2(address2);
+        return usermodel;
+    }
+
+    private void doSignUp(final UserModel userModel) {
+        try {
+            final ProgressDialog dialog = Logger.showProgressDialog(getContext());
+            final Call<UserResponseModel> userModelCall = RestClient.getInstance().getApiInterface().signUp(userModel);
+            userModelCall.enqueue(new RetrofitCallback<UserResponseModel>(getContext(),dialog) {
+                @Override
+                public void onSuccess(UserResponseModel userModel) {
+                    if(userModel.isresponse()){
+                        if(!TextUtils.isEmpty(userModel.getMessage())) {
+                            sm.execute();
+                            orderFoodETUserName.setText("");
+                            orderFoodETMobileNo.setText("");
+                            orderFoodETAddress1.setText("");
+                            openThankYouAlertDialog();
+                        }
+                    }
+                }
+
+//                @Override
+//                public void onSuccess(UserModel userModel) {
+//                    if(userModel.isresponse()){
+//                       if(userModel.getMessage()!=null) {
+//                           sm.execute();
+//                           orderFoodETUserName.setText("");
+//                           orderFoodETMobileNo.setText("");
+//                           orderFoodETAddress1.setText("");
+//                           openThankYouAlertDialog();
+//                       }
+//                    }
+//                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void sendEmailWithContent(final String userName, final String mobileNo, final String address1, final String orderTime) {
