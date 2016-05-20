@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:orientation="vertical">
+        <com.rudraksh.food.widgets.AppTextView
+            style="@style/semi_bold"
+            android:id="@+id/row_food_detail_extra_item_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:text="@string/extra_roti"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/ten_dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.rudraksh.food.widgets.AppTextView
+                style="@style/extra_bold"
+                android:id="@+id/row_food_detail_extra_item_price_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.75"
+                android:text="@string/extra_roti_price"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <ImageView
+                android:id="@+id/extra_food_IV_roti_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:scaleType="center"
+                android:src="@drawable/ic_add" />
+
+            <com.rudraksh.food.widgets.AppTextView
+                android:id="@+id/extra_food_TV_roti_total"
+                style="@style/semi_bold"
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/zero"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <ImageView
+                android:id="@+id/extra_food_IV_roti_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:background="@drawable/circle"
+                android:scaleType="center"
+                android:src="@drawable/ic_minus_circle" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:background="@color/gray" />
+</LinearLayout>

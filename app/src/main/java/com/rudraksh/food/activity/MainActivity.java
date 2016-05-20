@@ -1,87 +1,151 @@
 package com.rudraksh.food.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.adapters.MainRecyclerAdapter;
-import com.rudraksh.food.models.MainMenuModel;
-import com.rudraksh.food.utils.Constant;
-import com.rudraksh.food.utils.OnRecyclerViewItemClickListener;
+import com.rudraksh.food.fragments.ContactFragment;
+import com.rudraksh.food.fragments.FoodTypeFragment;
+import com.rudraksh.food.fragments.OffersFragment;
+import com.rudraksh.food.fragments.PhotoGalleryFragment;
+import com.rudraksh.food.fragments.ServiceFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
+public class MainActivity extends BaseActivity implements TabLayout.OnTabSelectedListener{
 
-public class MainActivity extends BaseActivity implements OnRecyclerViewItemClickListener {
+    private String selectedCardName;
+    private int tabPosition;
 
-    private RecyclerView mainActivityRecyclerView;
-    private MainRecyclerAdapter mainRecyclerAdapter;
-    private List<MainMenuModel> mainMenuModelList = new ArrayList<>();
+    private TabLayout tabLayout;
+    private Fragment selectedFragment;
+    private static MainActivity instance;
+    private Toolbar toolbar;
+    private ImageView backImageView;
+    private ImageView shareImageView;
+
 
     @Override
     protected void initView() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolBar);
+        instance = this;
+        toolbar = (Toolbar) findViewById(R.id.activity_main_toolBar);
         titleTextView = (TextView) toolbar.findViewById(R.id.row_toolbar_tv_title);
         setSupportActionBar(toolbar);
-        setActionBarTitle(getString(R.string.rudraksh_food_service));
+        setActionBarTitle();
 
-        mainActivityRecyclerView = (RecyclerView) findViewById(R.id.activity_main_recyclerView);
-        mainRecyclerAdapter = new MainRecyclerAdapter(this,mainMenuModelList);
-        mainRecyclerAdapter.setOnRecyclerViewItemClickListener(this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mainActivityRecyclerView.setLayoutManager(mLayoutManager);
-        mainActivityRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mainActivityRecyclerView.setAdapter(mainRecyclerAdapter);
+        backImageView = (ImageView) findViewById(R.id.row_toolbar_iv_back);
+        shareImageView = (ImageView) findViewById(R.id.row_toolbar_iv_share);
+        tabLayout = (TabLayout) findViewById(R.id.activity_main_tab_layout);
+        tabLayout.setOnTabSelectedListener(this);
+        setTabLayout();
 
-        getCardViewData();
+        tabLayout.getTabAt(0).select();
+
+
     }
+
 
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_main;
     }
 
-    private void getCardViewData() {
-        MainMenuModel menuModel = new MainMenuModel("Food",R.drawable.ic_food);
-        mainMenuModelList.add(menuModel);
+    private void setTabLayout() {
 
-        menuModel = new MainMenuModel("Photos",R.drawable.ic_photos);
-        mainMenuModelList.add(menuModel);
+        for (int i = 0; i < 5; i++) {
+            final TabLayout.Tab tab = tabLayout.newTab();
+            final View view = LayoutInflater.from(this).inflate(R.layout.layout_tab, null);
 
-        menuModel = new MainMenuModel("Service",R.drawable.ic_service);
-        mainMenuModelList.add(menuModel);
+            final TextView tabTextView = (TextView) view.findViewById(R.id.tabText);
+            final ImageView tabImageView = (ImageView) view.findViewById(R.id.tabImage);
+            switch (i) {
+                case 0:
+                    tabImageView.setImageResource(R.drawable.ic_food);
+                    tabTextView.setText(getString(R.string.food));
+                    break;
+                case 1:
+                    tabImageView.setImageResource(R.drawable.ic_photos);
+                    tabTextView.setText(getString(R.string.photos));
+                    break;
+                case 2:
+                    tabImageView.setImageResource(R.drawable.ic_service);
+                    tabTextView.setText(getString(R.string.sevice));
+                    break;
+                case 3:
+                    tabImageView.setImageResource(R.drawable.ic_offers);
+                    tabTextView.setText(getString(R.string.offers));
+                    break;
+                case 4:
+                    tabImageView.setImageResource(R.drawable.ic_phone);
+                    tabTextView.setText(getString(R.string.contact));
+                    break;
+            }
 
-        menuModel = new MainMenuModel("Offers",R.drawable.ic_offers);
-        mainMenuModelList.add(menuModel);
-
-        menuModel = new MainMenuModel("Contact Us",R.drawable.ic_phone);
-        mainMenuModelList.add(menuModel);
-
-        mainRecyclerAdapter.notifyDataSetChanged();
+            tab.setCustomView(view);
+            tabLayout.addTab(tab);
+        }
     }
-    @Override
-    public void onItemClick(int position, View view) {
-        switch (view.getId()) {
-            case R.id.row_main_recycler_cardView:
-                final MainMenuModel mainMenuModel = (MainMenuModel) view.getTag();
-                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-                final Bundle bundle = new Bundle();
-                bundle.putString("Selected", mainMenuModel.getCardViewName());
-                Log.e("TAG","Selected " + mainMenuModel.getCardViewName());
-                startActivity(intent);
 
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+        switch (tab.getPosition()) {
+            case 0:
+                selectedFragment = new FoodTypeFragment();
+                break;
+            case 1:
+                selectedFragment = new PhotoGalleryFragment();
+                break;
+            case 2:
+                selectedFragment = new ServiceFragment();
+                break;
+            case 3:
+                selectedFragment = new OffersFragment();
+                break;
+            case 4:
+                selectedFragment = new ContactFragment();
                 break;
         }
+
+        if (selectedFragment != null) {
+
+            displayFragment(selectedFragment);
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    private void displayFragment(final Fragment fragment) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.activity_main_container, fragment, fragment.getClass().getSimpleName());
+        ft.commit();
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    public ImageView getShareImageView() {
+        return shareImageView;
     }
 }

@@ -11,6 +11,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.models.UserModel;
 import com.rudraksh.food.models.UserResponseModel;
 import com.rudraksh.food.utils.Constant;
@@ -101,9 +102,9 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().setActionBarTitle(getString(R.string.gujarathi_thali));
-        SecondActivity.getInstance().showBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
+        MainActivity.getInstance().setActionBarTitle(getString(R.string.gujarathi_thali));
+        MainActivity.getInstance().showBackButton();
+        MainActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
 
     }
 
@@ -205,37 +206,33 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         return usermodel;
     }
 
-    private void doSignUp(final UserModel userModel) {
+    private void doSignUp(final UserModel userDetail) {
         try {
             final ProgressDialog dialog = Logger.showProgressDialog(getContext());
-            final Call<UserResponseModel> userModelCall = RestClient.getInstance().getApiInterface().signUp(userModel);
+            final Call<UserResponseModel> userModelCall = RestClient.getInstance().getApiInterface().signUp(userDetail);
             userModelCall.enqueue(new RetrofitCallback<UserResponseModel>(getContext(),dialog) {
                 @Override
                 public void onSuccess(UserResponseModel userModel) {
                     if(userModel.isresponse()){
-                        if(!TextUtils.isEmpty(userModel.getMessage())) {
+
+                            Log.e("message",userModel.getMessage().toString());
+                            if(orderFoodTVOrderDateTime.getText().toString().contains("AM")){
+                                sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Lunch Pack",
+                                        "Name : " + userDetail.getName() + "\n" +
+                                                " Mobile No " + userDetail.getMobile() + "\n" + " Address: " + userDetail.getAddress());
+                            } else if(orderFoodTVOrderDateTime.getText().toString().contains("PM")){
+                                sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Dinner Pack",
+                                        "Name : " + userDetail.getName() + "\n" +
+                                                " Mobile No " + userDetail.getMobile() + "\n" + " Address: " + userDetail.getAddress());
+                            }
                             sm.execute();
                             orderFoodETUserName.setText("");
                             orderFoodETMobileNo.setText("");
                             orderFoodETAddress1.setText("");
                             openThankYouAlertDialog();
                         }
-                    }
                 }
-
-//                @Override
-//                public void onSuccess(UserModel userModel) {
-//                    if(userModel.isresponse()){
-//                       if(userModel.getMessage()!=null) {
-//                           sm.execute();
-//                           orderFoodETUserName.setText("");
-//                           orderFoodETMobileNo.setText("");
-//                           orderFoodETAddress1.setText("");
-//                           openThankYouAlertDialog();
-//                       }
-//                    }
-//                }
-            });
+      });
         } catch (Exception e) {
             e.printStackTrace();
         }

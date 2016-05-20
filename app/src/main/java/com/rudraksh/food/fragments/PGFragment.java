@@ -2,7 +2,6 @@ package com.rudraksh.food.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 
@@ -42,8 +41,8 @@ public class PGFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().showBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
+        MainActivity.getInstance().showBackButton();
+        MainActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
     }
 
     @Override

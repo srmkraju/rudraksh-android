@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.activity.MainActivity;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -24,9 +24,9 @@ public abstract class BaseFragment extends Fragment {
 
     private void hideIcons() {
         setHasOptionsMenu(false);
-        if (SecondActivity.getInstance() != null) {
-            SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
-            SecondActivity.getInstance().getShareImageView().setOnClickListener(null);
+        if (MainActivity.getInstance() != null) {
+            MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+            MainActivity.getInstance().getShareImageView().setOnClickListener(null);
         }
     }
 

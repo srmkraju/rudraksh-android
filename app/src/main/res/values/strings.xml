@@ -103,4 +103,5 @@
     <string name="available_food">"Available with given pin code "</string>
     <string name="thank_you_dialog">Thank you for ordering from Rudraksh, your order will be deliverd within 45 min.</string>
     <string name="ok">OK</string>
+    <string name="offers_not_found">Offers Not Found</string>
 </resources>

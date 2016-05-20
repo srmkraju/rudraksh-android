@@ -6,10 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import android.view.ViewGroup;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.MainActivity;
-import com.rudraksh.food.activity.SecondActivity;
 import com.rudraksh.food.utils.Constant;
 
 import java.util.Locale;
@@ -40,10 +36,10 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().setActionBarTitle(getString(R.string.two_sharing));
-        SecondActivity.getInstance().showBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
-        //SecondActivity.getInstance().getShareImageView().setOnClickListener(this);
+        MainActivity.getInstance().setActionBarTitle(getString(R.string.two_sharing));
+        MainActivity.getInstance().showBackButton();
+        MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        //MainActivity.getInstance().getShareImageView().setOnClickListener(this);
     }
 
     @Override

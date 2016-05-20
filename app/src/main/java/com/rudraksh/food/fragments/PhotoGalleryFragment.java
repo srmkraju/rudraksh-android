@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.adapters.PhotoGalleryAdapter;
 import com.rudraksh.food.widgets.CirclePageIndicator;
 
@@ -37,12 +37,12 @@ public class PhotoGalleryFragment extends BaseFragment {
 
     @Override
     protected void initToolbar() {
-        if(getActivity() instanceof SecondActivity){
-            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
+        if(getActivity() instanceof MainActivity){
+            ActionBar actionBar = MainActivity.getInstance().getSupportActionBar();
             actionBar.show();
-            SecondActivity.getInstance().setActionBarTitle(getString(R.string.photo_gallery));
-            SecondActivity.getInstance().hideBackButton();
-            SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+            MainActivity.getInstance().setActionBarTitle(getString(R.string.photo_gallery));
+            MainActivity.getInstance().hideBackButton();
+            MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
         }
     }
 }

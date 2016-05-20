@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.activity.MainActivity;
 
 /**
  * Created by Raju on 4/16/2016.
@@ -34,9 +34,9 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().setActionBarTitle(getString(R.string.services));
-        SecondActivity.getInstance().hideBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        MainActivity.getInstance().setActionBarTitle(getString(R.string.services));
+        MainActivity.getInstance().hideBackButton();
+        MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
     }
 
     @Override

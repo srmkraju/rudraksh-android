@@ -9,14 +9,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.rudraksh.food.R;
-import com.rudraksh.food.activity.SecondActivity;
+import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.utils.Constant;
 
 import java.util.Locale;
@@ -45,14 +44,14 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initToolbar() {
-        SecondActivity.getInstance().setActionBarTitle(getString(R.string.contact_us));
-        SecondActivity.getInstance().hideBackButton();
-        SecondActivity.getInstance().getShareImageView().setVisibility(View.GONE);
-        if(getActivity() instanceof SecondActivity){
-            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
+        MainActivity.getInstance().setActionBarTitle(getString(R.string.contact_us));
+        MainActivity.getInstance().hideBackButton();
+        MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
+        if(getActivity() instanceof MainActivity){
+            ActionBar actionBar = MainActivity.getInstance().getSupportActionBar();
             actionBar.show();
         } else {
-            ActionBar actionBar = SecondActivity.getInstance().getSupportActionBar();
+            ActionBar actionBar = MainActivity.getInstance().getSupportActionBar();
             actionBar.show();
         }
     }

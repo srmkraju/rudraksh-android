@@ -8,6 +8,12 @@ import java.util.ArrayList;
  * Created by dell8 on 19/5/16.
  */
 public class UserResponseModel {
+    @SerializedName("response")
+    private boolean isresponse;
+
+    @SerializedName("message")
+    private String message;
+
     public boolean isresponse() {
         return isresponse;
     }
@@ -15,6 +21,8 @@ public class UserResponseModel {
     public void setIsresponse(boolean isresponse) {
         this.isresponse = isresponse;
     }
+
+
 
 
 
@@ -26,13 +34,5 @@ public class UserResponseModel {
         this.message = message;
     }
 
-    @SerializedName("response")
-    private boolean isresponse;
-
-
-
-
-    @SerializedName("message")
-    private String message;
 
 }
