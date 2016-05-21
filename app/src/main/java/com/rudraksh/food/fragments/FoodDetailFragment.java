@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ import android.widget.TextView;
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.models.ExtraFoodModel;
-import com.rudraksh.food.models.ProductListModel;
 import com.rudraksh.food.service.NotifyAlarmService;
 import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
@@ -44,37 +44,17 @@ import retrofit.Call;
 public class FoodDetailFragment extends BaseFragment implements View.OnClickListener {
     private String selectedFoodName;
     private AppImageView foodDetailImageView;
-    private TextView foodDetailTextViewRoties;
-    //private Button foodDetailOrderButton;
+    private TextView foodDetailTextViewItemIncluded;
+
+
     private ImageView foodIVPlus;
     private ImageView foodIVMinus;
     private TextView foodDetailTVTotalPrice;
     private TextView foodTVTotalQuantity;
-    //extras
-    private ImageView extraRotiIVAdd;
-    private ImageView extraRotiIVMinus;
-    private TextView extraRotiTVTotal;
 
-    private ImageView extraVegCurryIVAdd;
-    private ImageView extraVegCurryIVMinus;
-    private TextView extraVegCurryTVTotal;
+    private ImageView extraFoodPlusImage;
+    private ImageView extraFoodMinusImage;
 
-    private ImageView extraDalIVAdd;
-    private ImageView extraDalIVMinus;
-    private TextView extraDalTVTotal;
-
-    private ImageView extraPulsesIVAdd;
-    private ImageView extraPulsesIVMinus;
-    private TextView extraPulsesTVTotal;
-
-    private ImageView extraRiceIVAdd;
-    private ImageView extraRiceIVMinus;
-    private TextView extraRiceTVTotal;
-
-    private ImageView extraButterMilkIVAdd;
-    private ImageView extraButterMilkIVMinus;
-    private TextView extraButterMilkTVTotal;
-    private TextView extraFoodTVTotal;
     private EditText foodDetailEdtPinCodeCheck;
 
     private Button foodDetailBtnCheck;
@@ -83,65 +63,18 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private LinearLayout foodDetailLinearLayoutExtras;
     private LinearLayout foodDetailLinearLayoutAddMinus;
     private RelativeLayout foodDetailRelativeLayoutTotalBill;
-    private RelativeLayout foodDetailRelativeLayoutOrder;
 
-    private int count;
+
+    private int count=0;
     private int thaliPrice;
+    private int extraCount=0;
     private CoordinatorLayout foodDetailCoordinatorLayout;
-    private String oneThaliPrice;
+
     private LinearLayout fragmentFoodLinearLayout;
     private PendingIntent pendingIntent;
 
-    //extraPrice
-    private int extraGujaratiRoti;
-    private int extraGujaratiRotiCount;
-    private int extraGujaratiVegCurry;
-    private int extraGujaratiVegCurryCount;
-    private int extraGujaratiDal;
-    private int extraGujaratiDalCount;
-    private int extraGujaratiPulses;
-    private int extraGujaratiPulseCount;
-    private int extraGujaratiRice;
-    private int extraGujaratiRiceCount;
-    private int extraGujaratiButtermilk;
-    private int extraGujaratiButtermilkCount;
 
-    private int extraPunjabiRoti;
-    private int extraPunjabiVegCurry;
-    private int extraPunjabiDal;
-    private int extraPunjabiPulses;
-    private int extraPunjabiRice;
-    private int extraPunjabiButtermilk;
 
-    private int extraPunjabiRotiCount;
-    private int extraPunjabiVegCurryTotal;
-    private int extraPunjabiVegCurryCount;
-    private int extraPunjabiDalCount;
-    private int extraPunjabiPulseCount;
-    private int extraPunjabiRiceCount;
-    private int extraPunjabiButtermilkCount;
-
-    private int extraJainRoti;
-    private int extraJainVegCurry;
-    private int extraJainDal;
-    private int extraJainPulses;
-    private int extraJainrice;
-    private int extraJainButtermilk;
-
-    private int extraJainRotiCount;
-    private int extraJainVegCurryTotal;
-    private int extraJainVegCurryCount;
-    private int extraJainDalCount;
-    private int extraJainPulseCount;
-    private int extraJainRiceCount;
-    private int extraJainButtermilkCount;
-
-    private int extraFoodTotal;
-    private int extraGujaratiVegCurryTotal;
-    private int extraGujaratiRotiTotal;
-    private int gujaratiThali;
-
-    private int total;
     private ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList = new ArrayList<>();
 
 
@@ -153,7 +86,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initView(View view) {
         foodDetailImageView = (AppImageView) view.findViewById(R.id.fragment_food_detail_iv);
-        foodDetailTextViewRoties = (TextView) view.findViewById(R.id.fragment_food_detail_tv_roties);
+        foodDetailTextViewItemIncluded = (TextView) view.findViewById(R.id.fragment_food_detail_tv_itemsIncluded);
 
         foodIVPlus = (ImageView) view.findViewById(R.id.fragment_food_iv_plus);
         foodIVMinus = (ImageView) view.findViewById(R.id.fragment_food_iv_minus);
@@ -170,126 +103,23 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
         orderNow = (Button)view.findViewById(R.id.food_detail_bt_orderNow);
         getExtraFoodItem();
-        //extras
-//        extraRotiIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_roti_add);
-//        extraRotiIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_roti_minus);
-//        extraRotiTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_roti_total);
-//
-//        extraVegCurryIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_vegcurry_add);
-//        extraVegCurryIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_vegcurry_minus);
-//        extraVegCurryTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_vegcurry_total);
-//
-//        extraDalIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_dal_add);
-//        extraDalIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_dal_minus);
-//        extraDalTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_dal_total);
-//
-//        extraPulsesIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_pulse_add);
-//        extraPulsesIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_pulse_minus);
-//        extraPulsesTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_pulse_toatl);
-//
-//        extraRiceIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_rice_add);
-//        extraRiceIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_rice_minus);
-//        extraRiceTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_rice_total);
-//
-//        extraButterMilkIVAdd = (ImageView) view.findViewById(R.id.extra_food_IV_buttermilk_add);
-//        extraButterMilkIVMinus = (ImageView) view.findViewById(R.id.extra_food_IV_buttermilk_minus);
-//        extraButterMilkTVTotal = (TextView) view.findViewById(R.id.extra_food_TV_buttermilk_total);
-//
-//        extraFoodTVTotal = (TextView) view.findViewById(R.id.order_food_extra_TV_total);
-//
-//        foodIVMinus.setOnClickListener(this);
-//        foodIVPlus.setOnClickListener(this);
-//        orderNow.setOnClickListener(this);
-//        foodDetailBtnCheck.setOnClickListener(this);
-//
-//        //extras on click
-//        extraRotiIVAdd.setOnClickListener(this);
-//        extraRotiIVMinus.setOnClickListener(this);
-//
-//        extraVegCurryIVAdd.setOnClickListener(this);
-//        extraVegCurryIVMinus.setOnClickListener(this);
-//
-//        extraDalIVAdd.setOnClickListener(this);
-//        extraDalIVMinus.setOnClickListener(this);
-//
-//        extraPulsesIVAdd.setOnClickListener(this);
-//        extraPulsesIVMinus.setOnClickListener(this);
-//
-//        extraRiceIVAdd.setOnClickListener(this);
-//        extraRiceIVMinus.setOnClickListener(this);
-//
-//        extraButterMilkIVAdd.setOnClickListener(this);
-//        extraButterMilkIVMinus.setOnClickListener(this);
 
-        //foodTVTotal.setText(getString(R.string.Rs));
-        //oneThaliPrice = foodTVTotalQuantity.getText().toString();
+
+        orderNow.setOnClickListener(this);
+        foodDetailBtnCheck.setOnClickListener(this);
+
+            foodIVMinus.setOnClickListener(this);
+            foodIVPlus.setOnClickListener(this);
+
+
         if (getArguments() != null) {
             final String imageUrl = getArguments().getString("imageUrl");
             foodDetailImageView.loadImage(Constant.BASE_URL+"uploads/"+imageUrl);
             selectedFoodName = getArguments().getString("name");
             thaliPrice = getArguments().getInt("amount");
-//            if (selectedFoodName.equalsIgnoreCase(getString(R.string.gujarathi_thali))) {
-//                foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
-//                foodDetailTextViewRoties.setText(getString(R.string.roties));
-//                count = 0;
-//                thaliPrice = 80;
-//                extraGujaratiRoti = 10;
-//                extraGujaratiVegCurry = 50;
-//                extraGujaratiDal = 40;
-//                extraGujaratiPulses = 40;
-//                extraGujaratiRice = 40;
-//                extraGujaratiButtermilk=10;
-//
-//                extraGujaratiRotiCount = 0;
-//                extraGujaratiVegCurryTotal = 0;
-//                extraGujaratiVegCurryCount = 0;
-//                extraGujaratiDalCount = 0;
-//                extraGujaratiPulseCount = 0;
-//                extraGujaratiRiceCount = 0;
-//                extraGujaratiButtermilkCount = 0;
-//
-//            } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))) {
-//                foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
-//                foodDetailTextViewRoties.setText(getString(R.string.paratha));
-//                count = 0;
-//                thaliPrice = 110;
-//                extraPunjabiRoti = 15;
-//                extraPunjabiVegCurry = 60;
-//                extraPunjabiDal = 50;
-//                extraPunjabiPulses = 50;
-//                extraPunjabiRice = 40;
-//                extraPunjabiButtermilk=10;
-//
-//                extraPunjabiRotiCount = 0;
-//                extraPunjabiVegCurryTotal = 0;
-//                extraPunjabiVegCurryCount = 0;
-//                extraPunjabiDalCount = 0;
-//                extraPunjabiPulseCount = 0;
-//                extraPunjabiRiceCount = 0;
-//                extraPunjabiButtermilkCount = 0;
-//            } else if (selectedFoodName.equalsIgnoreCase(getString(R.string.jain_thali))) {
-//                foodDetailImageView.setImageResource(R.drawable.gujarathi_thali);
-//                foodDetailTextViewRoties.setText(getString(R.string.paratha));
-//                count = 0;
-//                thaliPrice = 80;
-//                extraJainRoti = 10;
-//                extraJainVegCurry = 50;
-//                extraJainDal = 40;
-//                extraJainPulses = 40;
-//                extraJainrice = 40;
-//                extraJainButtermilk=10;
-//
-//                extraJainRotiCount = 0;
-//                extraJainVegCurryTotal = 0;
-//                extraJainVegCurryCount = 0;
-//                extraJainDalCount = 0;
-//                extraJainPulseCount = 0;
-//                extraJainRiceCount = 0;
-//                extraJainButtermilkCount = 0;
-//            }
+            foodDetailTextViewItemIncluded.setText(getArguments().getString("description"));
         }
     }
-
     private void getExtraFoodItem() {
         try {
             final ProgressDialog dialog = com.rudraksh.food.utils.Logger.showProgressDialog(getContext());
@@ -302,8 +132,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                         extraFoodResponse.getData().trimToSize();
                         extraFoodArrayList.addAll(extraFoodResponse.getData());
                         setExtraFoodData(extraFoodArrayList);
-                    };
-
+                    }
                 }
             });
         } catch (Exception e) {
@@ -311,18 +140,71 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-    private void setExtraFoodData(ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList) {
+    private void setExtraFoodData(final ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList) {
+
         for(int i =0; i<extraFoodArrayList.size(); i++){
+            final int finalI = i;
             final LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             final View view = layoutInflater.inflate(R.layout.row_food_detail_extra_item,null);
-             final TextView extraFoodItemName = (TextView)view.findViewById(R.id.row_food_detail_extra_item_tv);
-            final TextView extraFoodItemPrice = (TextView)view.findViewById(R.id.row_food_detail_extra_item_price_tv);
-            extraFoodItemName.setText( extraFoodArrayList.get(i).getExtra_food_name());
-            extraFoodItemPrice.setText(extraFoodArrayList.get(i).getAmount());
 
+            final  TextView extraFoodItemName = (TextView)view.findViewById(R.id.row_food_detail_extra_item_tv);
+            final  TextView  extraFoodItemPrice = (TextView)view.findViewById(R.id.row_food_detail_extra_item_price_tv);
+            final  TextView extraFoodQuantity = (TextView)view.findViewById(R.id.extra_food_TV_extra_total_quantity);
+
+            extraFoodPlusImage = (ImageView)view.findViewById(R.id.extra_food_IV_add) ;
+            extraFoodMinusImage = (ImageView)view.findViewById(R.id.extra_food_IV_minus);
+
+            extraFoodPlusImage.setId(i);
+            extraFoodMinusImage.setId(i);
+
+            final String foodname=extraFoodArrayList.get(i).getExtra_food_name();
+            Log.e("foodnam",extraFoodArrayList.get(i).getExtra_food_name());
+
+            extraFoodPlusImage.setTag(foodname);
+            extraFoodMinusImage.setTag(foodname);
+
+            extraFoodPlusImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        Log.e("***************","!!!!!!!!!!!!");
+                        setCountForExtraPlus(extraFoodArrayList.get(finalI).getAmount(),extraFoodItemPrice,extraFoodQuantity);
+                }
+            });
+            extraFoodMinusImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setCountForExtraMinus(extraFoodArrayList.get(finalI).getAmount(),extraFoodItemPrice,extraFoodQuantity);
+                }
+            });
+            extraFoodItemName.setText( extraFoodArrayList.get(i).getExtra_food_name());
+            extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(extraFoodArrayList.get(i).getAmount()));
+            foodDetailLinearLayoutExtras.addView(view);
         }
     }
+    private void setCountForExtraPlus( int amount, TextView extraFoodItemPrice,TextView extraFoodQuantity) {
+        extraCount =extraCount+1;
+        Log.e("in extra plus",String.valueOf(amount*extraCount));
+        Log.e("in extra plus", String.valueOf(amount));
+        Log.e("in extra plus", String.valueOf(extraCount));
+        extraFoodQuantity.setText(String.valueOf(extraCount));
+        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*extraCount));
+    }
 
+    private void setCountForExtraMinus(int amount, TextView extraFoodItemPrice,TextView extraFoodQuantity) {
+        if(extraCount>0){
+            extraCount =extraCount-1;
+            Log.e("in extra minus",String.valueOf(amount*extraCount));
+            Log.e("in extra minus", String.valueOf(extraCount));
+            extraFoodQuantity.setText(String.valueOf(extraCount));
+            extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*extraCount));
+        }
+        else
+        {
+            extraCount=0;
+            extraFoodQuantity.setText("0");
+            extraFoodItemPrice.setText(String .valueOf(amount));
+        }
+    }
     @Override
     protected void initToolbar() {
         MainActivity.getInstance().setActionBarTitle(selectedFoodName);
@@ -335,224 +217,68 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
-//            case R.id.food_detail_bt_orderNow:
-//                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
-//                    bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
-//                    bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
-//                    bundle.putString(Constant.CARD_NAME, selectedFoodName);
-//                    bundle.putString("pincode",foodDetailEdtPinCodeCheck.getText().toString());
-//                    final Fragment orderFoodFragment = new OrderFoodFragment();
-//                    orderFoodFragment.setArguments(bundle);
-//                    addFragment(this, orderFoodFragment, true);
-//                } else {
-//                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
-//                }
-//                break;
-//            case R.id.fragment_food_btn_check:
-//                final String pinCode = foodDetailEdtPinCodeCheck.getText().toString();
-//                if(!TextUtils.isEmpty(pinCode)){
-//                    if(pinCode.equalsIgnoreCase("380009")){
-//                        Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.available_food));
-//                        foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
-//                        foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
-//                    } else{
-//                        foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
-//                        foodDetailLinearLayoutExtras.setVisibility(View.GONE);
-//                        Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.not_available_pin_code));
-//                    }
-//                }
-//                break;
-//            case R.id.fragment_food_iv_plus:
-//               /* count = count + 1;
-//                final int convertPlusPrice = thaliPrice * count;*/
-//                count =  count + 1;
-//                gujaratiThali = gujaratiThali * count;
-//                if (count > 0) {
-//                    if(selectedFoodName.equalsIgnoreCase(getString(R.string.gujarathi_thali))){
-//                        calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount,
-//                                extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                                extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                        foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
-//                        orderNow.setVisibility(View.VISIBLE);
-//                    } else if(selectedFoodName.equalsIgnoreCase(getString(R.string.punjabi_thali))){
-//                        calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                                ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                                extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                        foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
-//                        orderNow.setVisibility(View.VISIBLE);
-//                    }
-//                }
-//                break;
-//            case R.id.fragment_food_iv_minus:
-//                count = count - 1;
-//                final int convertMinusPrice = thaliPrice * count;
-//                if (count > -1) {
-//                    foodTVTotalQuantity.setText(String.valueOf(count));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.row_toolbar_iv_share:
-//                shareImage();
-//                break;
-//            case R.id.extra_food_IV_roti_add:
-//                extraGujaratiRotiCount =  extraGujaratiRotiCount + 1;
-//                extraPunjabiRotiCount = extraPunjabiRotiCount + 1;
-//                extraJainRotiCount = extraJainRotiCount + 1;
-//                if (extraGujaratiRotiCount > 0 || extraPunjabiRotiCount >0 || extraJainRotiCount>0) {
-//                    extraRotiTVTotal.setText(String.valueOf(extraGujaratiRotiCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_roti_minus:
-//                extraGujaratiRotiCount = extraGujaratiRotiCount - 1;
-//                extraPunjabiRotiCount = extraPunjabiRotiCount - 1;
-//                extraJainRotiCount = extraJainRotiCount - 1;
-//                if (extraGujaratiRotiCount > -1 || extraPunjabiRotiCount >-1 || extraJainRotiCount>-1) {
-//                    extraRotiTVTotal.setText(String.valueOf(extraGujaratiRotiCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_vegcurry_add:
-//                extraGujaratiVegCurryCount = extraGujaratiVegCurryCount + 1;
-//                extraPunjabiVegCurryCount = extraPunjabiVegCurryCount + 1;
-//                extraJainVegCurryCount = extraJainVegCurryCount + 1;
-//                if (extraGujaratiVegCurryCount > 0 || extraPunjabiVegCurry >0 || extraJainVegCurryCount>0) {
-//                    extraVegCurryTVTotal.setText(String.valueOf(extraGujaratiVegCurryCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_vegcurry_minus:
-//                extraGujaratiVegCurryCount = extraGujaratiVegCurryCount - 1;
-//                extraPunjabiVegCurryCount = extraPunjabiVegCurryCount -1;
-//                extraJainVegCurryCount = extraJainVegCurryCount -1;
-//                if (extraGujaratiVegCurryCount > -1 || extraPunjabiVegCurry >-1 || extraJainVegCurryCount>-1) {
-//                    extraVegCurryTVTotal.setText(String.valueOf(extraGujaratiVegCurryCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                    break;
-//            case R.id.extra_food_IV_dal_add:
-//                extraGujaratiDalCount = extraGujaratiDalCount + 1;
-//                extraPunjabiDalCount = extraPunjabiDalCount +1;
-//                extraJainDalCount = extraJainDalCount +1;
-//                if(extraGujaratiDalCount > 0 || extraPunjabiDalCount>0|| extraJainDalCount>0){
-//                    extraDalTVTotal.setText(String.valueOf(extraGujaratiDalCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_dal_minus:
-//                extraGujaratiDalCount = extraGujaratiDalCount - 1;
-//                extraGujaratiDalCount = extraGujaratiDalCount - 1;
-//                extraPunjabiDalCount = extraPunjabiDalCount -1;
-//                extraJainDalCount = extraJainDalCount +1;
-//                if(extraGujaratiDalCount >-1 || extraPunjabiDalCount>-1 || extraJainDalCount>-1){
-//                    extraDalTVTotal.setText(String.valueOf(extraGujaratiDalCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_pulse_add:
-//                extraGujaratiPulseCount = extraGujaratiPulseCount + 1;
-//                extraPunjabiPulseCount = extraPunjabiPulseCount+1;
-//                extraJainPulseCount = extraJainPulseCount + 1;
-//                if(extraGujaratiPulseCount > 0 || extraPunjabiPulseCount >0 || extraJainPulseCount >0){
-//                    extraPulsesTVTotal.setText(String.valueOf(extraGujaratiPulseCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_pulse_minus:
-//                extraGujaratiPulseCount = extraGujaratiPulseCount - 1;
-//                extraPunjabiPulseCount = extraPunjabiPulseCount-1;
-//                extraJainPulseCount = extraJainPulseCount - 1;
-//                if(extraGujaratiPulseCount > -1 || extraPunjabiPulseCount >-1 || extraJainPulseCount >-1){
-//                    extraPulsesTVTotal.setText(String.valueOf(extraGujaratiPulseCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_rice_add:
-//                extraGujaratiRiceCount = extraGujaratiRiceCount + 1;
-//                extraPunjabiRiceCount = extraPunjabiRiceCount + 1;
-//                extraJainRiceCount = extraJainRiceCount + 1;
-//                if(extraGujaratiRiceCount > 0 || extraPunjabiRiceCount >0 || extraJainRiceCount >0){
-//                    extraRiceTVTotal.setText(String.valueOf(extraGujaratiRiceCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_rice_minus:
-//                extraGujaratiRiceCount = extraGujaratiRiceCount - 1;
-//                extraPunjabiRiceCount = extraPunjabiRiceCount - 1;
-//                extraJainRiceCount = extraJainRiceCount - 1;
-//                if(extraGujaratiRiceCount > -1 || extraPunjabiRiceCount >-1 || extraJainRiceCount >-1){
-//                    extraRiceTVTotal.setText(String.valueOf(extraGujaratiRiceCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_buttermilk_add:
-//                extraGujaratiButtermilkCount = extraGujaratiButtermilkCount + 1;
-//                extraPunjabiButtermilkCount = extraPunjabiButtermilkCount + 1;
-//                extraJainButtermilkCount = extraJainButtermilkCount + 1;
-//                if(extraGujaratiButtermilkCount > 0 || extraPunjabiButtermilkCount >0 || extraJainButtermilkCount >0){
-//                    extraButterMilkTVTotal.setText(String.valueOf(extraGujaratiButtermilkCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
-//            case R.id.extra_food_IV_buttermilk_minus:
-//                extraGujaratiButtermilkCount = extraGujaratiButtermilkCount - 1;
-//                extraPunjabiButtermilkCount = extraPunjabiButtermilkCount - 1;
-//                extraJainButtermilkCount = extraJainButtermilkCount - 1;
-//                if(extraGujaratiButtermilkCount > - 1 || extraPunjabiButtermilkCount >-1 || extraJainButtermilkCount >-1){
-//                    extraButterMilkTVTotal.setText(String.valueOf(extraGujaratiButtermilkCount));
-//                    calculateTotal(count,extraGujaratiRotiCount,extraGujaratiVegCurryCount,extraGujaratiDalCount,extraGujaratiPulseCount,extraGujaratiRiceCount,extraGujaratiButtermilkCount
-//                            ,extraPunjabiRotiCount,extraPunjabiVegCurryCount,extraPunjabiDalCount,extraPunjabiPulseCount,extraPunjabiRiceCount,extraPunjabiButtermilkCount,
-//                            extraJainRotiCount,extraJainVegCurryCount,extraJainDalCount,extraJainPulseCount,extraJainRiceCount,extraJainButtermilkCount);
-//                }
-//                break;
+            case R.id.food_detail_bt_orderNow:
+                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
+                    bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
+                    bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
+                    bundle.putString(Constant.CARD_NAME, selectedFoodName);
+                    bundle.putString("pincode",foodDetailEdtPinCodeCheck.getText().toString());
+                    final Fragment orderFoodFragment = new OrderFoodFragment();
+                    orderFoodFragment.setArguments(bundle);
+                    addFragment(this, orderFoodFragment, true);
+                } else {
+                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.select_items));
+                }
+                break;
+            case R.id.fragment_food_btn_check:
+                final String pinCode = foodDetailEdtPinCodeCheck.getText().toString();
+                if(!TextUtils.isEmpty(pinCode)){
+                    if(pinCode.equalsIgnoreCase("380009")){
+                        Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.available_food));
+                        foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
+                        foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
+                        orderNow.setVisibility(View.VISIBLE);
+                    } else{
+                        foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
+                        foodDetailLinearLayoutExtras.setVisibility(View.GONE);
+                        Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.not_available_pin_code));
+                    }
+                }
+                break;
+            case R.id.fragment_food_iv_plus:
+                thaliPrice = getArguments().getInt("amount");
+                count =  count + 1;
+                thaliPrice = thaliPrice*count;
+               foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                orderNow.setVisibility(View.VISIBLE);
+                foodTVTotalQuantity.setText(String.valueOf(count));
+                foodDetailTVTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                break;
+            case R.id.fragment_food_iv_minus:
+                foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                orderNow.setVisibility(View.VISIBLE);
+                count = count - 1;
+                if(count<0){
+                    count=0;
+                    foodTVTotalQuantity.setText("0");
+                    foodDetailTVTotalPrice.setText("0");
+                }
+                else
+                {
+                    thaliPrice = getArguments().getInt("amount");
+                    thaliPrice = thaliPrice*count;
+                    foodTVTotalQuantity.setText(String.valueOf(count));
+                    foodDetailTVTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                }
+                break;
              }
          }
-
     private void calculateTotal(final int thaliCount, final int gujaratiRotiCount, final int gujaratiVegCurryCount, final int gujaratiDalCount,
                                 final int gujaratiPulseCount, final int guajaratiRiceCount, final int butterMilkCount,
                                 final int punjabiRotiCount,final int punjabiVegCurryCount, final int punjabiDalCount, final int punjabiPulseCount, final int punjabiRiceCount,
                                 final int punjabiButtermilkCount, final int jainRotiCount, final int jainVegCurryCount,final int jainDalCount,final int jainPulseCount,
                                 final int jainRiceCount, final int jainButtermilkCount){
-        if(thaliCount > 0){
-            final int thaliTotal = thaliPrice * thaliCount;
-            foodTVTotalQuantity.setText(String.valueOf(thaliCount));
-            //total = convertPlusPrice;
-            total = (thaliTotal) + (gujaratiRotiCount*extraGujaratiRoti) + (gujaratiVegCurryCount*extraGujaratiVegCurry) +
-                    (gujaratiDalCount*extraGujaratiDal) + (gujaratiPulseCount*extraGujaratiPulses) + (guajaratiRiceCount*extraGujaratiRice) +
-                    (butterMilkCount*extraGujaratiButtermilk) +
-                    (punjabiRotiCount*extraPunjabiRoti) + (punjabiVegCurryCount*extraPunjabiVegCurry) + (punjabiDalCount*extraPunjabiDal) +
-                    (punjabiPulseCount*extraPunjabiPulses) + (punjabiRiceCount*extraPunjabiRice) +
-                    (punjabiButtermilkCount*extraPunjabiButtermilk) +
-                    (jainRotiCount*extraJainRoti) + (jainVegCurryCount*extraJainVegCurry) + (jainDalCount*extraJainDal) +
-                    (jainPulseCount*extraJainPulses) + (jainRiceCount*extraJainrice) +
-                    (jainButtermilkCount*extraJainButtermilk);
 
-            foodDetailTVTotalPrice.setText(String.valueOf(thaliTotal));
-            extraFoodTVTotal.setText(String.valueOf(total));
-        }
     }
 
     private void shareImage(){
@@ -561,7 +287,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         Bitmap bm = Bitmap.createBitmap(fragmentFoodLinearLayout.getDrawingCache());
         String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(),
                 bm, "Image Description", null);
-
         Uri uri = Uri.parse(path);
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/jpg");

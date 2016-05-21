@@ -65,50 +65,61 @@
                                 android:background="@color/gray" />
 
                             <com.rudraksh.food.widgets.AppTextView
-                                android:id="@+id/fragment_food_detail_tv_roties"
+                                android:id="@+id/fragment_food_detail_tv_itemsIncluded"
                                 style="@style/semi_bold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/five_dp"
-                                android:text="@string/roties"
+                                android:singleLine="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sixteen_sp" />
+                            <com.rudraksh.food.widgets.AppTextView
+                                android:id="@+id/fragment_food_detail_tv_cost"
+                                style="@style/semi_bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/five_dp"
+                                android:singleLine="false"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sixteen_sp" />
 
-                            <com.rudraksh.food.widgets.AppTextView
-                                style="@style/semi_bold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/five_dp"
-                                android:text="@string/veg_curries"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/sixteen_sp" />
 
-                            <com.rudraksh.food.widgets.AppTextView
-                                style="@style/semi_bold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/five_dp"
-                                android:text="@string/dall"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/sixteen_sp" />
 
-                            <com.rudraksh.food.widgets.AppTextView
-                                style="@style/semi_bold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/five_dp"
-                                android:text="@string/rice"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/sixteen_sp" />
+                            <!--<com.rudraksh.food.widgets.AppTextView-->
+                                <!--style="@style/semi_bold"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="@dimen/five_dp"-->
+                                <!--android:text="@string/veg_curries"-->
+                                <!--android:textColor="@color/black"-->
+                                <!--android:textSize="@dimen/sixteen_sp" />-->
 
-                            <com.rudraksh.food.widgets.AppTextView
-                                style="@style/semi_bold"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/five_dp"
-                                android:text="@string/slad_papad"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/sixteen_sp" />
+                            <!--<com.rudraksh.food.widgets.AppTextView-->
+                                <!--style="@style/semi_bold"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="@dimen/five_dp"-->
+                                <!--android:text="@string/dall"-->
+                                <!--android:textColor="@color/black"-->
+                                <!--android:textSize="@dimen/sixteen_sp" />-->
+
+                            <!--<com.rudraksh.food.widgets.AppTextView-->
+                                <!--style="@style/semi_bold"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="@dimen/five_dp"-->
+                                <!--android:text="@string/rice"-->
+                                <!--android:textColor="@color/black"-->
+                                <!--android:textSize="@dimen/sixteen_sp" />-->
+
+                            <!--<com.rudraksh.food.widgets.AppTextView-->
+                                <!--style="@style/semi_bold"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:padding="@dimen/five_dp"-->
+                                <!--android:text="@string/slad_papad"-->
+                                <!--android:textColor="@color/black"-->
+                                <!--android:textSize="@dimen/sixteen_sp" />-->
                             <LinearLayout
                                 style="@style/semi_bold"
                                 android:id="@+id/fragment_order_ll_check_pincode"
@@ -238,7 +249,7 @@
                                 android:id="@+id/fragment_food_ll_parent_extras"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:orientation="vertical">
                             </LinearLayout>
                         </LinearLayout>

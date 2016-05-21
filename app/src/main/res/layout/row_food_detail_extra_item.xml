@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten_dp"
             android:layout_marginTop="@dimen/twenty_dp"
-            android:text="@string/extra_roti"
+
             android:textColor="@color/black"
             android:textSize="@dimen/sixteen_sp" />
 
@@ -31,12 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.75"
-                android:text="@string/extra_roti_price"
+
                 android:textColor="@color/black"
                 android:textSize="@dimen/sixteen_sp" />
 
             <ImageView
-                android:id="@+id/extra_food_IV_roti_add"
+                android:id="@+id/extra_food_IV_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/circle"
@@ -44,7 +44,7 @@
                 android:src="@drawable/ic_add" />
 
             <com.rudraksh.food.widgets.AppTextView
-                android:id="@+id/extra_food_TV_roti_total"
+                android:id="@+id/extra_food_TV_extra_total_quantity"
                 style="@style/semi_bold"
                 android:layout_width="0dp"
                 android:layout_weight="0.2"
@@ -56,7 +56,7 @@
                 android:textSize="@dimen/sixteen_sp" />
 
             <ImageView
-                android:id="@+id/extra_food_IV_roti_minus"
+                android:id="@+id/extra_food_IV_minus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"

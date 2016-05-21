@@ -30,7 +30,7 @@ public class Fragment_offer_Adapter extends RecyclerView.Adapter<Fragment_offer_
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
        MyViewHolder myViewHolder;
-        View view = LayoutInflater.from(context).inflate(R.layout.row_fragment_offers_adapter,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_fragment_offers_adapter,parent,false);
         myViewHolder = new MyViewHolder(view);
         return  myViewHolder;
     }

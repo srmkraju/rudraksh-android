@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/eighty_dp"
-    android:layout_gravity="center"
+
     android:layout_marginBottom="@dimen/five_dp"
     android:layout_marginEnd="@dimen/five_dp"
     android:layout_marginStart="@dimen/five_dp"
     android:layout_marginTop="@dimen/fifteen_dp">
+
     <com.rudraksh.food.widgets.AppTextView
         style="@style/semi_bold"
         android:id="@+id/row_fragment_offer_recycler_tv"
@@ -17,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:textSize="@dimen/eighteen_sp" />
 </android.support.v7.widget.CardView>
-</LinearLayout>
+

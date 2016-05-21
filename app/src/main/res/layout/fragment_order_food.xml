@@ -55,6 +55,18 @@
                     android:maxLength="10"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sixteen_sp" />
+                <com.rudraksh.food.widgets.AppEditText
+                    android:id="@+id/fragment_order_edt_email"
+                    style="@style/semi_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fifteen_dp"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/ten_dp"
+                    android:hint="@string/email"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sixteen_sp" />
 
                 <com.rudraksh.food.widgets.AppEditText
                     android:id="@+id/fragment_order_edt_address1"

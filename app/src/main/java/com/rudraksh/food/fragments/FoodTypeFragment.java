@@ -92,6 +92,7 @@ public class FoodTypeFragment extends BaseFragment implements OnRecyclerViewItem
         bundle.putInt("amount",data.getAmount());
         bundle.putString("name",data.getName());
         bundle.putString("imageUrl",data.getImage());
+        bundle.putString("description",data.getDescription());
 
         final Fragment punjabiFragment = new FoodDetailFragment();
         punjabiFragment.setArguments(bundle);

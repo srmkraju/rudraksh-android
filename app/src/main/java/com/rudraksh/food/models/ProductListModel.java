@@ -41,8 +41,21 @@ public class ProductListModel {
         @SerializedName("image")
         private String image;
 
+        @SerializedName("description")
+        private String description;
+
         @SerializedName("amount")
         private int amount;
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+
 
         public int getAmount() {
             return amount;
