@@ -78,7 +78,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     @Override
     protected void initView(View view) {
         if(getArguments()!=null){
-            totalBill = getArguments().getString(Constant.TOTAL_BILL);
+            totalBill = getArguments().getString("TotalBill");
             totalQuantity = getArguments().getString(Constant.TOTAL_QUANTITY);
             selectedOrderFoodName = getArguments().getString(Constant.CARD_NAME);
             pincode = getArguments().getString("pincode");
@@ -96,7 +96,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         orderFoodEdtOrderDate.setOnClickListener(this);
         orderFoodBtnOrder.setOnClickListener(this);
         if(!TextUtils.isEmpty(totalBill)){
-            orderFoodTVTotalBill.setText(getString(R.string.Rs) + 130);
+            orderFoodTVTotalBill.setText(getString(R.string.Rs) + String.valueOf(totalBill));
         }
     }
 

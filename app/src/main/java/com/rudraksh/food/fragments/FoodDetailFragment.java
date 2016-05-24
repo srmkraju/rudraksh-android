@@ -49,11 +49,13 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
     private ImageView foodIVPlus;
     private ImageView foodIVMinus;
-    private TextView foodDetailTVTotalPrice;
-    private TextView foodTVTotalQuantity;
 
-    private ImageView extraFoodPlusImage;
-    private ImageView extraFoodMinusImage;
+
+    private TextView foodDetailTVThaliTotalPrice;
+    private TextView foodTVTotalQuantity;
+    private TextView foodDetailExtraTextView;
+    private TextView totalFoodAmount;
+
 
     private EditText foodDetailEdtPinCodeCheck;
 
@@ -67,7 +69,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
     private int count=0;
     private int thaliPrice;
-    private int extraCount=0;
+    private int TotalAmount=0;
+
     private CoordinatorLayout foodDetailCoordinatorLayout;
 
     private LinearLayout fragmentFoodLinearLayout;
@@ -91,11 +94,15 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodIVPlus = (ImageView) view.findViewById(R.id.fragment_food_iv_plus);
         foodIVMinus = (ImageView) view.findViewById(R.id.fragment_food_iv_minus);
         foodTVTotalQuantity = (TextView) view.findViewById(R.id.fragment_food_tv_total_quantity);
-        foodDetailTVTotalPrice = (TextView) view.findViewById(R.id.fragment_food_tv_total_price);
+        foodDetailExtraTextView = (TextView)view.findViewById(R.id.food_detail_extra_TV);
+        foodDetailTVThaliTotalPrice = (TextView) view.findViewById(R.id.fragment_food_tv_thali_total_price);
+        totalFoodAmount = (TextView)view.findViewById(R.id.order_food_extra_TV_total);
         foodDetailCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_food_detail_coordinatorLayout);
-        fragmentFoodLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_foof_detail_ll);
+
         foodDetailEdtPinCodeCheck = (EditText) view.findViewById(R.id.fragment_food_edt_check_availability);
         foodDetailBtnCheck = (Button) view.findViewById(R.id.fragment_food_btn_check);
+
+        fragmentFoodLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_foof_detail_ll);
         foodDetialLinearLayoutPinCheck = (LinearLayout) view.findViewById(R.id.fragment_order_ll_check_pincode);
         foodDetailLinearLayoutExtras = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_extras);
         foodDetailLinearLayoutAddMinus = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_add_minus);
@@ -108,8 +115,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         orderNow.setOnClickListener(this);
         foodDetailBtnCheck.setOnClickListener(this);
 
-            foodIVMinus.setOnClickListener(this);
-            foodIVPlus.setOnClickListener(this);
+        foodIVMinus.setOnClickListener(this);
+        foodIVPlus.setOnClickListener(this);
 
 
         if (getArguments() != null) {
@@ -132,6 +139,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                         extraFoodResponse.getData().trimToSize();
                         extraFoodArrayList.addAll(extraFoodResponse.getData());
                         setExtraFoodData(extraFoodArrayList);
+
                     }
                 }
             });
@@ -142,38 +150,54 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
     private void setExtraFoodData(final ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList) {
 
+
         for(int i =0; i<extraFoodArrayList.size(); i++){
             final int finalI = i;
+
             final LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             final View view = layoutInflater.inflate(R.layout.row_food_detail_extra_item,null);
+            final TextView extraFoodItemName = (TextView)view.findViewById(R.id.row_food_detail_extra_item_tv);
+            final TextView  extraFoodItemPrice = (TextView)view.findViewById(R.id.row_food_detail_extra_item_price_tv);
+            final TextView extraFoodQuantity = (TextView)view.findViewById(R.id.extra_food_TV_extra_total_quantity);
+            final ImageView extraFoodPlusImage = (ImageView)view.findViewById(R.id.extra_food_IV_add) ;
+            final ImageView extraFoodMinusImage = (ImageView)view.findViewById(R.id.extra_food_IV_minus);
 
-            final  TextView extraFoodItemName = (TextView)view.findViewById(R.id.row_food_detail_extra_item_tv);
-            final  TextView  extraFoodItemPrice = (TextView)view.findViewById(R.id.row_food_detail_extra_item_price_tv);
-            final  TextView extraFoodQuantity = (TextView)view.findViewById(R.id.extra_food_TV_extra_total_quantity);
-
-            extraFoodPlusImage = (ImageView)view.findViewById(R.id.extra_food_IV_add) ;
-            extraFoodMinusImage = (ImageView)view.findViewById(R.id.extra_food_IV_minus);
-
-            extraFoodPlusImage.setId(i);
-            extraFoodMinusImage.setId(i);
-
-            final String foodname=extraFoodArrayList.get(i).getExtra_food_name();
-            Log.e("foodnam",extraFoodArrayList.get(i).getExtra_food_name());
-
-            extraFoodPlusImage.setTag(foodname);
-            extraFoodMinusImage.setTag(foodname);
-
+            final int amount=   extraFoodArrayList.get(finalI).getAmount();
             extraFoodPlusImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        Log.e("***************","!!!!!!!!!!!!");
-                        setCountForExtraPlus(extraFoodArrayList.get(finalI).getAmount(),extraFoodItemPrice,extraFoodQuantity);
+                    int count = extraFoodArrayList.get(finalI).getItem_count()+1;
+                    extraFoodQuantity.setText(String.valueOf(count));
+                    extraFoodArrayList.get(finalI).setItem_count(count);
+                    extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*count));
+                    TotalAmount = TotalAmount+amount;
+                    setTotalPrice();
                 }
             });
             extraFoodMinusImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setCountForExtraMinus(extraFoodArrayList.get(finalI).getAmount(),extraFoodItemPrice,extraFoodQuantity);
+                    int count = extraFoodArrayList.get(finalI).getItem_count()-1;
+                    if(count<=0)
+                    {
+                        extraFoodQuantity.setText("0");
+                        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount));
+                        if(extraFoodQuantity.getText().toString().equalsIgnoreCase("0") && count==0)
+                        {
+                            count=0;
+                            extraFoodArrayList.get(finalI).setItem_count(count);
+                            TotalAmount = TotalAmount-amount;
+                            setTotalPrice();
+                        }
+                    }
+                    else
+                    {
+                        extraFoodQuantity.setText(String.valueOf(count));
+                        extraFoodArrayList.get(finalI).setItem_count(count);
+                        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*count));
+                        TotalAmount = TotalAmount- amount;
+                        setTotalPrice();
+                    }
                 }
             });
             extraFoodItemName.setText( extraFoodArrayList.get(i).getExtra_food_name());
@@ -181,30 +205,20 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
             foodDetailLinearLayoutExtras.addView(view);
         }
     }
-    private void setCountForExtraPlus( int amount, TextView extraFoodItemPrice,TextView extraFoodQuantity) {
-        extraCount =extraCount+1;
-        Log.e("in extra plus",String.valueOf(amount*extraCount));
-        Log.e("in extra plus", String.valueOf(amount));
-        Log.e("in extra plus", String.valueOf(extraCount));
-        extraFoodQuantity.setText(String.valueOf(extraCount));
-        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*extraCount));
-    }
-
-    private void setCountForExtraMinus(int amount, TextView extraFoodItemPrice,TextView extraFoodQuantity) {
-        if(extraCount>0){
-            extraCount =extraCount-1;
-            Log.e("in extra minus",String.valueOf(amount*extraCount));
-            Log.e("in extra minus", String.valueOf(extraCount));
-            extraFoodQuantity.setText(String.valueOf(extraCount));
-            extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*extraCount));
+    private void setTotalPrice() {
+        if(foodTVTotalQuantity.getText().toString().equalsIgnoreCase("0"))
+        {
+            Logger.snackBar(foodDetailCoordinatorLayout,getContext(),"Choose atleast One Quantity for the thali");
         }
         else
         {
-            extraCount=0;
-            extraFoodQuantity.setText("0");
-            extraFoodItemPrice.setText(String .valueOf(amount));
+            final int TotalPrice = TotalAmount+thaliPrice;
+            Log.e("Total in setTotlaPrice", String.valueOf(TotalAmount));
+            totalFoodAmount.setText(String.valueOf(TotalPrice));
         }
+
     }
+
     @Override
     protected void initToolbar() {
         MainActivity.getInstance().setActionBarTitle(selectedFoodName);
@@ -218,11 +232,12 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.food_detail_bt_orderNow:
-                if (!foodDetailTVTotalPrice.getText().toString().equalsIgnoreCase("0")) {
-                    bundle.putString(Constant.TOTAL_BILL, foodDetailTVTotalPrice.getText().toString());
+                if (!foodDetailTVThaliTotalPrice.getText().toString().equalsIgnoreCase("0")) {
+
                     bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
                     bundle.putString(Constant.CARD_NAME, selectedFoodName);
                     bundle.putString("pincode",foodDetailEdtPinCodeCheck.getText().toString());
+                    bundle.putString("TotalBill",totalFoodAmount.getText().toString());
                     final Fragment orderFoodFragment = new OrderFoodFragment();
                     orderFoodFragment.setArguments(bundle);
                     addFragment(this, orderFoodFragment, true);
@@ -237,10 +252,14 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                         Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.available_food));
                         foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
                         foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
+                        foodDetailExtraTextView.setVisibility(View.VISIBLE);
+                        foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
                         orderNow.setVisibility(View.VISIBLE);
                     } else{
                         foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
+                        foodDetailRelativeLayoutTotalBill.setVisibility(View.GONE);
                         foodDetailLinearLayoutExtras.setVisibility(View.GONE);
+                        foodDetailExtraTextView.setVisibility(View.GONE);
                         Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.not_available_pin_code));
                     }
                 }
@@ -249,37 +268,34 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 thaliPrice = getArguments().getInt("amount");
                 count =  count + 1;
                 thaliPrice = thaliPrice*count;
-               foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
                 orderNow.setVisibility(View.VISIBLE);
                 foodTVTotalQuantity.setText(String.valueOf(count));
-                foodDetailTVTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                foodDetailTVThaliTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                totalFoodAmount.setText(String.valueOf(thaliPrice));
+
                 break;
             case R.id.fragment_food_iv_minus:
-                foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
                 orderNow.setVisibility(View.VISIBLE);
                 count = count - 1;
                 if(count<0){
                     count=0;
                     foodTVTotalQuantity.setText("0");
-                    foodDetailTVTotalPrice.setText("0");
+                    foodDetailTVThaliTotalPrice.setText("0");
+                    totalFoodAmount.setText("0");
                 }
                 else
                 {
+
                     thaliPrice = getArguments().getInt("amount");
                     thaliPrice = thaliPrice*count;
                     foodTVTotalQuantity.setText(String.valueOf(count));
-                    foodDetailTVTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                    foodDetailTVThaliTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                    totalFoodAmount.setText(String.valueOf(thaliPrice));
                 }
                 break;
-             }
-         }
-    private void calculateTotal(final int thaliCount, final int gujaratiRotiCount, final int gujaratiVegCurryCount, final int gujaratiDalCount,
-                                final int gujaratiPulseCount, final int guajaratiRiceCount, final int butterMilkCount,
-                                final int punjabiRotiCount,final int punjabiVegCurryCount, final int punjabiDalCount, final int punjabiPulseCount, final int punjabiRiceCount,
-                                final int punjabiButtermilkCount, final int jainRotiCount, final int jainVegCurryCount,final int jainDalCount,final int jainPulseCount,
-                                final int jainRiceCount, final int jainButtermilkCount){
-
+        }
     }
+
 
     private void shareImage(){
         fragmentFoodLinearLayout.setDrawingCacheEnabled(true);

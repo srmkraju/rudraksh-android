@@ -220,7 +220,7 @@
                                     android:textSize="@dimen/fourteen_sp" />
 
                                 <com.rudraksh.food.widgets.AppTextView
-                                    android:id="@+id/fragment_food_tv_total_price"
+                                    android:id="@+id/fragment_food_tv_thali_total_price"
                                     style="@style/semi_bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -239,10 +239,12 @@
                                 style="@style/semi_bold"
                                 android:layout_width="wrap_content"
                                 android:layout_gravity="left"
+                                android:id="@+id/food_detail_extra_TV"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/ten_dp"
                                 android:layout_marginTop="@dimen/twenty_dp"
                                 android:text="@string/extras"
+                                android:visibility="gone"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/eighteen_sp" />
                             <LinearLayout
@@ -262,7 +264,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/ten_dp"
                     android:gravity="center"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/twenty_dp">
                     <LinearLayout
                         android:layout_width="match_parent"
