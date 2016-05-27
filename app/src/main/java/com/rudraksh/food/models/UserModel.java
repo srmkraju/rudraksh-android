@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 /**
  * Created by dell8 on 19/5/16.
  */
@@ -21,18 +19,44 @@ public class UserModel {
     @SerializedName("address")
     private String address;
 
+    @SerializedName("address2")
+    private String address2;
+
     @SerializedName("pincode")
     private String pincode;
 
-    @SerializedName("extra_food")
-    private JSONObject extraFoodJsonObject;
+    @SerializedName("extra_products")
+    private JSONObject extraProductsJsonObject;
 
-    @SerializedName("total_amount")
-    private int total_amount;
+    @SerializedName("amount")
+    private int amount;
 
     @SerializedName("product_id")
     private int product_id;
 
+    @SerializedName("product_count")
+    private int product_count;
+
+    @SerializedName("have_extra")
+    private int have_extra;
+
+
+    public int getHave_extra() {
+        return have_extra;
+    }
+
+    public void setHave_extra(int have_extra) {
+        this.have_extra = have_extra;
+    }
+
+
+    public int getProduct_count() {
+        return product_count;
+    }
+
+    public void setProduct_count(int product_count) {
+        this.product_count = product_count;
+    }
 
     public int getProduct_id() {
         return product_id;
@@ -42,42 +66,20 @@ public class UserModel {
         this.product_id = product_id;
     }
 
-
-    private String address2;
-    private int count;
-    private int extra_food_id;
-
-    public int getTotal_amount() {
-        return total_amount;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setTotal_amount(int total_amount) {
-        this.total_amount = total_amount;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public JSONObject getExtraFoodJsonObject() {
-        return extraFoodJsonObject;
+    public JSONObject getExtraProductsJsonObject() {
+        return extraProductsJsonObject;
     }
 
-    public void setExtraFoodJsonObject(JSONObject extraFoodJsonObject) {
-        this.extraFoodJsonObject = extraFoodJsonObject;
-    }
-
-    public int getExtra_food_id() {
-        return extra_food_id;
-    }
-
-    public void setExtra_food_id(int extra_food_id) {
-        this.extra_food_id = extra_food_id;
-    }
-
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    public void setExtraProductsJsonObject(JSONObject extraProductsJsonObject) {
+        this.extraProductsJsonObject = extraProductsJsonObject;
     }
 
     public String getAddress2() {

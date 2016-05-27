@@ -251,7 +251,14 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     bundle.putString("pincode",foodDetailEdtPinCodeCheck.getText().toString());
                     bundle.putString("TotalBill",totalFoodAmount.getText().toString());
                     bundle.putInt("productId",productId);
+                    bundle.putInt("thali count",count);
                     bundle.putParcelableArrayList("Data",extraFoodArrayList);
+                    if(TotalAmount==0)
+                    {
+                        bundle.putInt("have_extra",0);
+                    }else{
+                        bundle.putInt("have_extra",1);
+                    }
                     final Fragment orderFoodFragment = new OrderFoodFragment();
                     orderFoodFragment.setArguments(bundle);
                     addFragment(this, orderFoodFragment, true);
