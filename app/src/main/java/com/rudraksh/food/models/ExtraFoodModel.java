@@ -1,5 +1,8 @@
 package com.rudraksh.food.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ public class ExtraFoodModel {
 
 
 
-    public class ExtraFoodResponseModel{
+    public class ExtraFoodResponseModel implements Parcelable{
         @SerializedName("id")
         private int id;
 
@@ -44,6 +47,25 @@ public class ExtraFoodModel {
 
         private int item_count=0;
 
+
+        protected ExtraFoodResponseModel(Parcel in) {
+            id = in.readInt();
+            extra_food_name = in.readString();
+            amount = in.readInt();
+            item_count = in.readInt();
+        }
+
+        public final Creator<ExtraFoodResponseModel> CREATOR = new Creator<ExtraFoodResponseModel>() {
+            @Override
+            public ExtraFoodResponseModel createFromParcel(Parcel in) {
+                return new ExtraFoodResponseModel(in);
+            }
+
+            @Override
+            public ExtraFoodResponseModel[] newArray(int size) {
+                return new ExtraFoodResponseModel[size];
+            }
+        };
 
         public int getItem_count() {
             return item_count;
@@ -78,5 +100,17 @@ public class ExtraFoodModel {
         }
 
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(id);
+            dest.writeString(extra_food_name);
+            dest.writeInt(amount);
+            dest.writeInt(item_count);
+        }
     }
 }

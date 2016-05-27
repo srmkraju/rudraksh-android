@@ -1,6 +1,9 @@
 package com.rudraksh.food.models;
 
+
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -8,13 +11,6 @@ import java.util.ArrayList;
  * Created by dell8 on 19/5/16.
  */
 public class UserModel {
-    @SerializedName("response")
-    private boolean isresponse;
-
-
-
-    @SerializedName("message")
-    private String message;
 
     @SerializedName("name")
     private String name;
@@ -26,29 +22,63 @@ public class UserModel {
     private String address;
 
     @SerializedName("pincode")
-    private String  pincode;
+    private String pincode;
+
+    @SerializedName("extra_food")
+    private JSONObject extraFoodJsonObject;
+
+    @SerializedName("total_amount")
+    private int total_amount;
+
+    @SerializedName("product_id")
+    private int product_id;
+
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
 
     private String address2;
+    private int count;
+    private int extra_food_id;
 
-    public boolean isresponse() {
-        return isresponse;
+    public int getTotal_amount() {
+        return total_amount;
     }
 
-    public void setIsresponse(boolean isresponse) {
-        this.isresponse = isresponse;
+    public void setTotal_amount(int total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    public JSONObject getExtraFoodJsonObject() {
+        return extraFoodJsonObject;
+    }
+
+    public void setExtraFoodJsonObject(JSONObject extraFoodJsonObject) {
+        this.extraFoodJsonObject = extraFoodJsonObject;
+    }
+
+    public int getExtra_food_id() {
+        return extra_food_id;
+    }
+
+    public void setExtra_food_id(int extra_food_id) {
+        this.extra_food_id = extra_food_id;
     }
 
 
-
-    public String getMessage() {
-        return message;
+    public int getCount() {
+        return count;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setCount(int count) {
+        this.count = count;
     }
-
-
 
     public String getAddress2() {
         return address2;
@@ -90,7 +120,6 @@ public class UserModel {
     public void setPincode(String pincode) {
         this.pincode = pincode;
     }
-
 
 
 }

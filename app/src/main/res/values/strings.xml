@@ -105,4 +105,5 @@
     <string name="ok">OK</string>
     <string name="offers_not_found">Offers Not Found</string>
     <string name="email">Email</string>
+    <string name="pin_code">Pin Code</string>
 </resources>

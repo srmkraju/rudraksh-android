@@ -20,8 +20,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.MainActivity;
+import com.rudraksh.food.models.ExtraFoodModel;
 import com.rudraksh.food.models.UserModel;
 import com.rudraksh.food.models.UserResponseModel;
 import com.rudraksh.food.utils.Constant;
@@ -31,11 +34,17 @@ import com.rudraksh.food.utils.Utils;
 import com.rudraksh.food.webservices.RestClient;
 import com.rudraksh.food.webservices.RetrofitCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -58,17 +67,24 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private EditText orderFoodETMobileNo;
     private EditText orderFoodETAddress1;
     private EditText orderFoodETAdrress2;
+    private EditText orderFoodETEmail;
+
     private Button orderFoodBtnOrder;
     private TextView orderFoodTVTotalBill;
     private CoordinatorLayout orderFoodCordinatorLayout;
     private TextView orderFoodTVOrderDateTime;
     private EditText orderFoodEdtOrderDate;
+
     private String pincode;
     private String totalBill;
     private String totalQuantity;
     private String selectedOrderFoodName;
     private String orderFormatTime;
+
+    private int productId;
     private SendMail sm;
+
+    private ArrayList<ExtraFoodModel.ExtraFoodResponseModel> dataFromFoodDetailFragment ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,11 +98,16 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             totalQuantity = getArguments().getString(Constant.TOTAL_QUANTITY);
             selectedOrderFoodName = getArguments().getString(Constant.CARD_NAME);
             pincode = getArguments().getString("pincode");
+            dataFromFoodDetailFragment = getArguments().getParcelableArrayList("Data");
+            productId = getArguments().getInt("productId");
+
         }
         orderFoodETUserName = (EditText) view.findViewById(R.id.fragment_order_edt_user_name);
         orderFoodETMobileNo = (EditText) view.findViewById(R.id.fragment_order_edt_mobile_no);
         orderFoodETAddress1 = (EditText) view.findViewById(R.id.fragment_order_edt_address1);
         orderFoodETAdrress2 = (EditText) view.findViewById(R.id.fragment_order_edt_address2);
+        orderFoodETEmail = (EditText)view.findViewById(R.id.fragment_order_edt_email);
+
         orderFoodBtnOrder = (Button) view.findViewById(R.id.fragment_order_food_btn_order);
         orderFoodTVTotalBill = (TextView) view.findViewById(R.id.order_food_tv_total_bill);
         orderFoodCordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_order_food_coordinatorLayout);
@@ -112,7 +133,11 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fragment_order_food_btn_order:
-                checkFoodOrderUserValidation();
+                try {
+                    checkFoodOrderUserValidation();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.fragment_order_edt_order_date:
                 openOrderDateTime();
@@ -153,7 +178,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         mDatePicker.show();
     }
 
-    private void checkFoodOrderUserValidation() {
+    private void checkFoodOrderUserValidation() throws JSONException {
         final String userName = orderFoodETUserName.getText().toString();
         final String mobileNo = orderFoodETMobileNo.getText().toString();
         final String address1 = orderFoodETAddress1.getText().toString();
@@ -196,16 +221,32 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private UserModel setUserData(String userName, String mobileNo, String address1, String address2, String pincode) {
+    private UserModel setUserData(String userName, String mobileNo, String address1, String address2, String pincode) throws JSONException {
         UserModel usermodel = new UserModel();
         usermodel.setName(userName);
         usermodel.setMobile(mobileNo);
         usermodel.setPincode(pincode);
         usermodel.setAddress(address1);
         usermodel.setAddress2(address2);
+        usermodel.setTotal_amount(Integer.parseInt(totalBill));
+        usermodel.setProduct_id(productId);
+
+        JSONObject myJson = new JSONObject();
+        for(int i = 0; i<dataFromFoodDetailFragment.size(); i++)
+        {
+
+            usermodel.setCount(dataFromFoodDetailFragment.get(i).getItem_count());
+            usermodel.setExtra_food_id(dataFromFoodDetailFragment.get(i).getId());
+            Log.e("count ", String.valueOf(dataFromFoodDetailFragment.get(i).getItem_count()));
+            Log.e("name",dataFromFoodDetailFragment.get(i).getExtra_food_name());
+            Log.e("amount", String.valueOf(dataFromFoodDetailFragment.get(i).getAmount()));
+//            extraFoodHashmap.put(dataFromFoodDetailFragment.get(i).getId(), dataFromFoodDetailFragment.get(i).getItem_count());
+            myJson.put(String.valueOf(dataFromFoodDetailFragment.get(i).getId()),dataFromFoodDetailFragment.get(i).getItem_count());
+        }
+
+        usermodel.setExtraFoodJsonObject(myJson);
         return usermodel;
     }
-
     private void doSignUp(final UserModel userDetail) {
         try {
             final ProgressDialog dialog = Logger.showProgressDialog(getContext());
@@ -239,105 +280,105 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
 
     }
 
-    private void sendEmailWithContent(final String userName, final String mobileNo, final String address1, final String orderTime) {
-        Session session = createSessionObject();
-
-        try {
-            Message message = createMessage(userName, mobileNo, address1, orderTime,session);
-            new SendMailTask().execute(message);
-        } catch (AddressException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Message createMessage(String username, String moile, String messageBody, String orderTime,Session session) throws MessagingException, UnsupportedEncodingException {
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("sraju432@gmail.com", "subbaraju123"));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress("sraju432@gmail.com", "sraju432@gmail.com"));
-        message.setSubject("hi");
-        message.setText("301 setu");
-        return message;
-    }
-
-    private Session createSessionObject() {
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", true);
-        properties.put("mail.smtp.starttls.enable", true);
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.setProperty("mail.smtp.ssl.trust", "smtpserver");
-
-        return Session.getInstance(properties, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("sraju432@gmail.com", "subbaraju123");
-            }
-        });
-    }
-
-    private class SendMailTask extends AsyncTask<Message, Void, Void> {
-        private ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = ProgressDialog.show(getActivity(), "Please wait", "Sending mail", true, false);
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressDialog.dismiss();
-        }
-
-        @Override
-        protected Void doInBackground(Message... messages) {
-            try {
-                Transport.send(messages[0]);
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
-    private void sendEmail(final String userName, final String mobileNo, final String address1, final String orderTime){
-        if(Utils.isConnectedToInternet(getActivity())){
-            String[] TO = {"sraju432@gmail.com"};
-            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-            emailIntent.setData(Uri.parse("mailto:"));
-            emailIntent.setType("text/plain");
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-            if(!TextUtils.isEmpty(orderFormatTime)){
-                if(orderTime.contains("AM")){
-                    Logger.e("Order AM");
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName + " for Lunch");
-                } else if (orderTime.contains("PM")){
-                    Logger.e("Order PM");
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName + " for Dinner");
-                }
-            }
-
-            emailIntent.putExtra(Intent.EXTRA_TEXT, "Name : " + userName + "\n" +
-                    " Mobile No " + mobileNo + "\n" + " Address1 " + address1 );
-
-            try {
-                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                getActivity().finish();
-            }
-            catch (android.content.ActivityNotFoundException ex) {
-                Logger.snackBar(orderFoodCordinatorLayout,getActivity(),getString(R.string.no_emial_client));
-            }
-        } else{
-            Logger.snackBar(orderFoodCordinatorLayout,getActivity(),getString(R.string.connect_to_internet));
-        }
-        //openWhatsappContact("8140113954");
-
-    }
+//    private void sendEmailWithContent(final String userName, final String mobileNo, final String address1, final String orderTime) {
+//        Session session = createSessionObject();
+//
+//        try {
+//            Message message = createMessage(userName, mobileNo, address1, orderTime,session);
+//            new SendMailTask().execute(message);
+//        } catch (AddressException e) {
+//            e.printStackTrace();
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private Message createMessage(String username, String moile, String messageBody, String orderTime,Session session) throws MessagingException, UnsupportedEncodingException {
+//        Message message = new MimeMessage(session);
+//        message.setFrom(new InternetAddress("sraju432@gmail.com", "subbaraju123"));
+//        message.addRecipient(Message.RecipientType.TO, new InternetAddress("sraju432@gmail.com", "sraju432@gmail.com"));
+//        message.setSubject("hi");
+//        message.setText("301 setu");
+//        return message;
+//    }
+//
+//    private Session createSessionObject() {
+//        Properties properties = new Properties();
+//        properties.put("mail.smtp.auth", true);
+//        properties.put("mail.smtp.starttls.enable", true);
+//        properties.put("mail.smtp.host", "smtp.gmail.com");
+//        properties.put("mail.smtp.port", "587");
+//        properties.setProperty("mail.smtp.ssl.trust", "smtpserver");
+//
+//        return Session.getInstance(properties, new javax.mail.Authenticator() {
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication("sraju432@gmail.com", "subbaraju123");
+//            }
+//        });
+//    }
+//
+//    private class SendMailTask extends AsyncTask<Message, Void, Void> {
+//        private ProgressDialog progressDialog;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            progressDialog = ProgressDialog.show(getActivity(), "Please wait", "Sending mail", true, false);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//            progressDialog.dismiss();
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Message... messages) {
+//            try {
+//                Transport.send(messages[0]);
+//            } catch (MessagingException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//    }
+//
+//    private void sendEmail(final String userName, final String mobileNo, final String address1, final String orderTime){
+//        if(Utils.isConnectedToInternet(getActivity())){
+//            String[] TO = {"sraju432@gmail.com"};
+//            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+//
+//            emailIntent.setData(Uri.parse("mailto:"));
+//            emailIntent.setType("text/plain");
+//            emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+//            if(!TextUtils.isEmpty(orderFormatTime)){
+//                if(orderTime.contains("AM")){
+//                    Logger.e("Order AM");
+//                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName + " for Lunch");
+//                } else if (orderTime.contains("PM")){
+//                    Logger.e("Order PM");
+//                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Order for " + totalQuantity + "of " + selectedOrderFoodName + " for Dinner");
+//                }
+//            }
+//
+//            emailIntent.putExtra(Intent.EXTRA_TEXT, "Name : " + userName + "\n" +
+//                    " Mobile No " + mobileNo + "\n" + " Address1 " + address1 );
+//
+//            try {
+//                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+//                getActivity().finish();
+//            }
+//            catch (android.content.ActivityNotFoundException ex) {
+//                Logger.snackBar(orderFoodCordinatorLayout,getActivity(),getString(R.string.no_emial_client));
+//            }
+//        } else{
+//            Logger.snackBar(orderFoodCordinatorLayout,getActivity(),getString(R.string.connect_to_internet));
+//        }
+//        //openWhatsappContact("8140113954");
+//
+//    }
     private void openThankYouAlertDialog() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
@@ -352,14 +393,14 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         // Showing Alert Message
         alertDialog.show();
     }
-    private void showAlarmAlertDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
-        builder.setTitle("Dialog");
-        builder.setMessage("Do you want to set Alarm everyday to order food?");
-        builder.setPositiveButton(getString(R.string.yes), null);
-        builder.setNegativeButton(getString(R.string.cancel), null);
-        builder.show();
-    }
+//    private void showAlarmAlertDialog(){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+//        builder.setTitle("Dialog");
+//        builder.setMessage("Do you want to set Alarm everyday to order food?");
+//        builder.setPositiveButton(getString(R.string.yes), null);
+//        builder.setNegativeButton(getString(R.string.cancel), null);
+//        builder.show();
+//    }
 }
 
 
