@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.models.ExtraFoodModel;
@@ -200,15 +201,16 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         if(have_extra_product==1){
             usermodel.setHave_extra(have_extra_product);
             Log.e("have_extra",String.valueOf(have_extra_product));
-            JSONObject myJson = new JSONObject();
+            JsonObject myJson = new JsonObject();
             for(int i = 0; i<dataFromFoodDetailFragment.size(); i++)
             {
                 Log.e("count ", String.valueOf(dataFromFoodDetailFragment.get(i).getItem_count()));
                 Log.e("name",dataFromFoodDetailFragment.get(i).getExtra_food_name());
                 Log.e("amount", String.valueOf(dataFromFoodDetailFragment.get(i).getAmount()));
-                myJson.put(String.valueOf(dataFromFoodDetailFragment.get(i).getId()),dataFromFoodDetailFragment.get(i).getItem_count());
+                myJson.addProperty(String.valueOf(dataFromFoodDetailFragment.get(i).getId()),dataFromFoodDetailFragment.get(i).getItem_count());
             }
-            usermodel.setExtraProductsJsonObject(myJson);
+            usermodel.setExtra_products(myJson);
+            Log.e("myJson", String.valueOf(myJson));
         }else{
             usermodel.setHave_extra(have_extra_product);
             Log.e("have_extra",String.valueOf(have_extra_product));

@@ -21,7 +21,7 @@ public interface ApiInterface {
     @GET("extraproducts")
     Call<ExtraFoodModel> getExtraFood();
 
-    @POST("users")
+    @POST("orders")
     Call<UserResponseModel> signUp(@Body UserModel userModel);
 
     @GET("offers")

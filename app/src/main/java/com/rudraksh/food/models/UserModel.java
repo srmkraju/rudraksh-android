@@ -1,6 +1,7 @@
 package com.rudraksh.food.models;
 
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ public class UserModel {
     private String pincode;
 
     @SerializedName("extra_products")
-    private JSONObject extraProductsJsonObject;
+    private JsonObject extra_products;
 
     @SerializedName("amount")
     private int amount;
@@ -74,12 +75,12 @@ public class UserModel {
         this.amount = amount;
     }
 
-    public JSONObject getExtraProductsJsonObject() {
-        return extraProductsJsonObject;
+    public JsonObject getExtra_products() {
+        return extra_products;
     }
 
-    public void setExtraProductsJsonObject(JSONObject extraProductsJsonObject) {
-        this.extraProductsJsonObject = extraProductsJsonObject;
+    public void setExtra_products(JsonObject extra_products) {
+        this.extra_products = extra_products;
     }
 
     public String getAddress2() {
