@@ -45,6 +45,7 @@ public class FoodTypeAdapter extends RecyclerView.Adapter<FoodTypeAdapter.MyView
             super(view);
             foodFragmentRecyclerTextView = (TextView) view.findViewById(R.id.fragment_food_name_tv);
             foodFragmentRecyclerImageView = (AppImageView) view.findViewById(R.id.fragment_food_name_iv);
+            foodFragmentRecyclerImageView.setGradient(true);
             view.setOnClickListener(this);
         }
 

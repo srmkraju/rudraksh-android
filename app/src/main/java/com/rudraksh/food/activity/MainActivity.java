@@ -1,5 +1,6 @@
 package com.rudraksh.food.activity;
 
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +39,11 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         titleTextView = (TextView) toolbar.findViewById(R.id.row_toolbar_tv_title);
         setSupportActionBar(toolbar);
         setActionBarTitle();
+
+        final Window window = MainActivity.this.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(MainActivity.this.getResources().getColor(R.color.colorPrimaryDark));
+        }
 
         backImageView = (ImageView) findViewById(R.id.row_toolbar_iv_back);
         shareImageView = (ImageView) findViewById(R.id.row_toolbar_iv_share);

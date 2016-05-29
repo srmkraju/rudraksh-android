@@ -56,10 +56,6 @@
     <string name="your_total_bill">Your total bill</string>
     <string name="select_items">Select Items</string>
 
-    <string name="offer_1">\u2022 In same office, building or society 5 or less than 10 Tiffin service will get 10% discount to each members.</string>
-    <string name="offer_2">\u2022 In same office, building or society 10 or less than 15 Tiffin service will get 15% discount to each members.</string>
-    <string name="offer_3">\u2022 In same office, building or society 15 or less than 20 Tiffin service will get 20% discount to each members.</string>
-    <string name="offer_4">\u2022 In same office, building or society 15 or less than 25 Tiffin service will get 25% discount to each members.</string>
     <string name="photo_gallery">Photo Gallery</string>
 
     <string name="share_via">Share via</string>
@@ -106,4 +102,8 @@
     <string name="offers_not_found">Offers Not Found</string>
     <string name="email">Email</string>
     <string name="pin_code">Pin Code</string>
+    <string name="feedback">Feedback</string>
+    <string name="enter_feedback">Enter your feedback</string>
+    <string name="thank_you_feedback">Thank you for your valuable feedback</string>
+    <string name="rudraksh_food_and_p_g_service">Rudraksh Food \n&amp; \nP.G Service</string>
 </resources>

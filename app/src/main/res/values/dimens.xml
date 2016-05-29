@@ -23,6 +23,9 @@
     <dimen name="one_fifty_dp">150dp</dimen>
     <dimen name="one_eighty_dp">180dp</dimen>
     <dimen name="two_hundred_dp">200dp</dimen>
+    <dimen name="two_hundred__twenty_dp">220dp</dimen>
+    <dimen name="two_hundred__forty_dp">240dp</dimen>
+    <dimen name="two_hundred__fifty_dp">250dp</dimen>
     <dimen name="tab_min_height">56dp</dimen>
 
     <dimen name="nine_sp">9sp</dimen>

@@ -2,11 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/eighty_dp"
-
     android:layout_marginBottom="@dimen/five_dp"
-    android:layout_marginEnd="@dimen/five_dp"
-    android:layout_marginStart="@dimen/five_dp"
-    android:layout_marginTop="@dimen/fifteen_dp">
+    android:layout_marginEnd="@dimen/ten_dp"
+    android:layout_marginStart="@dimen/ten_dp"
+    android:layout_marginTop="@dimen/twenty_dp">
 
     <com.rudraksh.food.widgets.AppTextView
         style="@style/semi_bold"
@@ -14,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textSize="@dimen/eighteen_sp" />
+        android:gravity="start"
+        android:padding="@dimen/five_dp"
+        android:textSize="@dimen/sixteen_sp" />
 </android.support.v7.widget.CardView>
 

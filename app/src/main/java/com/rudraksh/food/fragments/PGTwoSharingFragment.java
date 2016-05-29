@@ -7,9 +7,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rudraksh.food.R;
@@ -24,6 +26,8 @@ import java.util.Locale;
 public class PGTwoSharingFragment extends BaseFragment implements View.OnClickListener{
     //private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton callFloatingButton;
+    private ImageView sharingImageView;
+    private String sharing;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_pg_sharing, container, false);
@@ -31,12 +35,28 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initView(View view) {
         callFloatingButton = (FloatingActionButton) view.findViewById(R.id.fragment_pg_fab_call);
+        sharingImageView = (ImageView) view.findViewById(R.id.fragment_pg_sharing_iv);
+
+        if(getArguments()!=null){
+            sharing = getArguments().getString("sharing");
+        }
+        if(!TextUtils.isEmpty(sharing)){
+            if(sharing.equalsIgnoreCase("OneSharing")){
+                sharingImageView.setImageResource(R.drawable.single_sharing_pg);
+                MainActivity.getInstance().setActionBarTitle(getString(R.string.one_sharing));
+            } else if(sharing.equalsIgnoreCase("TwoSharing")){
+                sharingImageView.setImageResource(R.drawable.two_share_pg);
+                MainActivity.getInstance().setActionBarTitle(getString(R.string.two_sharing));
+            } else if(sharing.equalsIgnoreCase("ThreeSharing")){
+                sharingImageView.setImageResource(R.drawable.three_share_pg);
+                MainActivity.getInstance().setActionBarTitle(getString(R.string.three_sharing));
+            }
+        }
         callFloatingButton.setOnClickListener(this);
     }
 
     @Override
     protected void initToolbar() {
-        MainActivity.getInstance().setActionBarTitle(getString(R.string.two_sharing));
         MainActivity.getInstance().showBackButton();
         MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
         //MainActivity.getInstance().getShareImageView().setOnClickListener(this);

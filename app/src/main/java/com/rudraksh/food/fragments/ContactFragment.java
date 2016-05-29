@@ -9,14 +9,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.utils.Constant;
+import com.rudraksh.food.utils.Logger;
+import com.rudraksh.food.utils.SendMail;
 
 import java.util.Locale;
 
@@ -27,6 +31,9 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     private Button contactFrgmentBtnMukesh;
     private Button contactFragmentBtnNaresh;
+    private EditText contactFragmentFeedback;
+    private Button contactFragmentSubmit;
+    private SendMail sm;
 
     @Nullable
     @Override
@@ -38,8 +45,11 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
     protected void initView(View view) {
         contactFrgmentBtnMukesh = (Button) view.findViewById(R.id.frament_contact_btn_mukesh);
         contactFragmentBtnNaresh = (Button) view.findViewById(R.id.frament_contact_btn_naresh);
+        contactFragmentFeedback = (EditText) view.findViewById(R.id.fragment_contact_edt_feedback);
+        contactFragmentSubmit = (Button) view.findViewById(R.id.fragment_contact_btn_submit);
         contactFrgmentBtnMukesh.setOnClickListener(this);
         contactFragmentBtnNaresh.setOnClickListener(this);
+        contactFragmentSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -65,7 +75,22 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
             case R.id.frament_contact_btn_naresh:
                 callToNaresh();
                 break;
+            case R.id.fragment_contact_btn_submit:
+                sendFeedBack();
+                break;
         }
+    }
+
+    private void sendFeedBack(){
+        if(!TextUtils.isEmpty(contactFragmentFeedback.getText().toString())){
+            sm = new SendMail(getActivity(),"sraju432@gmail.com","Reg: Feedback", contactFragmentFeedback.getText().toString());
+            sm.execute();
+            contactFragmentFeedback.setText("");
+            Logger.toast(getActivity(),getString(R.string.thank_you_feedback));
+        } else{
+            Logger.toast(getActivity(),getString(R.string.enter_feedback));
+        }
+
     }
 
     private void callToMukesh(){

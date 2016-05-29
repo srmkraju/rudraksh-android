@@ -2,8 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardElevation="@dimen/five_dp">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/fargment_food_detail_coordinatorLayout"
@@ -28,12 +27,8 @@
                     <com.rudraksh.food.widgets.AppImageView
                         android:id="@+id/fragment_food_detail_iv"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/one_fifty_dp"
-                        android:scaleType="centerCrop"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@null"
-                        android:src="@drawable/gujarathi_thali"
-                        android:visibility="visible" />
+                        android:layout_height="@dimen/two_hundred__twenty_dp"
+                        android:contentDescription="@null" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

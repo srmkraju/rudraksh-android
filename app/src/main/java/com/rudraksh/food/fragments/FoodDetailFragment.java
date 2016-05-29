@@ -74,9 +74,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private RelativeLayout orderNowLayout;
 
 
-    private int count=0;
+    private int count = 0;
     private int thaliPrice;
-    private int TotalAmount=0;
+    private int TotalAmount = 0;
     private int productId;
 
     private CoordinatorLayout foodDetailCoordinatorLayout;
@@ -87,10 +87,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private double myLatitude = 23.026509;
     private double myLongitude = 72.560910;
 
-
-
     private ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList = new ArrayList<>();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,9 +102,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodIVPlus = (ImageView) view.findViewById(R.id.fragment_food_iv_plus);
         foodIVMinus = (ImageView) view.findViewById(R.id.fragment_food_iv_minus);
         foodTVTotalQuantity = (TextView) view.findViewById(R.id.fragment_food_tv_total_quantity);
-        foodDetailExtraTextView = (TextView)view.findViewById(R.id.food_detail_extra_TV);
+        foodDetailExtraTextView = (TextView) view.findViewById(R.id.food_detail_extra_TV);
         foodDetailTVThaliTotalPrice = (TextView) view.findViewById(R.id.fragment_food_tv_thali_total_price);
-        totalFoodAmount = (TextView)view.findViewById(R.id.order_food_extra_TV_total);
+        totalFoodAmount = (TextView) view.findViewById(R.id.order_food_extra_TV_total);
         foodDetailCoordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.fargment_food_detail_coordinatorLayout);
 
         foodDetailEdtPinCodeCheck = (EditText) view.findViewById(R.id.fragment_food_edt_check_availability);
@@ -118,7 +115,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         foodDetailLinearLayoutExtras = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_extras);
         foodDetailLinearLayoutAddMinus = (LinearLayout) view.findViewById(R.id.fragment_food_ll_parent_add_minus);
         foodDetailRelativeLayoutTotalBill = (RelativeLayout) view.findViewById(R.id.fragment_order_rl_total_bill);
-        orderNowLayout = (RelativeLayout)view.findViewById(R.id.food_detail_rl_orderNow);
+        orderNowLayout = (RelativeLayout) view.findViewById(R.id.food_detail_rl_orderNow);
 
         orderNow = (Button) view.findViewById(R.id.food_detail_bt_orderNow);
         getExtraFoodItem();
@@ -133,22 +130,22 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
         if (getArguments() != null) {
             final String imageUrl = getArguments().getString("imageUrl");
-            foodDetailImageView.loadImage(Constant.BASE_URL+"uploads/"+imageUrl);
+            foodDetailImageView.loadImage(Constant.BASE_URL + "uploads/" + imageUrl);
             selectedFoodName = getArguments().getString("name");
             thaliPrice = getArguments().getInt("amount");
             foodDetailTextViewItemIncluded.setText(getArguments().getString("description"));
             productId = getArguments().getInt("Id");
         }
     }
+
     private void getExtraFoodItem() {
         try {
             final ProgressDialog dialog = com.rudraksh.food.utils.Logger.showProgressDialog(getContext());
             final Call<ExtraFoodModel> extraModelCall = RestClient.getInstance().getApiInterface().getExtraFood();
-            extraModelCall.enqueue(new RetrofitCallback<ExtraFoodModel>(getContext(),dialog) {
+            extraModelCall.enqueue(new RetrofitCallback<ExtraFoodModel>(getContext(), dialog) {
                 @Override
                 public void onSuccess(ExtraFoodModel extraFoodResponse) {
-                    if(extraFoodResponse.isResponse())
-                    {
+                    if (extraFoodResponse.isResponse()) {
                         extraFoodResponse.getData().trimToSize();
                         extraFoodArrayList.addAll(extraFoodResponse.getData());
                         setExtraFoodData(extraFoodArrayList);
@@ -164,69 +161,63 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private void setExtraFoodData(final ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList) {
 
 
-        for(int i =0; i<extraFoodArrayList.size(); i++){
+        for (int i = 0; i < extraFoodArrayList.size(); i++) {
             final int finalI = i;
 
             final LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            final View view = layoutInflater.inflate(R.layout.row_food_detail_extra_item,null);
-            final TextView extraFoodItemName = (TextView)view.findViewById(R.id.row_food_detail_extra_item_tv);
-            final TextView  extraFoodItemPrice = (TextView)view.findViewById(R.id.row_food_detail_extra_item_price_tv);
-            final TextView extraFoodQuantity = (TextView)view.findViewById(R.id.extra_food_TV_extra_total_quantity);
-            final ImageView extraFoodPlusImage = (ImageView)view.findViewById(R.id.extra_food_IV_add) ;
-            final ImageView extraFoodMinusImage = (ImageView)view.findViewById(R.id.extra_food_IV_minus);
+            final View view = layoutInflater.inflate(R.layout.row_food_detail_extra_item, null);
+            final TextView extraFoodItemName = (TextView) view.findViewById(R.id.row_food_detail_extra_item_tv);
+            final TextView extraFoodItemPrice = (TextView) view.findViewById(R.id.row_food_detail_extra_item_price_tv);
+            final TextView extraFoodQuantity = (TextView) view.findViewById(R.id.extra_food_TV_extra_total_quantity);
+            final ImageView extraFoodPlusImage = (ImageView) view.findViewById(R.id.extra_food_IV_add);
+            final ImageView extraFoodMinusImage = (ImageView) view.findViewById(R.id.extra_food_IV_minus);
 
-            final int amount=   extraFoodArrayList.get(finalI).getAmount();
+            final int amount = extraFoodArrayList.get(finalI).getAmount();
             extraFoodPlusImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int count = extraFoodArrayList.get(finalI).getItem_count()+1;
+                    int count = extraFoodArrayList.get(finalI).getItem_count() + 1;
                     extraFoodQuantity.setText(String.valueOf(count));
                     extraFoodArrayList.get(finalI).setItem_count(count);
 //                    extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*count));
-                    TotalAmount = TotalAmount+amount;
+                    TotalAmount = TotalAmount + amount;
                     setTotalPrice();
                 }
             });
             extraFoodMinusImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int count = extraFoodArrayList.get(finalI).getItem_count()-1;
-                    if(count<=0)
-                    {
+                    int count = extraFoodArrayList.get(finalI).getItem_count() - 1;
+                    if (count <= 0) {
                         extraFoodQuantity.setText("0");
 //                        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount));
-                        if(extraFoodQuantity.getText().toString().equalsIgnoreCase("0") && count==0)
-                        {
-                            count=0;
+                        if (extraFoodQuantity.getText().toString().equalsIgnoreCase("0") && count == 0) {
+                            count = 0;
                             extraFoodArrayList.get(finalI).setItem_count(count);
-                            TotalAmount = TotalAmount-amount;
+                            TotalAmount = TotalAmount - amount;
                             setTotalPrice();
                         }
-                    }
-                    else
-                    {
+                    } else {
                         extraFoodQuantity.setText(String.valueOf(count));
                         extraFoodArrayList.get(finalI).setItem_count(count);
 //                        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*count));
-                        TotalAmount = TotalAmount- amount;
+                        TotalAmount = TotalAmount - amount;
                         setTotalPrice();
                     }
                 }
             });
-            extraFoodItemName.setText( extraFoodArrayList.get(i).getExtra_food_name());
-            extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(extraFoodArrayList.get(i).getAmount()));
+            extraFoodItemName.setText(extraFoodArrayList.get(i).getExtra_food_name());
+            extraFoodItemPrice.setText("\u20B9" + " " + String.valueOf(extraFoodArrayList.get(i).getAmount()));
             foodDetailLinearLayoutExtras.addView(view);
         }
     }
+
     private void setTotalPrice() {
-        if(foodTVTotalQuantity.getText().toString().equalsIgnoreCase("0"))
-        {
-            Logger.snackBar(foodDetailCoordinatorLayout,getContext(),"Choose atleast One Quantity for the thali");
-        }
-        else
-        {
-            final int TotalPrice = TotalAmount+thaliPrice;
-             totalFoodAmount.setText(String.valueOf(TotalPrice));
+        if (foodTVTotalQuantity.getText().toString().equalsIgnoreCase("0")) {
+            Logger.snackBar(foodDetailCoordinatorLayout, getContext(), "Choose atleast One Quantity for the thali");
+        } else {
+            final int TotalPrice = TotalAmount + thaliPrice;
+            totalFoodAmount.setText(String.valueOf(TotalPrice));
         }
 
     }
@@ -248,16 +239,15 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
                     bundle.putString(Constant.TOTAL_QUANTITY, foodTVTotalQuantity.getText().toString());
                     bundle.putString(Constant.CARD_NAME, selectedFoodName);
-                    bundle.putString("pincode",foodDetailEdtPinCodeCheck.getText().toString());
-                    bundle.putString("TotalBill",totalFoodAmount.getText().toString());
-                    bundle.putInt("productId",productId);
-                    bundle.putInt("thali count",count);
-                    bundle.putParcelableArrayList("Data",extraFoodArrayList);
-                    if(TotalAmount==0)
-                    {
-                        bundle.putInt("have_extra",0);
-                    }else{
-                        bundle.putInt("have_extra",1);
+                    bundle.putString("pincode", foodDetailEdtPinCodeCheck.getText().toString());
+                    bundle.putString("TotalBill", totalFoodAmount.getText().toString());
+                    bundle.putInt("productId", productId);
+                    bundle.putInt("thali count", count);
+                    bundle.putParcelableArrayList("Data", extraFoodArrayList);
+                    if (TotalAmount == 0) {
+                        bundle.putInt("have_extra", 0);
+                    } else {
+                        bundle.putInt("have_extra", 1);
                     }
                     final Fragment orderFoodFragment = new OrderFoodFragment();
                     orderFoodFragment.setArguments(bundle);
@@ -268,47 +258,43 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.fragment_food_btn_check:
                 final String pinCode = foodDetailEdtPinCodeCheck.getText().toString();
-                if(!TextUtils.isEmpty(pinCode)){
+                if (!TextUtils.isEmpty(pinCode)) {
                     checkAvailability(pinCode);
                 }
                 break;
             case R.id.fragment_food_iv_plus:
                 thaliPrice = getArguments().getInt("amount");
-                count =  count + 1;
-                thaliPrice = thaliPrice*count;
+                count = count + 1;
+                thaliPrice = thaliPrice * count;
                 orderNow.setVisibility(View.VISIBLE);
                 foodTVTotalQuantity.setText(String.valueOf(count));
-                foodDetailTVThaliTotalPrice.setText("\u20B9"+" "+thaliPrice);
+                foodDetailTVThaliTotalPrice.setText("\u20B9" + " " + thaliPrice);
 
-                if(TotalAmount!=0)
-                {
-                    totalFoodAmount.setText(String.valueOf(thaliPrice+TotalAmount));
-                }
-                else{
+                if (TotalAmount != 0) {
+                    totalFoodAmount.setText(String.valueOf(thaliPrice + TotalAmount));
+                } else {
                     totalFoodAmount.setText(String.valueOf(thaliPrice));
                 }
                 break;
             case R.id.fragment_food_iv_minus:
                 orderNow.setVisibility(View.VISIBLE);
                 count = count - 1;
-                if(count<0){
-                    count=0;
+                if (count < 0) {
+                    count = 0;
                     foodTVTotalQuantity.setText("0");
                     foodDetailTVThaliTotalPrice.setText("0");
                     totalFoodAmount.setText("0");
 
-                }
-                else
-                {
+                } else {
 
                     thaliPrice = getArguments().getInt("amount");
-                    thaliPrice = thaliPrice*count;
+                    thaliPrice = thaliPrice * count;
                     foodTVTotalQuantity.setText(String.valueOf(count));
-                    foodDetailTVThaliTotalPrice.setText("\u20B9"+" "+thaliPrice);
-                    totalFoodAmount.setText(String.valueOf(thaliPrice+TotalAmount));
+                    foodDetailTVThaliTotalPrice.setText("\u20B9" + " " + thaliPrice);
+                    totalFoodAmount.setText(String.valueOf(thaliPrice + TotalAmount));
                 }
                 break;
-             }
+        }
     }
 
     private void checkAvailability(String pinCode) {
@@ -324,28 +310,27 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 float[] results = new float[1];
                 final double userLongitude = address.getLongitude();
 
-                Location.distanceBetween(myLatitude, myLongitude, userLatitude, userLongitude,results);
+                Location.distanceBetween(myLatitude, myLongitude, userLatitude, userLongitude, results);
                 float distanceInMeters = results[0];
                 boolean isWithin5km = distanceInMeters < 5000;
-                if(isWithin5km)
-                {
-                    Log.e("Distanceis 5 km within","yeahhh");
-                    Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.available_food));
+                if (isWithin5km) {
+                    Log.e("Distanceis 5 km within", "yeahhh");
+                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.available_food));
                     foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
                     foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
                     foodDetailExtraTextView.setVisibility(View.VISIBLE);
                     foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
                     orderNow.setVisibility(View.VISIBLE);
                     orderNowLayout.setVisibility(View.VISIBLE);
-                }else{
-                    Log.e("Distancei not in 5 km","huhh");
+                } else {
+                    Log.e("Distancei not in 5 km", "huhh");
                     foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
                     foodDetailRelativeLayoutTotalBill.setVisibility(View.GONE);
                     foodDetailLinearLayoutExtras.setVisibility(View.GONE);
                     foodDetailExtraTextView.setVisibility(View.GONE);
                     orderNow.setVisibility(View.GONE);
                     orderNowLayout.setVisibility(View.GONE);
-                    Logger.snackBar(foodDetailCoordinatorLayout,getActivity(),getString(R.string.not_available_pin_code));
+                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.not_available_pin_code));
                 }
 
             } else {
@@ -358,7 +343,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     }
 
 
-    private void shareImage(){
+    private void shareImage() {
         fragmentFoodLinearLayout.setDrawingCacheEnabled(true);
         fragmentFoodLinearLayout.buildDrawingCache();
         Bitmap bm = Bitmap.createBitmap(fragmentFoodLinearLayout.getDrawingCache());
@@ -371,16 +356,16 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         startActivity(Intent.createChooser(shareIntent, "Share image using"));
     }
 
-    private void setAlarmService(){
+    private void setAlarmService() {
         Intent myIntent = new Intent(getActivity(), NotifyAlarmService.class);
         pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);
 
-        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 10);
         //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*3600*1000, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, pendingIntent);
     }
 }

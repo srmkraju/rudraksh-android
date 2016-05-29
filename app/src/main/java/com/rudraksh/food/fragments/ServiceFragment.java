@@ -45,8 +45,8 @@ public class ServiceFragment extends BaseFragment implements View.OnClickListene
         switch (view.getId()){
             case R.id.fragment_service_cv_food:
                 final Fragment foodTypeFragment = new FoodTypeFragment();
-                //bundle.putString("foodService","foodService");
-                //foodTypeFragment.setArguments(bundle);
+                bundle.putString("foodService","foodService");
+                foodTypeFragment.setArguments(bundle);
                 addFragment(this, foodTypeFragment, true);
                 break;
             case R.id.fragment_service_cv_pg:
