@@ -3,15 +3,18 @@ package com.rudraksh.food.fragments;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rudraksh.food.R;
@@ -27,6 +30,7 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
     //private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton callFloatingButton;
     private ImageView sharingImageView;
+    private LinearLayout pgParentLinearLayout;
     private String sharing;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
     protected void initView(View view) {
         callFloatingButton = (FloatingActionButton) view.findViewById(R.id.fragment_pg_fab_call);
         sharingImageView = (ImageView) view.findViewById(R.id.fragment_pg_sharing_iv);
-
+        pgParentLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_pg_linear);
         if(getArguments()!=null){
             sharing = getArguments().getString("sharing");
         }
@@ -58,13 +62,16 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initToolbar() {
         MainActivity.getInstance().showBackButton();
-        MainActivity.getInstance().getShareImageView().setVisibility(View.GONE);
-        //MainActivity.getInstance().getShareImageView().setOnClickListener(this);
+        MainActivity.getInstance().getShareImageView().setVisibility(View.VISIBLE);
+        MainActivity.getInstance().getShareImageView().setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.row_toolbar_iv_share:
+                shareImage();
+                break;
             case R.id.fragment_pg_fab_call:
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(String.format(Locale.getDefault(), "tel:%s", getString(R.string.mukesh_91_9409409408))));
@@ -79,5 +86,18 @@ public class PGTwoSharingFragment extends BaseFragment implements View.OnClickLi
 
                 break;
         }
+    }
+
+    private void shareImage() {
+        pgParentLinearLayout.setDrawingCacheEnabled(true);
+        pgParentLinearLayout.buildDrawingCache();
+        Bitmap bm = Bitmap.createBitmap(pgParentLinearLayout.getDrawingCache());
+        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(),
+                bm, "Image Description", null);
+        Uri uri = Uri.parse(path);
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/jpg");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(shareIntent, "Share image using"));
     }
 }

@@ -52,16 +52,13 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private AppImageView foodDetailImageView;
     private TextView foodDetailTextViewItemIncluded;
 
-
     private ImageView foodIVPlus;
     private ImageView foodIVMinus;
-
 
     private TextView foodDetailTVThaliTotalPrice;
     private TextView foodTVTotalQuantity;
     private TextView foodDetailExtraTextView;
     private TextView totalFoodAmount;
-
 
     private EditText foodDetailEdtPinCodeCheck;
 
@@ -73,14 +70,12 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private RelativeLayout foodDetailRelativeLayoutTotalBill;
     private RelativeLayout orderNowLayout;
 
-
     private int count = 0;
     private int thaliPrice;
     private int TotalAmount = 0;
     private int productId;
 
     private CoordinatorLayout foodDetailCoordinatorLayout;
-
     private LinearLayout fragmentFoodLinearLayout;
     private PendingIntent pendingIntent;
 
@@ -120,13 +115,11 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         orderNow = (Button) view.findViewById(R.id.food_detail_bt_orderNow);
         getExtraFoodItem();
 
-
         orderNow.setOnClickListener(this);
         foodDetailBtnCheck.setOnClickListener(this);
 
         foodIVMinus.setOnClickListener(this);
         foodIVPlus.setOnClickListener(this);
-
 
         if (getArguments() != null) {
             final String imageUrl = getArguments().getString("imageUrl");
@@ -159,8 +152,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     }
 
     private void setExtraFoodData(final ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList) {
-
-
         for (int i = 0; i < extraFoodArrayList.size(); i++) {
             final int finalI = i;
 
@@ -234,6 +225,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         final Bundle bundle = new Bundle();
         switch (view.getId()) {
+            case R.id.row_toolbar_iv_share:
+                shareImage();
+                break;
             case R.id.food_detail_bt_orderNow:
                 if (!foodDetailTVThaliTotalPrice.getText().toString().equalsIgnoreCase("0")) {
 
@@ -315,7 +309,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 boolean isWithin5km = distanceInMeters < 5000;
                 if (isWithin5km) {
                     Log.e("Distanceis 5 km within", "yeahhh");
-                    Toast.makeText(getContext(),getString(R.string.available_food),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.available_food), Toast.LENGTH_SHORT).show();
 //                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.available_food));
                     foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
                     foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
@@ -331,7 +325,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     foodDetailExtraTextView.setVisibility(View.GONE);
                     orderNow.setVisibility(View.GONE);
                     orderNowLayout.setVisibility(View.GONE);
-                    Toast.makeText(getContext(),getString(R.string.not_available_pin_code),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.not_available_pin_code), Toast.LENGTH_SHORT).show();
 //                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.not_available_pin_code));
                 }
 
@@ -343,7 +337,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
         }
     }
-
 
     private void shareImage() {
         fragmentFoodLinearLayout.setDrawingCacheEnabled(true);

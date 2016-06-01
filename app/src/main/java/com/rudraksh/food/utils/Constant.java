@@ -5,7 +5,7 @@ package com.rudraksh.food.utils;
  */
 public class Constant {
 
-    public static final String BASE_URL="http://192.168.1.9/rudraksh/public/";
+    public static final String BASE_URL="http://ec2-52-26-129-93.us-west-2.compute.amazonaws.com/public/";
     public static final String CARD_NAME = "CARDNAME";
 
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 10001;
