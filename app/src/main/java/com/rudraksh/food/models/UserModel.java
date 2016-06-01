@@ -26,8 +26,9 @@ public class UserModel {
     @SerializedName("pincode")
     private String pincode;
 
+
     @SerializedName("extra_products")
-    private JsonObject extra_products;
+    private String extra_products;
 
     @SerializedName("amount")
     private int amount;
@@ -75,13 +76,7 @@ public class UserModel {
         this.amount = amount;
     }
 
-    public JsonObject getExtra_products() {
-        return extra_products;
-    }
 
-    public void setExtra_products(JsonObject extra_products) {
-        this.extra_products = extra_products;
-    }
 
     public String getAddress2() {
         return address2;
@@ -124,5 +119,7 @@ public class UserModel {
         this.pincode = pincode;
     }
 
-
+    public void setExtra_products(String extra_products) {
+        this.extra_products = extra_products;
+    }
 }

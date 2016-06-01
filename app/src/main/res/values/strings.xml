@@ -53,6 +53,7 @@
     <string name="enter_name">Name is empty</string>
     <string name="address_empty">Address is empty</string>
     <string name="no_emial_client">There is no email client installed.</string>
+    <string name="email_not_valid">Given email is not valid</string>
     <string name="your_total_bill">Your total bill</string>
     <string name="select_items">Select Items</string>
 

@@ -95,44 +95,44 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/sixteen_sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/fifteen_dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/ten_dp"
-                    android:layout_marginStart="@dimen/ten_dp"
-                    android:layout_marginEnd="@dimen/ten_dp"
-                    android:paddingTop="@dimen/ten_dp"
-                    android:weightSum="1">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/fifteen_dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:paddingBottom="@dimen/ten_dp"-->
+                    <!--android:layout_marginStart="@dimen/ten_dp"-->
+                    <!--android:layout_marginEnd="@dimen/ten_dp"-->
+                    <!--android:paddingTop="@dimen/ten_dp"-->
+                    <!--android:weightSum="1">-->
 
-                    <com.rudraksh.food.widgets.AppTextView
-                        android:id="@+id/fragment_order_tv_order_date"
-                        style="@style/semi_bold"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.65"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/ten_dp"
-                        android:text="@string/order_time"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/fourteen_sp" />
+                    <!--<com.rudraksh.food.widgets.AppTextView-->
+                        <!--android:id="@+id/fragment_order_tv_order_date"-->
+                        <!--style="@style/semi_bold"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="0.65"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:paddingStart="@dimen/ten_dp"-->
+                        <!--android:text="@string/order_time"-->
+                        <!--android:textColor="@color/gray"-->
+                        <!--android:textSize="@dimen/fourteen_sp" />-->
 
-                    <com.rudraksh.food.widgets.AppEditText
-                        android:id="@+id/fragment_order_edt_order_date"
-                        style="@style/bold"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/five_dp"
-                        android:layout_weight="0.35"
-                        android:drawableEnd="@drawable/ic_calendar"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/ten_dp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sixteen_sp" />
-                </LinearLayout>
+                    <!--<com.rudraksh.food.widgets.AppEditText-->
+                        <!--android:id="@+id/fragment_order_edt_order_date"-->
+                        <!--style="@style/bold"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginEnd="@dimen/five_dp"-->
+                        <!--android:layout_weight="0.35"-->
+                        <!--android:drawableEnd="@drawable/ic_calendar"-->
+                        <!--android:focusable="false"-->
+                        <!--android:focusableInTouchMode="false"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:paddingStart="@dimen/ten_dp"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/sixteen_sp" />-->
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

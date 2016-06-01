@@ -315,7 +315,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 boolean isWithin5km = distanceInMeters < 5000;
                 if (isWithin5km) {
                     Log.e("Distanceis 5 km within", "yeahhh");
-                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.available_food));
+                    Toast.makeText(getContext(),getString(R.string.available_food),Toast.LENGTH_SHORT).show();
+//                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.available_food));
                     foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
                     foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
                     foodDetailExtraTextView.setVisibility(View.VISIBLE);
@@ -330,7 +331,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     foodDetailExtraTextView.setVisibility(View.GONE);
                     orderNow.setVisibility(View.GONE);
                     orderNowLayout.setVisibility(View.GONE);
-                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.not_available_pin_code));
+                    Toast.makeText(getContext(),getString(R.string.not_available_pin_code),Toast.LENGTH_SHORT).show();
+//                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.not_available_pin_code));
                 }
 
             } else {

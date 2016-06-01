@@ -23,9 +23,6 @@ public class UserResponseModel {
     }
 
 
-
-
-
     public String getMessage() {
         return message;
     }
