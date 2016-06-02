@@ -30,7 +30,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_rudraksh" />
+                android:src="@mipmap/ic_rudraksh" />
 
             <com.rudraksh.food.widgets.AppTextView
                 android:id="@+id/activity_splash_tv_rudraksh_service"

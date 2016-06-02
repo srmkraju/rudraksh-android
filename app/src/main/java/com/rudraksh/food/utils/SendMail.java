@@ -3,7 +3,6 @@ package com.rudraksh.food.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.util.Properties;
 
@@ -56,7 +55,8 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         //Dismissing the progress dialog
         progressDialog.dismiss();
         //Showing a success message
-        Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
+        Logger.toast(context,"Mail Sent");
     }
 
     @Override

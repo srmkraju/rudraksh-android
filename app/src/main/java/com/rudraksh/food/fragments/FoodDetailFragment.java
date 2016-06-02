@@ -79,8 +79,8 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private LinearLayout fragmentFoodLinearLayout;
     private PendingIntent pendingIntent;
 
-    private double myLatitude = 23.026509;
-    private double myLongitude = 72.560910;
+    private double myLatitude = 23.0316849;
+    private double myLongitude = 72.5589462;
 
     private ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList = new ArrayList<>();
 

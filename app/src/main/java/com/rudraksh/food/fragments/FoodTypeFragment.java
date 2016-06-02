@@ -20,7 +20,9 @@ import com.rudraksh.food.utils.OnRecyclerViewItemClickListener;
 import com.rudraksh.food.webservices.RestClient;
 import com.rudraksh.food.webservices.RetrofitCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit.Call;
 
@@ -48,6 +50,7 @@ public class FoodTypeFragment extends BaseFragment implements OnRecyclerViewItem
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         foodTypeRecyclerView.setLayoutManager(mLayoutManager);
         foodTypeRecyclerView.setAdapter(foodTypeRecyclerAdapter);
+
         getProductData();
     }
     private void getProductData() {

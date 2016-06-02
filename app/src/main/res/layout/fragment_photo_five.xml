@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/punjabi_thali"
+        android:src="@drawable/three_share_pg"
         android:adjustViewBounds="true"
         android:contentDescription="@null"/>
 

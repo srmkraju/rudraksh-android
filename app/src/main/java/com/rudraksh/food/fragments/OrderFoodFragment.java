@@ -1,6 +1,5 @@
 package com.rudraksh.food.fragments;
 
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,13 +29,10 @@ import com.rudraksh.food.webservices.RestClient;
 import com.rudraksh.food.webservices.RetrofitCallback;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import retrofit.Call;
 
@@ -55,8 +50,6 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private Button orderFoodBtnOrder;
     private TextView orderFoodTVTotalBill;
     private CoordinatorLayout orderFoodCordinatorLayout;
-//    private TextView orderFoodTVOrderDateTime;
-//    private EditText orderFoodEdtOrderDate;
 
     private String pincode;
     private String totalBill;
@@ -67,7 +60,8 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     private int productId;
     private int thaliCount;
     private int have_extra_product;
-    private SendMail sm;
+    private SendMail sendMailToUser;
+    private SendMail sendMailForMukesh;
 
     private ArrayList<ExtraFoodModel.ExtraFoodResponseModel> dataFromFoodDetailFragment;
 
@@ -133,34 +127,6 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-//    private void openOrderDateTime() {
-//        final Calendar mcurrentDate = Calendar.getInstance();
-//        int mYear = mcurrentDate.get(Calendar.YEAR);
-//        int mMonth = mcurrentDate.get(Calendar.MONTH);
-//        int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
-//
-//        DatePickerDialog mDatePicker = new DatePickerDialog(
-//                getActivity(), new DatePickerDialog.OnDateSetListener() {
-//            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-//                mcurrentDate.set(Calendar.YEAR, selectedyear);
-//                mcurrentDate.set(Calendar.MONTH, selectedmonth);
-//                mcurrentDate.set(Calendar.DAY_OF_MONTH,
-//                        selectedday);
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-//
-//                SimpleDateFormat sdfnew = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-//                Date now = new Date();
-//                SimpleDateFormat sdfa = new SimpleDateFormat("K:mm a");
-//                String orderFormatTime = sdfa.format(now);
-//                orderFoodTVOrderDateTime.setTag(sdf.format(mcurrentDate.getTime()));
-//                Logger.e("Time " + orderFormatTime);
-//                orderFoodTVOrderDateTime.setText(sdfnew.format(mcurrentDate.getTime()) + " " + orderFormatTime);
-//            }
-//        }, mYear, mMonth, mDay);
-//        mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
-//        mDatePicker.show();
-//    }
-
     private void checkFoodOrderUserValidation() throws JSONException {
         final String userName = orderFoodETUserName.getText().toString();
         final String mobileNo = orderFoodETMobileNo.getText().toString();
@@ -172,19 +138,19 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
         if (!TextUtils.isEmpty(userName)) {
             if (!TextUtils.isEmpty(mobileNo)) {
                 if (Utils.isValidMobile(mobileNo)) {
-                    if(TextUtils.isEmpty(email)){
+                    if (TextUtils.isEmpty(email)) {
                         Logger.snackBar(orderFoodCordinatorLayout, getActivity(), getString(R.string.address_empty));
                     }
-                    if(!TextUtils.isEmpty(email)){
-                        if(Utils.isEmailValid(email)){
+                    if (!TextUtils.isEmpty(email)) {
+                        if (Utils.isEmailValid(email)) {
                             if (!TextUtils.isEmpty(address1)) {
 
                                 UserModel usermodel = setUserData(userName, mobileNo, address1, address2, pincode);
                                 doSignUp(usermodel);
-                            }else {
+                            } else {
                                 Logger.snackBar(orderFoodCordinatorLayout, getActivity(), getString(R.string.address_empty));
                             }
-                        }else{
+                        } else {
                             Logger.snackBar(orderFoodCordinatorLayout, getActivity(), getString(R.string.email_not_valid));
                         }
                     }
@@ -238,20 +204,25 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
                 public void onSuccess(UserResponseModel userModel) {
                     if (userModel.isresponse()) {
                         Log.e("message", userModel.getMessage().toString());
-//                        if (orderFoodTVOrderDateTime.getText().toString().contains("AM")) {
-//                            sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Lunch Pack",
-//                                    "Name : " + userDetail.getName() + "\n" +
-//                                            " Mobile No " + userDetail.getMobile() + "\n" + " Address: " + userDetail.getAddress());
-//                        } else if (orderFoodTVOrderDateTime.getText().toString().contains("PM")) {
-//                            sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Dinner Pack",
-//                                    "Name : " + userDetail.getName() + "\n" +
-//                                            " Mobile No " + userDetail.getMobile() + "\n" + " Address: " + userDetail.getAddress());
-//                        }
-//                        sm.execute();
-//                        orderFoodETUserName.setText("");
-//                        orderFoodETMobileNo.setText("");
-//                        orderFoodETAddress1.setText("");
-                        openThankYouAlertDialog();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh.mm a");
+                        final String formattedDate = dateFormat.format(new Date()).toString();
+                        /*if (formattedDate.contains("am")) {
+                            sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Lunch Pack",
+                                    "Name : " + userDetail.getName() + "\n" +
+                                            " Mobile No " + userDetail.getMobile() + "\n" + " Address: " + userDetail.getAddress() + "\n" +
+                                            "Ordered Detail : ", " Your Order is " + " \n" + selectedOrderFoodName + " :" + thaliCount + "\n" + sb.toString() +
+                                    "Total Bill  : " + totalBill);
+                        } else if (formattedDate.contains("pm")) {
+                            sm = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Dinner Pack",
+                                    "Name : " + userDetail.getName() + "\n" +
+                                            " Mobile No " + userDetail.getMobile() + "\n" + " Address: " + userDetail.getAddress());
+                        }
+
+                        sm.execute();*/
+                        orderFoodETUserName.setText("");
+                        orderFoodETMobileNo.setText("");
+                        orderFoodETAddress1.setText("");
+                        openThankYouAlertDialog(userDetail);
                     }
                 }
             });
@@ -261,7 +232,7 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
 
     }
 
-    private void openThankYouAlertDialog() {
+    private void openThankYouAlertDialog(final UserModel userDetail) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setMessage(getActivity().getString(R.string.thank_you_dialog));
         alertDialog.setPositiveButton(getActivity().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -276,9 +247,15 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             sb.append(Totalcount + "\n " + " ");
 
         }
-        sm = new SendMail(getActivity(), orderFoodETEmail.getText().toString(), "Your order Detail From RudrakshFood", " Your Order is " + " \n" + selectedOrderFoodName + " :" + thaliCount + "\n" + sb.toString() +
-                "Total Bill  : " + totalBill);
-        sm.execute();
+        sendMailForMukesh = new SendMail(getActivity(), "sraju432@gmail.com", "Order for " + totalQuantity + " Dinner Pack",
+                "Name : " + userDetail.getName() + "\n" +
+                        "Mobile No " + userDetail.getMobile() + "\n" + "Address: " + userDetail.getAddress() +
+        "\n \n" + "Order is " + "\n" + selectedOrderFoodName + " :" + thaliCount + "\n" + sb.toString() +
+                "\n \n" + "Total Bill  : " + totalBill + " Rs");
+        sendMailToUser = new SendMail(getActivity(), orderFoodETEmail.getText().toString(), "Your order Detail From RudrakshFood", " Your Order is " + " \n" + selectedOrderFoodName + " :" + thaliCount + "\n" + sb.toString() +
+                "\n \n" +  "Total Bill  : " + totalBill + " Rs");
+        sendMailForMukesh.execute();
+        sendMailToUser.execute();
         final Fragment foodTypeFragment = new FoodTypeFragment();
         addFragment(this, foodTypeFragment, true);
         alertDialog.show();

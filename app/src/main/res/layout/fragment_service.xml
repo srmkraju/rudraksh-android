@@ -18,12 +18,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#000000">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:alpha="0.4"
             android:scaleType="centerCrop"
@@ -47,19 +47,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
-        android:layout_marginStart="@dimen/ten_dp"
-        android:layout_marginEnd="@dimen/ten_dp"
-        android:layout_marginTop="@dimen/ten_dp"
+        android:layout_margin="@dimen/ten_dp"
         app:cardElevation="@dimen/five_dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#000000">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:alpha="0.4"
                 android:scaleType="centerCrop"

@@ -4,7 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.rudraksh.food.fragments.PhotoGalleryFiveFragment;
+import com.rudraksh.food.fragments.PhotoGalleryFourFragment;
 import com.rudraksh.food.fragments.PhotoGalleryOneFragment;
+import com.rudraksh.food.fragments.PhotoGalleryThreeFragment;
 import com.rudraksh.food.fragments.PhotoGalleryTwoFragment;
 
 /**
@@ -32,13 +35,13 @@ public class PhotoGalleryAdapter extends FragmentStatePagerAdapter {
                 fragment = new PhotoGalleryTwoFragment();
                 break;
             case 2:
-                fragment = new PhotoGalleryOneFragment();
+                fragment = new PhotoGalleryThreeFragment();
                 break;
             case 3:
-                fragment = new PhotoGalleryTwoFragment();
+                fragment = new PhotoGalleryFourFragment();
                 break;
             case 4:
-                fragment = new PhotoGalleryOneFragment();
+                fragment = new PhotoGalleryFiveFragment();
                 break;
         }
         return fragment;
