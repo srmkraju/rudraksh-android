@@ -81,8 +81,6 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
             productId = getArguments().getInt("productId");
             thaliCount = getArguments().getInt("thali count");
             have_extra_product = getArguments().getInt("have_extra");
-
-
         }
         orderFoodETUserName = (EditText) view.findViewById(R.id.fragment_order_edt_user_name);
         orderFoodETMobileNo = (EditText) view.findViewById(R.id.fragment_order_edt_mobile_no);
@@ -98,6 +96,21 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
 
 //        orderFoodEdtOrderDate.setOnClickListener(this);
         orderFoodBtnOrder.setOnClickListener(this);
+        if (!TextUtils.isEmpty(Constant.USERNAME)){
+            orderFoodETUserName.setText(Constant.USERNAME);
+        }
+        if (!TextUtils.isEmpty(Constant.USERMOBILE)){
+            orderFoodETMobileNo.setText(Constant.USERMOBILE);
+        }
+        if (!TextUtils.isEmpty(Constant.USEREMAIL)){
+            orderFoodETEmail.setText(Constant.USEREMAIL);
+        }
+        if (!TextUtils.isEmpty(Constant.USERADDRESS)){
+            orderFoodETAddress1.setText(Constant.USERADDRESS);
+        }
+        if (!TextUtils.isEmpty(Constant.USERADDRESS2)){
+            orderFoodETAdrress2.setText(Constant.USERADDRESS2);
+        }
         if (!TextUtils.isEmpty(totalBill)) {
             orderFoodTVTotalBill.setText(getString(R.string.Rs) + String.valueOf(totalBill));
         }
@@ -128,24 +141,24 @@ public class OrderFoodFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void checkFoodOrderUserValidation() throws JSONException {
-        final String userName = orderFoodETUserName.getText().toString();
-        final String mobileNo = orderFoodETMobileNo.getText().toString();
-        final String address1 = orderFoodETAddress1.getText().toString();
-        final String address2 = orderFoodETAdrress2.getText().toString();
-        final String email = orderFoodETEmail.getText().toString();
+        Constant.USERNAME = orderFoodETUserName.getText().toString();
+        Constant.USERMOBILE = orderFoodETMobileNo.getText().toString();
+        Constant.USERADDRESS = orderFoodETAddress1.getText().toString();
+        Constant.USERADDRESS2 = orderFoodETAdrress2.getText().toString();
+        Constant.USEREMAIL = orderFoodETEmail.getText().toString();
 //        final String orderTime = orderFoodTVOrderDateTime.getText().toString();
 
-        if (!TextUtils.isEmpty(userName)) {
-            if (!TextUtils.isEmpty(mobileNo)) {
-                if (Utils.isValidMobile(mobileNo)) {
-                    if (TextUtils.isEmpty(email)) {
+        if (!TextUtils.isEmpty(Constant.USERNAME)) {
+            if (!TextUtils.isEmpty(Constant.USERMOBILE)) {
+                if (Utils.isValidMobile(Constant.USERMOBILE)) {
+                    if (TextUtils.isEmpty(Constant.USEREMAIL)) {
                         Logger.snackBar(orderFoodCordinatorLayout, getActivity(), getString(R.string.address_empty));
                     }
-                    if (!TextUtils.isEmpty(email)) {
-                        if (Utils.isEmailValid(email)) {
-                            if (!TextUtils.isEmpty(address1)) {
+                    if (!TextUtils.isEmpty(Constant.USEREMAIL)) {
+                        if (Utils.isEmailValid(Constant.USEREMAIL)) {
+                            if (!TextUtils.isEmpty(Constant.USERADDRESS)) {
 
-                                UserModel usermodel = setUserData(userName, mobileNo, address1, address2, pincode);
+                                UserModel usermodel = setUserData(Constant.USERNAME, Constant.USERMOBILE, Constant.USERADDRESS, Constant.USERADDRESS2, pincode);
                                 doSignUp(usermodel);
                             } else {
                                 Logger.snackBar(orderFoodCordinatorLayout, getActivity(), getString(R.string.address_empty));

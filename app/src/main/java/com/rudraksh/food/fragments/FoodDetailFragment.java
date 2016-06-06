@@ -293,22 +293,18 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
     private void checkAvailability(String pinCode) {
         final Geocoder geocoder = new Geocoder(getContext());
-
         try {
             List<Address> addresses = geocoder.getFromLocationName(pinCode, 1);
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
-
-
                 final double userLatitude = address.getLatitude();
                 float[] results = new float[1];
                 final double userLongitude = address.getLongitude();
-
                 Location.distanceBetween(myLatitude, myLongitude, userLatitude, userLongitude, results);
                 float distanceInMeters = results[0];
-                boolean isWithin5km = distanceInMeters < 5000;
+                boolean isWithin5km = distanceInMeters < 3000;
                 if (isWithin5km) {
-                    Log.e("Distanceis 5 km within", "yeahhh");
+                    Log.e("Distanceis 3 km within", "yeahhh");
                     Toast.makeText(getContext(), getString(R.string.available_food), Toast.LENGTH_SHORT).show();
 //                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.available_food));
                     foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
@@ -318,7 +314,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     orderNow.setVisibility(View.VISIBLE);
                     orderNowLayout.setVisibility(View.VISIBLE);
                 } else {
-                    Log.e("Distancei not in 5 km", "huhh");
+                    Log.e("Distancei not in 3 km", "huhh");
                     foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
                     foodDetailRelativeLayoutTotalBill.setVisibility(View.GONE);
                     foodDetailLinearLayoutExtras.setVisibility(View.GONE);
@@ -328,13 +324,11 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     Toast.makeText(getContext(), getString(R.string.not_available_pin_code), Toast.LENGTH_SHORT).show();
 //                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.not_available_pin_code));
                 }
-
             } else {
-
                 Toast.makeText(getContext(), "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
             }
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
