@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,7 @@ import com.rudraksh.food.utils.OnRecyclerViewItemClickListener;
 import com.rudraksh.food.webservices.RestClient;
 import com.rudraksh.food.webservices.RetrofitCallback;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import retrofit.Call;
 
@@ -91,7 +88,6 @@ public class FoodTypeFragment extends BaseFragment implements OnRecyclerViewItem
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
         }
-        Log.e("In item click","clicked");
         mLastClickTime = SystemClock.elapsedRealtime();
         final Bundle bundle = new Bundle();
         bundle.putInt("Id",data.getId());
@@ -103,8 +99,5 @@ public class FoodTypeFragment extends BaseFragment implements OnRecyclerViewItem
         final Fragment punjabiFragment = new FoodDetailFragment();
         punjabiFragment.setArguments(bundle);
         addFragment(this, punjabiFragment, true);
-
-
-
     }
 }

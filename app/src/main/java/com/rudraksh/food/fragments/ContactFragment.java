@@ -83,7 +83,7 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     private void sendFeedBack(){
         if(!TextUtils.isEmpty(contactFragmentFeedback.getText().toString())){
-            sm = new SendMail(getActivity(),"sraju432@gmail.com","Reg: Feedback", contactFragmentFeedback.getText().toString());
+            sm = new SendMail(getActivity(),"mukesh.prajapati22@gmail.com","Reg: Feedback", contactFragmentFeedback.getText().toString());
             sm.execute();
             contactFragmentFeedback.setText("");
             Logger.toast(getActivity(),getString(R.string.thank_you_feedback));

@@ -1,10 +1,7 @@
 package com.rudraksh.food.models;
 
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONObject;
 
 /**
  * Created by dell8 on 19/5/16.
@@ -16,6 +13,9 @@ public class UserModel {
 
     @SerializedName("mobile")
     private String mobile;
+
+    @SerializedName("email")
+    private String email;
 
     @SerializedName("address")
     private String address;
@@ -42,6 +42,13 @@ public class UserModel {
     @SerializedName("have_extra")
     private int have_extra;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getHave_extra() {
         return have_extra;

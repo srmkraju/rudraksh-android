@@ -56,7 +56,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         progressDialog.dismiss();
         //Showing a success message
         //Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
-        Logger.toast(context,"Mail Sent");
+        Logger.toast(context," Successfully Mail sent");
     }
 
     @Override

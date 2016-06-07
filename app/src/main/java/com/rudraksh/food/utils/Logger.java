@@ -19,13 +19,7 @@ public class Logger {
         Logger.TAG = TAG;
     }
 
-    /**
-     * Log.e()
-     *
-     * @param message which is display in logcat.
-     */
     public static final void e(String message) {
-        Log.e(Logger.TAG, message);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.rudraksh.food.fragments;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,16 +8,17 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.rudraksh.food.R;
 import com.rudraksh.food.activity.MainActivity;
 import com.rudraksh.food.models.ExtraFoodModel;
-import com.rudraksh.food.service.NotifyAlarmService;
 import com.rudraksh.food.utils.Constant;
 import com.rudraksh.food.utils.Logger;
 import com.rudraksh.food.webservices.RestClient;
@@ -39,7 +38,6 @@ import com.rudraksh.food.widgets.AppImageView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit.Call;
@@ -82,6 +80,15 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
     private double myLatitude = 23.0316849;
     private double myLongitude = 72.5589462;
 
+    LocationManager location_manager;
+    String getLatitude;
+    String getLongitude;
+    double x;
+    double y;
+    Geocoder geocoder;
+    List<Address> addresses;
+    Location loc;
+
     private ArrayList<ExtraFoodModel.ExtraFoodResponseModel> extraFoodArrayList = new ArrayList<>();
 
     @Override
@@ -113,6 +120,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         orderNowLayout = (RelativeLayout) view.findViewById(R.id.food_detail_rl_orderNow);
 
         orderNow = (Button) view.findViewById(R.id.food_detail_bt_orderNow);
+        location_manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         getExtraFoodItem();
 
         orderNow.setOnClickListener(this);
@@ -170,7 +178,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     int count = extraFoodArrayList.get(finalI).getItem_count() + 1;
                     extraFoodQuantity.setText(String.valueOf(count));
                     extraFoodArrayList.get(finalI).setItem_count(count);
-//                    extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*count));
                     TotalAmount = TotalAmount + amount;
                     setTotalPrice();
                 }
@@ -181,7 +188,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     int count = extraFoodArrayList.get(finalI).getItem_count() - 1;
                     if (count <= 0) {
                         extraFoodQuantity.setText("0");
-//                        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount));
                         if (extraFoodQuantity.getText().toString().equalsIgnoreCase("0") && count == 0) {
                             count = 0;
                             extraFoodArrayList.get(finalI).setItem_count(count);
@@ -191,7 +197,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     } else {
                         extraFoodQuantity.setText(String.valueOf(count));
                         extraFoodArrayList.get(finalI).setItem_count(count);
-//                        extraFoodItemPrice.setText("\u20B9"+" "+String .valueOf(amount*count));
                         TotalAmount = TotalAmount - amount;
                         setTotalPrice();
                     }
@@ -208,7 +213,7 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
             Logger.snackBar(foodDetailCoordinatorLayout, getContext(), "Choose atleast One Quantity for the thali");
         } else {
             final int TotalPrice = TotalAmount + thaliPrice;
-            totalFoodAmount.setText(String.valueOf(TotalPrice));
+            totalFoodAmount.setText("\u20B9" + " " + String.valueOf(TotalPrice));
         }
 
     }
@@ -253,6 +258,11 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
             case R.id.fragment_food_btn_check:
                 final String pinCode = foodDetailEdtPinCodeCheck.getText().toString();
                 if (!TextUtils.isEmpty(pinCode)) {
+                    View keyboardView = getActivity().getCurrentFocus();
+                    if (keyboardView != null) {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
                     checkAvailability(pinCode);
                 }
                 break;
@@ -265,9 +275,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                 foodDetailTVThaliTotalPrice.setText("\u20B9" + " " + thaliPrice);
 
                 if (TotalAmount != 0) {
-                    totalFoodAmount.setText(String.valueOf(thaliPrice + TotalAmount));
+                    totalFoodAmount.setText("\u20B9" + " " + String.valueOf(thaliPrice + TotalAmount));
                 } else {
-                    totalFoodAmount.setText(String.valueOf(thaliPrice));
+                    totalFoodAmount.setText("\u20B9" + " " + String.valueOf(thaliPrice));
                 }
                 break;
             case R.id.fragment_food_iv_minus:
@@ -280,25 +290,24 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     totalFoodAmount.setText("0");
 
                 } else {
-
                     thaliPrice = getArguments().getInt("amount");
                     thaliPrice = thaliPrice * count;
                     foodTVTotalQuantity.setText(String.valueOf(count));
                     foodDetailTVThaliTotalPrice.setText("\u20B9" + " " + thaliPrice);
-                    totalFoodAmount.setText(String.valueOf(thaliPrice + TotalAmount));
+                    totalFoodAmount.setText("\u20B9" + " " + String.valueOf(thaliPrice + TotalAmount));
                 }
                 break;
         }
     }
 
-    private void checkAvailability(String pinCode) {
-        final Geocoder geocoder = new Geocoder(getContext());
+    private void checkAvailability(final String pinCode) {
 
+        final Geocoder geocoder = new Geocoder(getContext());
+        //final Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocationName(pinCode, 1);
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
-
 
                 final double userLatitude = address.getLatitude();
                 float[] results = new float[1];
@@ -306,11 +315,9 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
 
                 Location.distanceBetween(myLatitude, myLongitude, userLatitude, userLongitude, results);
                 float distanceInMeters = results[0];
-                boolean isWithin5km = distanceInMeters < 5000;
+                boolean isWithin5km = distanceInMeters < 3000;
                 if (isWithin5km) {
-                    Log.e("Distanceis 5 km within", "yeahhh");
                     Toast.makeText(getContext(), getString(R.string.available_food), Toast.LENGTH_SHORT).show();
-//                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.available_food));
                     foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
                     foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
                     foodDetailExtraTextView.setVisibility(View.VISIBLE);
@@ -318,7 +325,6 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     orderNow.setVisibility(View.VISIBLE);
                     orderNowLayout.setVisibility(View.VISIBLE);
                 } else {
-                    Log.e("Distancei not in 5 km", "huhh");
                     foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
                     foodDetailRelativeLayoutTotalBill.setVisibility(View.GONE);
                     foodDetailLinearLayoutExtras.setVisibility(View.GONE);
@@ -326,15 +332,27 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
                     orderNow.setVisibility(View.GONE);
                     orderNowLayout.setVisibility(View.GONE);
                     Toast.makeText(getContext(), getString(R.string.not_available_pin_code), Toast.LENGTH_SHORT).show();
-//                    Logger.snackBar(foodDetailCoordinatorLayout, getActivity(), getString(R.string.not_available_pin_code));
                 }
 
-            } else {
-
-                Toast.makeText(getContext(), "Unable to geocode zipcode", Toast.LENGTH_LONG).show();
+            } else if(pinCode.equalsIgnoreCase("380009") || pinCode.equalsIgnoreCase("380001") || pinCode.equalsIgnoreCase("380006")) {
+                Toast.makeText(getContext(), getString(R.string.available_food), Toast.LENGTH_SHORT).show();
+                foodDetailLinearLayoutAddMinus.setVisibility(View.VISIBLE);
+                foodDetailLinearLayoutExtras.setVisibility(View.VISIBLE);
+                foodDetailExtraTextView.setVisibility(View.VISIBLE);
+                foodDetailRelativeLayoutTotalBill.setVisibility(View.VISIBLE);
+                orderNow.setVisibility(View.VISIBLE);
+                orderNowLayout.setVisibility(View.VISIBLE);
+            } else{
+                Toast.makeText(getContext(), getString(R.string.not_available_pin_code), Toast.LENGTH_SHORT).show();
+                foodDetailLinearLayoutAddMinus.setVisibility(View.GONE);
+                foodDetailRelativeLayoutTotalBill.setVisibility(View.GONE);
+                foodDetailLinearLayoutExtras.setVisibility(View.GONE);
+                foodDetailExtraTextView.setVisibility(View.GONE);
+                orderNow.setVisibility(View.GONE);
+                orderNowLayout.setVisibility(View.GONE);
             }
-        } catch (IOException e) {
-
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -349,18 +367,5 @@ public class FoodDetailFragment extends BaseFragment implements View.OnClickList
         shareIntent.setType("image/jpg");
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         startActivity(Intent.createChooser(shareIntent, "Share image using"));
-    }
-
-    private void setAlarmService() {
-        Intent myIntent = new Intent(getActivity(), NotifyAlarmService.class);
-        pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);
-
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 10);
-        //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 3600 * 1000, pendingIntent);
     }
 }

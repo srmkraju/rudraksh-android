@@ -28,12 +28,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="CustomAlertDialogStyle">
-        <item name="android:bottomBright">@color/blue</item>
-        <item name="android:bottomDark">@color/blue</item>
-        <item name="android:bottomMedium">@color/blue</item>
-        <item name="android:centerBright">@color/blue</item>
-        <item name="android:centerDark">@color/blue</item>
-        <item name="android:centerMedium">@color/blue</item>
+        <item name="android:bottomBright">@color/gray</item>
+        <item name="android:bottomDark">@color/gray</item>
+        <item name="android:bottomMedium">@color/gray</item>
+        <item name="android:centerBright">@color/gray</item>
+        <item name="android:centerDark">@color/gray</item>
+        <item name="android:centerMedium">@color/gray</item>
         <item name="android:fullBright">@drawable/progress_drawable</item>
         <item name="android:fullDark">@drawable/progress_drawable</item>
         <item name="android:topBright">@color/blue</item>
